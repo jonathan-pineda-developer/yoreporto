@@ -18,3 +18,11 @@ use App\Http\Controllers\Auth\C_AuthController;
 // rutas de autentificacion
 Route::post('registro', [C_AuthController::class, 'registro']);
 Route::post('login', [C_AuthController::class, 'login']);
+
+
+// rutas protegidas
+/*
+Route::group(['middleware' => 'jwt.verify'], function () {
+    Route::get('logout', [C_AuthController::class, 'logout']);
+});
+*/
