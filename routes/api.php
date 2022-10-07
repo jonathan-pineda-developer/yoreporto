@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\C_AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// rutas de autentificacion
+Route::post('registro', [C_AuthController::class, 'registro']);
+Route::post('login', [C_AuthController::class, 'login']);

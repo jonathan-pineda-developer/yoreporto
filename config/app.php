@@ -195,6 +195,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        // JWT PARA AUTH
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
     ],
 
     /*
