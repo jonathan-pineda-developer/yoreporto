@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\C_AuthController;
+use App\Http\Controllers\C_AuthController;
 
 /*
 |--------------------------------------------------------------------------
