@@ -21,15 +21,18 @@ class C_AuthController extends Controller
             'apellidos' => 'required|string',
             'correo' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:16',
+            'imagen' => 'string|max:100000|mimes:jpg,png',
+            'google' => 'required'
         ]);
-
 
         // crear usuario
         $user = User::create([
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'correo' => $request->correo,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'imagen' => $request->imagen,
+            'google' => $request->google
         ]);
 
         // token
