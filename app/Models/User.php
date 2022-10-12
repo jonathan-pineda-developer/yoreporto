@@ -17,22 +17,15 @@ class User extends Authenticatable implements JWTSubject
     // tabla de referencia en la base
     protected $table = 'users';
     protected $primaryKey = 'id';
-    // campos que se pueden llenar
     protected $fillable = [
-        'nombre', 'apellidos',
-        'correo', 'password'
-    ];
-    /*
-
-        PRUEBAS DE Verdad
-
-        protected $fillable = [
-        'nombre', 'apellidos',
-        'correo', 'password', 'imagen',
-        'rol_id', 'estado', 'cantidad_reportes',
+        'nombre',
+        'apellidos',
+        'correo',
+        'password',
+        'imagen',
         'google'
     ];
-    */
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -61,11 +54,5 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    // relacion con la tabla roles 1 a 1
-    public function rol()
-    {
-        return $this->belongsTo('App\Models\Rol', 'rol_id');
     }
 }
