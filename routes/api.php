@@ -21,8 +21,9 @@ Route::post('login', [C_AuthController::class, 'login']);
 
 
 // rutas protegidas
-/*
+
 Route::group(['middleware' => 'jwt.verify'], function () {
-    Route::get('logout', [C_AuthController::class, 'logout']);
+    Route::get('/', function () {
+        return "soy una ruta segura";
+    })->name("ruta-segura");
 });
-*/
