@@ -21,8 +21,8 @@ class C_AuthController extends Controller
             'apellidos' => 'required|string',
             'correo' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:16',
-            'imagen' => 'string|max:100000|mimes:jpg,png',
-            'google' => 'required'
+            //  'imagen' => 'string|max:100000|mimes:jpg,png',
+            'google' => 'boolean',
         ]);
 
         // crear usuario
@@ -31,7 +31,7 @@ class C_AuthController extends Controller
             'apellidos' => $request->apellidos,
             'correo' => $request->correo,
             'password' => Hash::make($request->password),
-            'imagen' => $request->imagen,
+            // 'imagen' => $request->imagen,
             'google' => $request->google
         ]);
 
