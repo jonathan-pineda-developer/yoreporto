@@ -17,4 +17,10 @@ class C_Reporte extends Model
     {
         return $this->belongsTo(C_Categoria::class);
     }
+
+    // relacion con usuario de muchos a uno
+    public function usuario()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

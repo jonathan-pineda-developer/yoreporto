@@ -55,4 +55,10 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    // relacion con reporte de uno a muchos
+    public function reporte()
+    {
+        return $this->hasMany(C_Reporte::class);
+    }
 }
