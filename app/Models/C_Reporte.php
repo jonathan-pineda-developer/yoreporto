@@ -23,4 +23,10 @@ class C_Reporte extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // relacion con estado de muchos a uno
+    public function estado()
+    {
+        return $this->belongsTo(C_Estado_Reporte::class);
+    }
 }
