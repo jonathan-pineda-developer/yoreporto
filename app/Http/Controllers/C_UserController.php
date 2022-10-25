@@ -19,19 +19,37 @@ class C_UserController extends Controller
         if (User::all()->isEmpty()) {
             return response()->json(['message' => 'No hay registros'], 404);
         } else {
-            $str_user = User::all();
-            return response ($str_user,200);
+            $user = User::all();
+            return response ()->json($user, 200);
         }
     }
-    public function edit(Request $str_request, $vint_id)
+
+    //mostrar un usuario por id 
+    public function showById($id)
+    {
+        if (User::find($id) == null) {
+            return response()->json(['message' => 'No hay registros'], 404);
+        } else {
+            $user = User::find($id);
+            return response() ->json($user, 200);
+        }
+    }
+
+
+    public function edit(Request $request, $id)
     {
 
-        $str_user = User::find($vint_id);
-        if (User::find($vint_id) == null) {
+        $user = User::find($id);
+        if (User::find($id) == null) {
             return response()->json(['message' => 'No se encontro el registro'], 404);
         } else {
-            $str_user->update($str_request->all());
-            return response($str_user, 200);
+            $user->update($request->all());
+            return response()->json(
+                [
+                    'message' => 'Registro actualizado',
+                ],
+                200
+            );
         }
     }
       /**
@@ -42,9 +60,9 @@ class C_UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $str_request, $vint_id)
+    public function update(Request $request, $id)
     {
-        $str_campos=[
+        $campos=[
             'nombre' => 'required|string|max:30',
             'apellidos' => 'required|string|max:70',
             'correo' => 'required|string|max:100|unique:users|email',
@@ -53,31 +71,26 @@ class C_UserController extends Controller
         return reponse ()->json([
             'required' => 'El :attribute es requerido'], 404);
 
-        if ($str_request->hasFile('imagen')) {
-            $str_campos=['imagen'=>'required|max:10000|mimes:jpeg,png,jpg'];
+        if ($request->hasFile('imagen')) {
+            $campos=['imagen'=>'max:10000|mimes:jpeg,png,jpg'];
            
         }
 
-        $this->validate($str_request,$str_campos,$str_mensaje);
+        $this->validate($request,$campos,$mensaje);
 
-        $str_datosUser=request()->except(['_token','_method']);
+        $datosUser=request()->except(['_token','_method']);
 
-        if ($str_request->hasFile('imagen')) {
-            $str_user=User::findOrFail($vint_id);
+        if ($request->hasFile('imagen')) {
+            $user=User::findOrFail($id);
 
-            Storage::delete('public/'.$str_user->imagen);
+            Storage::delete('public/'.$user->imagen);
 
-            $str_datosUser['imagen']=$str_request->file('imagen')->store('uploads','public');
+            $datosUser['imagen']=$request->file('imagen')->store('uploads','public');
         }
 
-        User::where('id','=',$vint_id)->update($str_datosUser);
+        User::where('id','=',$id)->update($datosUser);
 
-        $str_user=User::findOrFail($vint_id);
-
-         return response($str_user, 200);
-
-
-
+        $user=User::findOrFail($id);
     }
 
     public function inactivar(Request $str_request,$vint_id)
@@ -89,8 +102,6 @@ class C_UserController extends Controller
         } else {
             $str_user->estado = 0;
             $str_user->save();
-            $str_user->update($str_request->all());
-            //retornar mensaje y datos del usuario
             return response()->json([
                 'message' => 'Usuario inactivado correctamente'
                 
@@ -100,3 +111,5 @@ class C_UserController extends Controller
     }
     
 }
+
+
