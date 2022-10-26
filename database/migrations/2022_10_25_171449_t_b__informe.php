@@ -13,7 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('TB_Informe', function (Blueprint $table) {
+            $table->string ('id', 10)->primary();
+            $table->string('id_reporte');
+            $table->foreign('id_reporte')->references('id')->on('TB_Reporte')->onDelete('cascade');
+           
+        });
     }
 
     /**
@@ -23,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('TB_Informe');
     }
 };

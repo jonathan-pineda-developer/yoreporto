@@ -13,7 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('TB_Categoria', function (Blueprint $table) {
+            $table->string ('id', 10)->primary();
+            $table->string('descripcion', 100);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+          
+        });
     }
 
     /**
@@ -23,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('TB_Categoria');
     }
 };

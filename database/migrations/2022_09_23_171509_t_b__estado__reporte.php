@@ -13,7 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('TB_Estado_Reporte', function (Blueprint $table) {
+            $table->string ('id', 10)->primary();
+            $table->string('description', 100);
+        });
     }
 
     /**
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('TB_Estado_Reporte');
     }
 };
