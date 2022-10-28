@@ -22,7 +22,7 @@ class C_AuthController extends Controller
             'correo' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:16',
             //  'imagen' => 'string|max:100000|mimes:jpg,png',
-            'google' => 'boolean',
+            //'google' => 'boolean',
         ]);
 
         // crear usuario
@@ -32,7 +32,7 @@ class C_AuthController extends Controller
             'correo' => $request->correo,
             'password' => Hash::make($request->password),
             // 'imagen' => $request->imagen,
-            'google' => $request->google
+            // 'google' => $request->google
         ]);
 
         // token
