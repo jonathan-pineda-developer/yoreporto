@@ -119,4 +119,30 @@ class C_AuthController extends Controller
             ], 500);
         }
     }
+
+    // metodo para obtener la informacion del usuario
+    public function getAuthUser(Request $request)
+    {
+        // validacion del request
+        $this->validate($request, [
+            'token' => 'required'
+        ]);
+
+        $user = JWTAuth::authenticate($request->token);
+
+        return response()->json(compact('user'));
+    }
+
+    // metodo para actualizar un token
+    public function renewToken(Request $request)
+    {
+        // validacion del request
+        $this->validate($request, [
+            'token' => 'required'
+        ]);
+
+        $token = JWTAuth::refresh($request->token);
+
+        return response()->json(compact('token'));
+    }
 }
