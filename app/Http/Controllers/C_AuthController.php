@@ -9,8 +9,34 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
+require_once '../vendor/autoload.php';
+
 class C_AuthController extends Controller
 {
+
+    public function googleSignIn(Request $request)
+    {
+        $client = new \Google_Client(['client_id' => env('GOOGLE_ID')]);  // Specify the CLIENT_ID of the app that accesses the backend
+        $payload = $client->verifyIdToken($request->token);
+        if ($payload) {
+            $userid = $payload['sub'];
+            // If request specified a G Suite domain:
+            //$domain = $payload['hd'];
+            return response()->json([
+                'ok' => true,
+                'status' => 'success',
+                'message' => 'Login Success',
+                'data' => $payload
+            ], 200);
+        } else {
+            // Invalid ID token
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Login Failed',
+                'data' => null
+            ], 401);
+        }
+    }
 
     public function registro(Request $request)
     {
