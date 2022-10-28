@@ -24,6 +24,8 @@ Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
 Route::get('/mostrar_usuario/{id}', [C_UserController::class, 'showById']);
 Route::put('/actualizar/{id}', [C_UserController::class, 'edit']);
 Route::put('/inactivar/{id}', [C_UserController::class, 'inactivar']);
+// ruta para login de google
+Route::post('google', [C_AuthController::class, 'googleSignIn']);
 // rutas protegidas
 
 Route::group(['middleware' => 'jwt.verify'], function () {
