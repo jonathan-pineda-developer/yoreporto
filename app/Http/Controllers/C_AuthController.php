@@ -100,4 +100,23 @@ class C_AuthController extends Controller
         // si todo es correcto
         return response()->json(compact('token'));
     }
+
+    public function logout(Request $request)
+    {
+        // validacion del request
+        $this->validate($request, [
+            'token' => 'required'
+        ]);
+
+        try {
+            JWTAuth::invalidate($request->token);
+            return response()->json([
+                'message' => 'Sesion cerrada correctamente'
+            ]);
+        } catch (JWTException $e) {
+            return response()->json([
+                'message' => 'No se pudo cerrar la sesion'
+            ], 500);
+        }
+    }
 }
