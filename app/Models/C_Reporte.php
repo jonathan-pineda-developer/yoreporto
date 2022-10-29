@@ -12,6 +12,17 @@ class C_Reporte extends Model
     // tabla de la base de datos
     protected $table = 'TB_Reporte';
 
+    protected $primaryKey = 'id';
+
+    // campos de la tabla
+    protected $fillable = [
+        'titulo',
+        'descripcion',
+        'imagen',
+        'categoria_id',
+        'user_id',
+    ];
+
     // relacion con categoria de muchos a uno
     public function categoria()
     {

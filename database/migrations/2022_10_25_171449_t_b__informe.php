@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('TB_Informe', function (Blueprint $table) {
             $table->string ('id', 10)->primary();
-            $table->string('id_reporte');
-            $table->foreign('id_reporte')->references('id')->on('TB_Reporte')->onDelete('cascade');
+            $table->unsignedBigInteger('id_reporte');
+            $table->foreign('id_reporte')->references('id')->on('TB_Reporte');
            
         });
     }

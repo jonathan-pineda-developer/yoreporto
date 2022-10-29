@@ -14,18 +14,18 @@ return new class extends Migration
     public function up()
     {
         Schema::create('TB_Reporte', function (Blueprint $table) {
-            $table->string ('id', 10)->primary();
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->id()->autoIncrement();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('titulo');
             $table->string('descripcion');
             $table->timestamps();
-            $table->float('localizacion');
-            $table->string('imagen');
+            $table->float('localizacion')->nullable();
+            $table->string('imagen')->nullable();
             $table->string('categoria_id');
-            $table->foreign('categoria_id')->references('id')->on('TB_Categoria')->onDelete('cascade');
-            $table->string('estado_id');
-            $table->foreign('estado_id')->references('id')->on('TB_Estado_Reporte')->onDelete('cascade');
+            $table->foreign('categoria_id')->references('id')->on('TB_Categoria');
+            $table->string('estado_id')->nullable();
+            $table->foreign('estado_id')->references('id')->on('TB_Estado_Reporte');
         
         });
     }
