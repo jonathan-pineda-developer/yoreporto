@@ -22,7 +22,8 @@ Route::post('registro', [C_AuthController::class, 'registro']);
 Route::post('login', [C_AuthController::class, 'login']);
 
 //rutas del reporte
-Route::post('crear_reporte', [C_ReporteController::class, 'store']);
+//crear reporte y validar jwt
+Route::post('crear_reporte', [C_ReporteController::class, 'store'])->middleware('jwt.verify');
 
 Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
 Route::get('/mostrar_usuario/{id}', [C_UserController::class, 'showById']);

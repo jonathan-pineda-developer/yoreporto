@@ -12,18 +12,20 @@ class C_ReporteController extends Controller
 
 public function store(Request $request)
 {
-    $reporte = new C_Reporte();
+  $uid = auth()->user()->id;
+  $reporte = new C_Reporte();
     $reporte->titulo = $request->titulo;
     $reporte->descripcion = $request->descripcion;
-    //$reporte->imagen = $request->imagen;
+    $reporte->imagen = $request->imagen;
     $reporte->categoria_id = $request->categoria_id;
-    $reporte->user_id = $request->user_id;
+    $reporte->user_id = $uid;
+    $reporte->save();
 
     $mensaje=[
       'required' => 'El campo :attribute es requerido',
       'titulo.max' => 'El campo titulo no debe ser mayor a 50 caracteres',
       'descripcion.max' => 'El campo descripcion no debe ser mayor a 255 caracteres',
-      'imagen.mimes' => 'El campo imagen debe ser de tipo jpeg, jpg, png o gif',
+      //'imagen.mimes' => 'El campo imagen debe ser de tipo jpeg, jpg, png o gif',
       'imagen.max' => 'El campo imagen no debe ser mayor a 10MB',
     ];
 
@@ -32,7 +34,6 @@ public function store(Request $request)
         'descripcion' => 'required|string|max:255',
        // 'imagen' => 'mimes:jpeg,jpg,png,gif|max:10000',
         'categoria_id' => 'required',
-        'user_id' => 'required',
     ], $mensaje);
 
     if ($request->hasFile('imagen')) {
@@ -41,6 +42,7 @@ public function store(Request $request)
         $file->move(public_path() . '/images/', $name);
         $reporte->imagen = $name;
     }
+   
 
   $reporte = C_Reporte::create(
     [
@@ -51,11 +53,26 @@ public function store(Request $request)
       'user_id' => $reporte->user_id,
     ]
   );
-  
+
     return response()->json([
         'message' => 'Reporte creado correctamente',
         'reporte' => $reporte
     ], 201);
+//   $uid = auth()->user()->id;
+//   $reporte = new C_Reporte();
+//   $reporte->user_id = $uid;
+//   $reporte->titulo = $request->titulo;
+//   $reporte->descripcion = $request->descripcion;
+//  // $reporte->imagen = $request->imagen;
+//   $reporte->categoria_id= $request->categoria_id;
+//   $reporte->save();
+//   return response()->json([
+//     'ok' => true,
+//     'status' => 'success',
+//     'message' => 'Reporte creado con exito',
+//     'data' => $reporte
+//   ], 200);
+
     
 }
 

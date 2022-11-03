@@ -10,24 +10,26 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 require_once '../vendor/autoload.php';
-
 class C_AuthController extends Controller
 {
+    
 
-    public function googleSignIn(Request $request)
-    {
+// Get $id_token via HTTPS POST.
+
+
+    public function googleSignIn(Request $request){
         $client = new \Google_Client(['client_id' => env('GOOGLE_ID')]);  // Specify the CLIENT_ID of the app that accesses the backend
         $payload = $client->verifyIdToken($request->token);
         if ($payload) {
             $userid = $payload['sub'];
             // If request specified a G Suite domain:
             //$domain = $payload['hd'];
-            return response()->json([
-                'ok' => true,
-                'status' => 'success',
-                'message' => 'Login Success',
-                'data' => $payload
-            ], 200);
+                return response()->json([
+                    'ok' => true,
+                    'status' => 'success',
+                    'message' => 'Login Success',
+                    'data' => $payload
+                ], 200);
         } else {
             // Invalid ID token
             return response()->json([
@@ -36,6 +38,29 @@ class C_AuthController extends Controller
                 'data' => null
             ], 401);
         }
+    }
+    public function renew(){
+        $token = JWTAuth::getToken();
+        $token = JWTAuth::refresh($token);
+
+        if(!$token){
+            return response()->json([
+                'success' => false,
+                'message' => 'No se pudo renovar el token'
+            ], 401);
+        }{
+            return response()->json([
+                'success' => true,
+                'message' => 'Exito'
+            ], 200);
+        }
+        
+
+
+    }
+    public function getUsuarios(){
+        $usuarios = User::all();
+        return response()->json($usuarios);
     }
 
     public function registro(Request $request)
@@ -47,8 +72,8 @@ class C_AuthController extends Controller
             'apellidos' => 'required|string',
             'correo' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:16',
-            //  'imagen' => 'string|max:100000|mimes:jpg,png',
-            //'google' => 'boolean',
+            // 'imagen' => 'string|max:100000|mimes:jpg,png',
+            // 'google' => 'required'
         ]);
 
         // crear usuario
@@ -59,19 +84,42 @@ class C_AuthController extends Controller
             'password' => Hash::make($request->password),
             // 'imagen' => $request->imagen,
             // 'google' => $request->google
+
         ]);
 
         // token
         $token = JWTAuth::fromUser($user);
-
+        
         // respuesta en json
         return response()->json([
             'message' => 'Usuario creado correctamente',
             'user' => $user,
             'token' => $token // retornamos el token
         ], 201);
+        // $existeCorreo = User::where('correo', $request->correo)->first();
+        // try{
+        //     if($noexisteCorreo){
+        //         return response()->json([
+        //             'success' => true,
+        //             'message' => 'Usuario creado correctamente',
+        //             'token' => $token,
+        //             'user' => $user
+        //         ], 200);
+        //     }else{
+                
+        //         return response()->json([
+        //             'success' => false,
+        //             'message' => 'Este correo ya existe'
+        //         ], 400);
+        //     }
+        // }catch(JWTException $e){
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'No se pudo crear el usuario consulte con el administrador',
+        //     ], 400);
+        // }
     }
-
+    
 
     public function login(Request $request)
     {
@@ -100,49 +148,8 @@ class C_AuthController extends Controller
         // si todo es correcto
         return response()->json(compact('token'));
     }
+    
 
-    public function logout(Request $request)
-    {
-        // validacion del request
-        $this->validate($request, [
-            'token' => 'required'
-        ]);
-
-        try {
-            JWTAuth::invalidate($request->token);
-            return response()->json([
-                'message' => 'Sesion cerrada correctamente'
-            ]);
-        } catch (JWTException $e) {
-            return response()->json([
-                'message' => 'No se pudo cerrar la sesion'
-            ], 500);
-        }
-    }
-
-    // metodo para obtener la informacion del usuario
-    public function getAuthUser(Request $request)
-    {
-        // validacion del request
-        $this->validate($request, [
-            'token' => 'required'
-        ]);
-
-        $user = JWTAuth::authenticate($request->token);
-
-        return response()->json(compact('user'));
-    }
-
-    // metodo para actualizar un token
-    public function renewToken(Request $request)
-    {
-        // validacion del request
-        $this->validate($request, [
-            'token' => 'required'
-        ]);
-
-        $token = JWTAuth::refresh($request->token);
-
-        return response()->json(compact('token'));
-    }
+    
+    
 }
