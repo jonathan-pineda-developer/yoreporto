@@ -13,13 +13,15 @@ class C_ReporteController extends Controller
 public function store(Request $request)
 {
   $uid = auth()->user()->id;
-  $reporte = new C_Reporte();
+ $reporte = new C_Reporte();
     $reporte->titulo = $request->titulo;
     $reporte->descripcion = $request->descripcion;
     $reporte->imagen = $request->imagen;
+    $reporte->latitud = $request->latitud;
+    $reporte->longitud = $request->longitud;
     $reporte->categoria_id = $request->categoria_id;
     $reporte->user_id = $uid;
-    $reporte->save();
+    
 
     $mensaje=[
       'required' => 'El campo :attribute es requerido',
@@ -49,10 +51,12 @@ public function store(Request $request)
       'titulo' => $reporte->titulo,
       'descripcion' => $reporte->descripcion,
       'imagen' => $reporte->imagen,
+      'latitud' => $reporte->latitud,
+      'longitud' => $reporte->longitud,
       'categoria_id' => $reporte->categoria_id,
       'user_id' => $reporte->user_id,
     ]
-  );
+    );
 
     return response()->json([
         'message' => 'Reporte creado correctamente',

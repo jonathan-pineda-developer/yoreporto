@@ -20,8 +20,9 @@ return new class extends Migration
             $table->string('titulo');
             $table->string('descripcion');
             $table->timestamps();
-            $table->float('localizacion')->nullable();
             $table->string('imagen')->nullable();
+            $table->float('latitud');
+            $table->float('longitud');
             $table->string('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('TB_Categoria');
             $table->string('estado_id')->nullable();

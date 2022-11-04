@@ -19,6 +19,8 @@ class C_Reporte extends Model
         'titulo',
         'descripcion',
         'imagen',
+        'latitud',
+        'longitud',
         'categoria_id',
         'user_id',
     ];
