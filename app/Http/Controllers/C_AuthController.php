@@ -145,4 +145,52 @@ class C_AuthController extends Controller
 
         return response()->json(compact('token'));
     }
+
+        //registro UTE
+        public function registroUTE(Request $request)
+        {
+    
+            // validacion del request
+            $this->validate($request, [
+                'nombre' => 'required|string',
+                'apellidos' => 'required|string',
+                'correo' => 'required|email|unique:users',
+                'password' => 'required|string|min:6|max:16',
+                //  'imagen' => 'string|max:100000|mimes:jpg,png',
+                //'google' => 'boolean',
+            ]);
+    
+            // crear usuario
+            $userUTE = new user();
+            $userUTE->nombre = $request->nombre; 
+            $userUTE->apellidos = $request->apellidos;
+            $userUTE->correo = $request->correo;  
+            $userUTE->rol = $request->rol; 
+            $userUTE->nombre = $request->nombre; 
+    
+            request()->validate(User::$rules);
+    
+            $userUTE->save();
+    
+            $user = User::create([
+                'nombre' => $request->nombre,
+                'apellidos' => $request->apellidos,
+                'correo' => $request->correo,
+                'password' => Hash::make($request->password),
+                'rol' => $request->rol, 
+                // 'imagen' => $request->imagen,
+                // 'google' => $request->google
+            ]);
+    
+            // token
+            $token = JWTAuth::fromUser($user);
+    
+            // respuesta en json
+            return response()->json([
+                'message' => 'Usuario creado correctamente',
+                'user' => $user,
+                'token' => $token // retornamos el token
+            ], 201);
+        }
+    }
 }

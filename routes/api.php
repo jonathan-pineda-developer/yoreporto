@@ -37,3 +37,9 @@ Route::group(['middleware' => 'jwt.verify'], function () {
         return "soy una ruta segura";
     })->name("ruta-segura");
 });
+
+//rutas categoria
+Route::get('/categorias', 'App\Http\Controllers\C_CategoriaController@index');
+Route::post('/categorias', 'App\Http\Controllers\C_CategoriaController@store');
+Route::put('/categorias/{id}', 'App\Http\Controllers\C_CategoriaController@update');
+Route::put('/categorias/{id}', 'App\Http\Controllers\C_CategoriaController@destroy');
