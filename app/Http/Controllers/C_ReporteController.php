@@ -13,14 +13,14 @@ class C_ReporteController extends Controller
 public function store(Request $request)
 {
   $uid = auth()->user()->id;
- $reporte = new C_Reporte();
+  $y = $request->input('longitud');
+    $reporte = new C_Reporte();
     $reporte->titulo = $request->titulo;
     $reporte->descripcion = $request->descripcion;
     $reporte->imagen = $request->imagen;
-    $reporte->latitud = $request->latitud;
-    $reporte->longitud = $request->longitud;
     $reporte->categoria_id = $request->categoria_id;
     $reporte->user_id = $uid;
+    $reporte->estado_id;
     
 
     $mensaje=[
@@ -51,10 +51,10 @@ public function store(Request $request)
       'titulo' => $reporte->titulo,
       'descripcion' => $reporte->descripcion,
       'imagen' => $reporte->imagen,
-      'latitud' => $reporte->latitud,
-      'longitud' => $reporte->longitud,
       'categoria_id' => $reporte->categoria_id,
       'user_id' => $reporte->user_id,
+      'estado_id' => 1,
+
     ]
     );
 

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('TB_Informe', function (Blueprint $table) {
-            $table->string ('id', 10)->primary();
+            $table->id()->autoIncrement();
             $table->unsignedBigInteger('id_reporte');
             $table->foreign('id_reporte')->references('id')->on('TB_Reporte');
            

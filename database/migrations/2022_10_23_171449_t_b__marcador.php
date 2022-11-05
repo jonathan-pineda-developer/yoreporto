@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('TB_Estado_Reporte', function (Blueprint $table) {
+        Schema::create('TB_Marcador', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('description', 100);
+            $table->float('latitud')->nullable();
+            $table->float('longitud')->nullable();
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('TB_Estado_Reporte');
+        Schema::dropIfExists('TB_Marcador');
     }
 };
