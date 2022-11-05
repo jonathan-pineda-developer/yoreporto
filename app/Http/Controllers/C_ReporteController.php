@@ -62,25 +62,30 @@ public function store(Request $request)
         'message' => 'Reporte creado correctamente',
         'reporte' => $reporte
     ], 201);
-//   $uid = auth()->user()->id;
-//   $reporte = new C_Reporte();
-//   $reporte->user_id = $uid;
-//   $reporte->titulo = $request->titulo;
-//   $reporte->descripcion = $request->descripcion;
-//  // $reporte->imagen = $request->imagen;
-//   $reporte->categoria_id= $request->categoria_id;
-//   $reporte->save();
-//   return response()->json([
-//     'ok' => true,
-//     'status' => 'success',
-//     'message' => 'Reporte creado con exito',
-//     'data' => $reporte
-//   ], 200);
-
-    
-}
 
 }
+
+  //mostrar reportes que tiene un usuario logueado
+  public function showByUserId()
+  {
+    $uid = auth()->user()->id;
+    $reportes = C_Reporte::where('user_id', $uid)->get();
+    if (count($reportes) > 0) {
+      return response()->json([
+        'reportes' => $reportes
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
+  }
+
+
+}
+
+
+
 
 
 
