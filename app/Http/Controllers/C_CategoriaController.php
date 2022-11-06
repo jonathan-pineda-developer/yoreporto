@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\C_Categoria;
 use Illuminate\Http\Request;
+use Validator;
 
 class C_CategoriaController extends Controller
 {
@@ -34,9 +35,11 @@ class C_CategoriaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $categoria = new C_Categoria();
+        $categoria->id = $request->id;
         $categoria->descripcion = $request->descripcion; 
         $categoria->user_id = $request->user_id;
 
