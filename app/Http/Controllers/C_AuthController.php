@@ -161,17 +161,20 @@ class C_AuthController extends Controller
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
             'correo' => 'required|email|unique:users',
-            'password' => 'required|string|min:6|max:16',
+            //'password' => 'required|string|min:6|max:16',
             // 'imagen' => 'string|max:100000|mimes:jpg,png',
             // 'google' => 'required'
         ]);
 
         // crear usuario
+        $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!$%^&!$%^&');
+        $password = substr($random, 0, 10);
+
         $user = User::create([
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'correo' => $request->correo,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($password),
             // 'imagen' => $request->imagen,
             // 'google' => $request->google
 
@@ -183,11 +186,10 @@ class C_AuthController extends Controller
         // token
         $token = JWTAuth::fromUser($user);
 
-        //Mail::to($user)->locale('es')->send(new NewUteUser($user));
-        
-        // respuesta en json
-        Mail::to($user)->send(new NuevoUTERol($user));
+        Mail::to($user)->locale('es')->send(new NuevoUTERol($user));
+    
 
+        // respuesta en json
         return response()->json([
             'message' => 'Usuario creado correctamente',
             'user' => $user,

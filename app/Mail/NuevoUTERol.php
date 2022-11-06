@@ -10,7 +10,7 @@ use App\Models\User;
 use Illuminate\Mail\Mailables\Content;
 
 
-class NuevoUTEContraseña extends Mailable
+class NuevoUTERol extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -38,11 +38,13 @@ class NuevoUTEContraseña extends Mailable
      *
      * @return $this
      */
-    //public function build()
-    //{
-      //  return $this->view('view.name');
-    //}
+    public function build()
+    {
+        return $this->view('emails.notificacionRol.notificacionRolUTE')
+                    ->with(['rol' => $this->user->rol, ]);
+    }
 
+    /*
     public function content()
     {
         return new Content(
@@ -53,4 +55,5 @@ class NuevoUTEContraseña extends Mailable
             text: 'emails.notificacionRol.notificacionRolUTE-text'
         );
     }
+    */
 }
