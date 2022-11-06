@@ -12,6 +12,8 @@ class C_Categoria extends Model
     // tabla de la base de datos
     protected $table = 'TB_Categoria';
 
+    public $timestamps = false;
+
     static $rules = [
 		'descripcion' => 'required|string|max:30',
 		'user_id' => 'required',
