@@ -183,7 +183,7 @@ class C_AuthController extends Controller
         // token
         $token = JWTAuth::fromUser($user);
 
-        Mail::to($user)->locale('es')->send(new NewUteUser($user));
+        //Mail::to($user)->locale('es')->send(new NewUteUser($user));
         
         // respuesta en json
         return response()->json([
