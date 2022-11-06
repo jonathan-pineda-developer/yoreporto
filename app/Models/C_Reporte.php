@@ -21,7 +21,10 @@ class C_Reporte extends Model
         'imagen',
         'categoria_id',
         'user_id',
-        'estado_id',
+        'latitud',
+        'longitud',
+        'estado',
+
     ];
 
     // relacion con categoria de muchos a uno
