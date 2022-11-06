@@ -20,7 +20,9 @@ public function store(Request $request)
     $reporte->imagen = $request->imagen;
     $reporte->categoria_id = $request->categoria_id;
     $reporte->user_id = $uid;
-    $reporte->estado_id;
+    $reporte->latitud = $request->latitud;
+    $reporte->longitud = $request->longitud;
+  
     
 
     $mensaje=[
@@ -53,7 +55,9 @@ public function store(Request $request)
       'imagen' => $reporte->imagen,
       'categoria_id' => $reporte->categoria_id,
       'user_id' => $reporte->user_id,
-      'estado_id' => 1,
+      'latitud' => $reporte->latitud,
+      'longitud' => $reporte->longitud,
+  
 
     ]
     );
