@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\C_AuthController;
 use App\Http\Controllers\C_UserController;
 use App\Http\Controllers\C_ReporteController;
+use App\Http\Controllers\C_CategoriaController;
 
 /*
 |--------------------------------------------------------------------------
