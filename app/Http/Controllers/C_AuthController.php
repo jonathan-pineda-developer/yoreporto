@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Mail\NewUteUser;
+use App\Mail\NuevoUTERol;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -186,6 +186,8 @@ class C_AuthController extends Controller
         //Mail::to($user)->locale('es')->send(new NewUteUser($user));
         
         // respuesta en json
+        Mail::to($user)->send(new NuevoUTERol($user));
+
         return response()->json([
             'message' => 'Usuario creado correctamente',
             'user' => $user,
