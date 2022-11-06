@@ -12,18 +12,22 @@ class C_ReporteController extends Controller
 
 public function store(Request $request)
 {
+  $uid = auth()->user()->id;
+  $y = $request->input('longitud');
     $reporte = new C_Reporte();
     $reporte->titulo = $request->titulo;
     $reporte->descripcion = $request->descripcion;
-    //$reporte->imagen = $request->imagen;
+    $reporte->imagen = $request->imagen;
     $reporte->categoria_id = $request->categoria_id;
-    $reporte->user_id = $request->user_id;
+    $reporte->user_id = $uid;
+    $reporte->estado_id;
+    
 
     $mensaje=[
       'required' => 'El campo :attribute es requerido',
       'titulo.max' => 'El campo titulo no debe ser mayor a 50 caracteres',
       'descripcion.max' => 'El campo descripcion no debe ser mayor a 255 caracteres',
-      'imagen.mimes' => 'El campo imagen debe ser de tipo jpeg, jpg, png o gif',
+      //'imagen.mimes' => 'El campo imagen debe ser de tipo jpeg, jpg, png o gif',
       'imagen.max' => 'El campo imagen no debe ser mayor a 10MB',
     ];
 
@@ -32,7 +36,6 @@ public function store(Request $request)
         'descripcion' => 'required|string|max:255',
        // 'imagen' => 'mimes:jpeg,jpg,png,gif|max:10000',
         'categoria_id' => 'required',
-        'user_id' => 'required',
     ], $mensaje);
 
     if ($request->hasFile('imagen')) {
@@ -41,6 +44,7 @@ public function store(Request $request)
         $file->move(public_path() . '/images/', $name);
         $reporte->imagen = $name;
     }
+   
 
   $reporte = C_Reporte::create(
     [
@@ -49,17 +53,39 @@ public function store(Request $request)
       'imagen' => $reporte->imagen,
       'categoria_id' => $reporte->categoria_id,
       'user_id' => $reporte->user_id,
+      'estado_id' => 1,
+
     ]
-  );
-  
+    );
+
     return response()->json([
         'message' => 'Reporte creado correctamente',
         'reporte' => $reporte
     ], 201);
-    
-}
 
 }
+
+  //mostrar reportes que tiene un usuario logueado
+  public function showByUserId()
+  {
+    $uid = auth()->user()->id;
+    $reportes = C_Reporte::where('user_id', $uid)->get();
+    if (count($reportes) > 0) {
+      return response()->json([
+        'reportes' => $reportes
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
+  }
+
+
+}
+
+
+
 
 
 
