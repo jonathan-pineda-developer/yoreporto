@@ -21,6 +21,7 @@ class C_Reporte extends Model
         'imagen',
         'categoria_id',
         'user_id',
+        'estado_id',
     ];
 
     // relacion con categoria de muchos a uno
@@ -40,4 +41,13 @@ class C_Reporte extends Model
     {
         return $this->belongsTo(C_Estado_Reporte::class);
     }
+
+    // relacion con marcador de uno a uno
+    public function marcador()
+    {
+      return $this->belongsTo(C_Marcador::class);
+        
+    }
+
+
 }
