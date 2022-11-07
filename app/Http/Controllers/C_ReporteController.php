@@ -66,7 +66,7 @@ public function store(Request $request)
 
     return response()->json([
         'message' => 'Reporte creado correctamente',
-        'reporte' => $reporte
+       // 'reporte' => $reporte
     ], 201);
 
 }
@@ -108,6 +108,7 @@ public function store(Request $request)
       ], 404);
     }
   }
+
 
 
 }

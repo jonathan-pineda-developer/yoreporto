@@ -52,7 +52,7 @@ Route::put('eliminarCategoria/{id}', [C_CategoriaController::class, 'destroy']);
 
 
 //rutas UTEs
-Route::get('/mostrar_usuarios_UTE', [C_UserController::class, 'showUTE']);
+Route::get('/mostrar_usuarios_UTE', [C_UserController::class, 'showAllUTE']);
 
 Route::post('/registro_UTE', [C_AuthController::class, 'registro_UTE']);
 
