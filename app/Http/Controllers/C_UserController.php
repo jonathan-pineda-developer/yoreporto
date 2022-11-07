@@ -124,14 +124,16 @@ class C_UserController extends Controller
 
     public function showAllUTE()
     {
-      $datos = User::select('nombre as Nombre', 'apellidos as Apellidos', 'rol as Rol')
-      ->where('rol', 'UTE')
-      ->get();
+      $datos = User::select('nombre as Nombre', 'apellidos as Apellidos', 'rol as Rol' , 'TB_Categoria.descripcion as Categoria')
+   
+        ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id') 
+        ->where('rol', 'UTE')
+        ->get();
       $ute = User::all();
       if (count($ute) > 0) {
         return response()->json([
          
-          $datos,
+          $datos,   
   
         ], 200);
       } else {
