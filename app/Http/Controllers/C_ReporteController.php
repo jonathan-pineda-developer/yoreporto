@@ -91,14 +91,14 @@ public function store(Request $request)
 
   public function showAll()
   {
-   $usuario = C_Reporte::select('nombre as usuario','TB_Categoria.descripcion as categoria', 'TB_Reporte.estado', 'TB_Reporte.created_at', 'TB_Reporte.updated_at')
+   $usuario = C_Reporte::select('nombre as Ciudadano','TB_Categoria.descripcion as Categoria','TB_Categoria.user_id as UTE a cargo', 'TB_Reporte.estado as Estado', 'TB_Reporte.created_at as Fecha de creacion', 'TB_Reporte.updated_at as Fecha de actualizacion/finalizacion')
     ->join('users', 'users.id', '=', 'TB_Reporte.user_id')
     ->join('TB_Categoria', 'TB_Categoria.id', '=', 'TB_Reporte.categoria_id')
     ->get();
     $reportes = C_Reporte::all();
     if (count($reportes) > 0) {
       return response()->json([
-      
+       
         $usuario,
 
       ], 200);
