@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\C_Reporte;
+use App\Models\C_Categoria;
+use App\Models\User;
 
 class C_ReporteController extends Controller
 {
@@ -77,6 +79,28 @@ public function store(Request $request)
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
+  }
+
+     //mostrar todos los reportes con fecha de creado, nombre de usuario, nombre de categoria y estado
+
+  public function showAll()
+  {
+   $usuario = C_Reporte::select('nombre as usuario','TB_Categoria.descripcion as categoria', 'TB_Reporte.estado', 'TB_Reporte.created_at', 'TB_Reporte.updated_at')
+    ->join('users', 'users.id', '=', 'TB_Reporte.user_id')
+    ->join('TB_Categoria', 'TB_Categoria.id', '=', 'TB_Reporte.categoria_id')
+    ->get();
+    $reportes = C_Reporte::all();
+    if (count($reportes) > 0) {
+      return response()->json([
+      
+        $usuario,
+
       ], 200);
     } else {
       return response()->json([
