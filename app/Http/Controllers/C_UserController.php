@@ -110,7 +110,7 @@ class C_UserController extends Controller
     }
     
     //UTE
-    public function showUTE()
+ /*   public function showUTE()
     {
         if (DB::table('users')->where('rol', 'UTE')->get()->isEmpty()) {
             return response()->json(['message' => 'No hay registros'], 404);
@@ -118,7 +118,29 @@ class C_UserController extends Controller
             $user = DB::table('users')->where('rol', 'UTE')->get();
             return response ()->json($user, 200);
         }
-    }  
+    }  */
+
+    //mostrar usuarios con rol UTE
+
+    public function showAllUTE()
+    {
+      $datos = User::select('nombre as Nombre', 'apellidos as Apellidos', 'rol as Rol')
+      ->where('rol', 'UTE')
+      ->get();
+      $ute = User::all();
+      if (count($ute) > 0) {
+        return response()->json([
+         
+          $datos,
+  
+        ], 200);
+      } else {
+        return response()->json([
+          'message' => 'No se encontraron reportes',
+        ], 404);
+      }
+    }
+
 }
 
 
