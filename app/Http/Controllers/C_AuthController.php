@@ -22,6 +22,30 @@ class C_AuthController extends Controller
     public function googleSignIn(Request $request){
         $client = new \Google_Client(['client_id' => env('GOOGLE_ID')]);  // Specify the CLIENT_ID of the app that accesses the backend
         $payload = $client->verifyIdToken($request->token);
+        //desestructuramos el payload
+        $email = $payload['email'];
+        $name = $payload['name'];
+        $apellidos = $payload['name'];
+        $picture = $payload['picture'];
+        $userDB = User::where('correo', $email)->first();
+        if(!$userDB){
+            $user = new User();
+            $user->nombre = $name;
+            $user->correo = $email;
+            $user->apellidos = $apellidos;
+            $user->password = Hash::make($email);
+            $user->imagen = $picture;
+            $user->google = 1;
+        }else{
+            $user=$userDB;
+            $user->google=1;
+
+            
+        }
+        $user->save();
+        $token = JWTAuth::fromUser($user);
+        
+
         if ($payload) {
             $userid = $payload['sub'];
             // If request specified a G Suite domain:
@@ -30,7 +54,11 @@ class C_AuthController extends Controller
                     'ok' => true,
                     'status' => 'success',
                     'message' => 'Login Success',
-                    'data' => $payload
+                    //desestructuramos el payload
+                    'email' => $email,
+                    'name' => $name,
+                    'picture' => $picture,
+                    'token' => $token
                 ], 200);
         } else {
             // Invalid ID token

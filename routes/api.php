@@ -56,4 +56,7 @@ Route::get('/mostrar_usuarios_UTE', [C_UserController::class, 'showAllUTE']);
 
 Route::post('/registro_UTE', [C_AuthController::class, 'registro_UTE']);
 
+//renew
+//Route::get('renew', [C_AuthController::class, 'renew']);
+
 

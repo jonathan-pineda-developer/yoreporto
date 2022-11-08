@@ -110,15 +110,15 @@ class C_UserController extends Controller
     }
     
     //UTE
- /*   public function showUTE()
-    {
-        if (DB::table('users')->where('rol', 'UTE')->get()->isEmpty()) {
-            return response()->json(['message' => 'No hay registros'], 404);
-        } else {
-            $user = DB::table('users')->where('rol', 'UTE')->get();
-            return response ()->json($user, 200);
-        }
-    }  */
+    // public function showAllUTE()
+    // {
+    //     if (DB::table('users')->where('rol', 'UTE')->get()->isEmpty()) {
+    //         return response()->json(['message' => 'No hay registros'], 404);
+    //     } else {
+    //         $user = DB::table('users')->where('rol', 'UTE')->get();
+    //         return response ()->json($user, 200);
+    //     }
+    // }  
 
     //mostrar usuarios con rol UTE
 
