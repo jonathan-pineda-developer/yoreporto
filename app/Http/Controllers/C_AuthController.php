@@ -68,14 +68,14 @@ class C_AuthController extends Controller
             ], 401);
         }
     }
-<<<<<<< HEAD
     //nuevo token
-    public function renew(Request $request){
+    public function renew(Request $request)
+    {
         //respuesta del usuario
         $user = JWTAuth::toUser($request->token);
         $token = JWTAuth::getToken();
         $newToken = JWTAuth::refresh($token);
-        
+
         JWTAuth::setToken($newToken)->toUser();
 
         return response()->json([
@@ -98,28 +98,8 @@ class C_AuthController extends Controller
     //         'tokenExists' => $token
     //     ], 200);
     // }
-    public function getUsuarios(){
-=======
-    public function renew()
-    {
-        $token = JWTAuth::getToken();
-        $token = JWTAuth::refresh($token);
-
-        if (!$token) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No se pudo renovar el token'
-            ], 401);
-        } {
-            return response()->json([
-                'success' => true,
-                'message' => 'Exito'
-            ], 200);
-        }
-    }
     public function getUsuarios()
     {
->>>>>>> error
         $usuarios = User::all();
         return response()->json($usuarios);
     }
