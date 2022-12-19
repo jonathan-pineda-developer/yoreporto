@@ -114,8 +114,6 @@ class C_AuthController extends Controller
             'correo' => 'required|email',
             'password' => 'required|string|min:6|max:16',
             'rol' => 'string',
-            // 'imagen' => 'string|max:100000|mimes:jpg,png',
-            // 'google' => 'required'
         ]);
 
         // verificar si el correo ya existe
@@ -135,10 +133,7 @@ class C_AuthController extends Controller
             'apellidos' => $request->apellidos,
             'correo' => $request->correo,
             'password' => Hash::make($request->password),
-            'rol' => $request->rol,
-            // 'imagen' => $request->imagen,
-            // 'google' => $request->google
-
+            'rol' => $request->rol
         ]);
 
         // token
