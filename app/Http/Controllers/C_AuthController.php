@@ -14,12 +14,13 @@ use Illuminate\Support\Facades\Mail;
 require_once '../vendor/autoload.php';
 class C_AuthController extends Controller
 {
-    
-
-// Get $id_token via HTTPS POST.
 
 
-    public function googleSignIn(Request $request){
+    // Get $id_token via HTTPS POST.
+
+
+    public function googleSignIn(Request $request)
+    {
         $client = new \Google_Client(['client_id' => env('GOOGLE_ID')]);  // Specify the CLIENT_ID of the app that accesses the backend
         $payload = $client->verifyIdToken($request->token);
         //desestructuramos el payload
@@ -28,7 +29,7 @@ class C_AuthController extends Controller
         $apellidos = $payload['name'];
         $picture = $payload['picture'];
         $userDB = User::where('correo', $email)->first();
-        if(!$userDB){
+        if (!$userDB) {
             $user = new User();
             $user->nombre = $name;
             $user->correo = $email;
@@ -36,30 +37,28 @@ class C_AuthController extends Controller
             $user->password = Hash::make($email);
             $user->imagen = $picture;
             $user->google = 1;
-        }else{
-            $user=$userDB;
-            $user->google=1;
-
-            
+        } else {
+            $user = $userDB;
+            $user->google = 1;
         }
         $user->save();
         $token = JWTAuth::fromUser($user);
-        
+
 
         if ($payload) {
             $userid = $payload['sub'];
             // If request specified a G Suite domain:
             //$domain = $payload['hd'];
-                return response()->json([
-                    'ok' => true,
-                    'status' => 'success',
-                    'message' => 'Login Success',
-                    //desestructuramos el payload
-                    'email' => $email,
-                    'name' => $name,
-                    'picture' => $picture,
-                    'token' => $token
-                ], 200);
+            return response()->json([
+                'ok' => true,
+                'status' => 'success',
+                'message' => 'Login Success',
+                //desestructuramos el payload
+                'email' => $email,
+                'name' => $name,
+                'picture' => $picture,
+                'token' => $token
+            ], 200);
         } else {
             // Invalid ID token
             return response()->json([
@@ -69,26 +68,25 @@ class C_AuthController extends Controller
             ], 401);
         }
     }
-    public function renew(){
+    public function renew()
+    {
         $token = JWTAuth::getToken();
         $token = JWTAuth::refresh($token);
 
-        if(!$token){
+        if (!$token) {
             return response()->json([
                 'success' => false,
                 'message' => 'No se pudo renovar el token'
             ], 401);
-        }{
+        } {
             return response()->json([
                 'success' => true,
                 'message' => 'Exito'
             ], 200);
         }
-        
-
-
     }
-    public function getUsuarios(){
+    public function getUsuarios()
+    {
         $usuarios = User::all();
         return response()->json($usuarios);
     }
@@ -100,12 +98,23 @@ class C_AuthController extends Controller
         $this->validate($request, [
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
-            'correo' => 'required|email|unique:users',
+            'correo' => 'required|email',
             'password' => 'required|string|min:6|max:16',
             'rol' => 'string',
             // 'imagen' => 'string|max:100000|mimes:jpg,png',
             // 'google' => 'required'
         ]);
+
+        // verificar si el correo ya existe
+        $correoARegistrar = $request->correo;
+
+        $correoExistente = User::where('correo', $correoARegistrar)->first();
+
+        if ($correoExistente) {
+            return response()->json([
+                'message' => 'El correo que intenta registrar ya existe, por favor intente con otro'
+            ], 400);
+        }
 
         // crear usuario
         $user = User::create([
@@ -113,7 +122,7 @@ class C_AuthController extends Controller
             'apellidos' => $request->apellidos,
             'correo' => $request->correo,
             'password' => Hash::make($request->password),
-            'rol' => $request->rol, 
+            'rol' => $request->rol,
             // 'imagen' => $request->imagen,
             // 'google' => $request->google
 
@@ -121,37 +130,15 @@ class C_AuthController extends Controller
 
         // token
         $token = JWTAuth::fromUser($user);
-        
+
         // respuesta en json
         return response()->json([
             'message' => 'Usuario creado correctamente',
             'user' => $user,
             'token' => $token // retornamos el token
         ], 201);
-        // $existeCorreo = User::where('correo', $request->correo)->first();
-        // try{
-        //     if($noexisteCorreo){
-        //         return response()->json([
-        //             'success' => true,
-        //             'message' => 'Usuario creado correctamente',
-        //             'token' => $token,
-        //             'user' => $user
-        //         ], 200);
-        //     }else{
-                
-        //         return response()->json([
-        //             'success' => false,
-        //             'message' => 'Este correo ya existe'
-        //         ], 400);
-        //     }
-        // }catch(JWTException $e){
-        //     return response()->json([
-        //         'success' => false,
-        //         'message' => 'No se pudo crear el usuario consulte con el administrador',
-        //     ], 400);
-        // }
     }
-    
+
 
     public function login(Request $request)
     {
@@ -180,7 +167,7 @@ class C_AuthController extends Controller
         // si todo es correcto
         return response()->json(compact('token'));
     }
-    
+
     //registro UTE
     public function registro_UTE(Request $request)
     {
@@ -208,22 +195,20 @@ class C_AuthController extends Controller
 
         ]);
 
-        $user->rol= "UTE";
+        $user->rol = "UTE";
         $user->save();
 
         // token
         $token = JWTAuth::fromUser($user);
 
-     //   Mail::to($user)->locale('es')->send(new NuevoUTERol($user));
-    
+        //   Mail::to($user)->locale('es')->send(new NuevoUTERol($user));
+
 
         // respuesta en json
         return response()->json([
             'message' => 'Usuario creado correctamente',
-          //  'user' => $user,
-          //  'token' => $token // retornamos el token
+            //  'user' => $user,
+            //  'token' => $token // retornamos el token
         ], 201);
     }
-    
 }
-
