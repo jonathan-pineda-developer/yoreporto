@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('TB_Reporte', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('titulo');
             $table->string('descripcion');
