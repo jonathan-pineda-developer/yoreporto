@@ -28,7 +28,6 @@ Route::post('crear_reporte', [C_ReporteController::class, 'store'])->middleware(
 //obtener reportes
 Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middleware('jwt.verify');
 Route::get('reportes', [C_ReporteController::class, 'showAll']);
-Route::get('reportes_general', [C_ReporteController::class, 'show']);
 
 Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
 Route::get('/mostrar_usuario/{id}', [C_UserController::class, 'showById']);

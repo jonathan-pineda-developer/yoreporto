@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class C_Reporte extends Model
 {
     use HasFactory;
+    use HasUuids;
 
     // tabla de la base de datos
     protected $table = 'TB_Reporte';

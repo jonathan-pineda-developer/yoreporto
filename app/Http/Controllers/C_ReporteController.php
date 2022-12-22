@@ -108,21 +108,4 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
-
-  //mostrar reportes en general
-  public function show()
-  {
-    // get all the reportes and cast its prymary key to string
-    $reportes = C_Reporte::all();
-
-    if (count($reportes) > 0) {
-      return response()->json([
-        'reportes' => $reportes
-      ], 200);
-    } else {
-      return response()->json([
-        'message' => 'No se encontraron reportes',
-      ], 404);
-    }
-  }
 }
