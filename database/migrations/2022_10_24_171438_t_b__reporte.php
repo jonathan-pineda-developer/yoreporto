@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('TB_Reporte', function (Blueprint $table) {
-            $table->string('id', 36)->primary();
+            $table->string('id', 36)->primary()->unique();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('titulo');
