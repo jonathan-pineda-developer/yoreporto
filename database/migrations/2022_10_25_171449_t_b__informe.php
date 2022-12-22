@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('TB_Informe', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->unsignedBigInteger('id_reporte');
+            $table->string('id_reporte', 36);
             $table->foreign('id_reporte')->references('id')->on('TB_Reporte');
-           
         });
     }
 

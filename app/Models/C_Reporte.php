@@ -16,6 +16,7 @@ class C_Reporte extends Model
 
     // campos de la tabla
     protected $fillable = [
+        'id',
         'titulo',
         'descripcion',
         'imagen',
@@ -48,9 +49,6 @@ class C_Reporte extends Model
     // relacion con marcador de uno a uno
     public function marcador()
     {
-      return $this->belongsTo(C_Marcador::class);
-        
+        return $this->belongsTo(C_Marcador::class);
     }
-
-
 }
