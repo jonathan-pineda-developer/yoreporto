@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('TB_Reporte', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->string('id', 36)->primary();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('titulo');
@@ -26,12 +26,10 @@ return new class extends Migration
             $table->foreign('categoria_id')->references('id')->on('TB_Categoria');
             $table->string('estado')->default('En proceso');
             $table->timestamps();
-           /* $table->unsignedBigInteger('estado_id')->nullable();
+            /* $table->unsignedBigInteger('estado_id')->nullable();
             $table->foreign('estado_id')->references('id')->on('TB_Estado_Reporte');
             $table->unsignedBigInteger('id_marcador')->nullable();
             $table->foreign('id_marcador')->references('id')->on('TB_Marcador');*/
-
-        
         });
     }
 
