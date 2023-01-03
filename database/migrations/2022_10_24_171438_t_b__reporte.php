@@ -22,13 +22,11 @@ return new class extends Migration
             $table->string('imagen')->nullable();
             $table->float('latitud');
             $table->float('longitud');
-            $table->string('categoria_id');
+            $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('TB_Categoria');
             $table->string('estado')->default('En proceso');
             $table->timestamps();
-            /* $table->unsignedBigInteger('estado_id')->nullable();
-            $table->foreign('estado_id')->references('id')->on('TB_Estado_Reporte');
-            $table->unsignedBigInteger('id_marcador')->nullable();
+             /* $table->unsignedBigInteger('id_marcador')->nullable();
             $table->foreign('id_marcador')->references('id')->on('TB_Marcador');*/
         });
     }
