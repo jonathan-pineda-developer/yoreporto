@@ -14,10 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('TB_Categoria', function (Blueprint $table) {
-            $table->string('id', 10)->primary();
+            $table->id()->autoIncrement();
             $table->string('descripcion', 100);
-            $table->uuid('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
