@@ -46,10 +46,10 @@ Route::group(['middleware' => 'jwt.verify'], function () {
 
 //rutas categoria
 //Route::post('crear_categoria', [C_CategoriaController::class, 'crear_Categoria']);
-Route::get('mostrar_categorias', [C_CategoriaController::class, 'index']);
+Route::get('mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
 Route::post('crear_categoria', [C_CategoriaController::class, 'store']);
 Route::put('actualizar_categoria/{id}', [C_CategoriaController::class, 'update']);
-Route::put('eliminarCategoria/{id}', [C_CategoriaController::class, 'destroy']);
+Route::delete('eliminar_categoria/{id}', [C_CategoriaController::class, 'destroy']);
 
 
 //rutas UTEs
