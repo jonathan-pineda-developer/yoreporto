@@ -12,28 +12,34 @@ class C_Categoria extends Model
     // tabla de la base de datos
     protected $table = 'TB_Categoria';
 
+    // llave primaria
+    protected $primaryKey = 'id';
+
     public $timestamps = false;
 
-    static $rules = [
-		'descripcion' => 'required|string|max:30',
-		'user_id' => 'required',
-    ];
-
     protected $fillable = [
-        'descripcion',
-        'user_id'
+        'id',
+        'descripcion'
     ]; 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function user()
-    {
-        return $this->hasOne('App\Models\User', 'id', 'user_id');
-    }
 
     // relacion con reporte de uno a muchos
     public function reporte()
     {
         return $this->hasMany(C_Reporte::class);
     }
+    // relacion con usuario de uno a muchos
+
+    public function usuario()
+    {
+        return $this->hasMany(User::class);
+    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+   /* public function user()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }*/
+
+
 }
