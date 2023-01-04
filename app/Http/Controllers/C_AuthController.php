@@ -28,11 +28,11 @@ class C_AuthController extends Controller
         $name = $payload['name'];
         $apellidos = $payload['name'];
         $picture = $payload['picture'];
-        $userDB = User::where('correo', $email)->first();
+        $userDB = User::where('email', $email)->first();
         if (!$userDB) {
             $user = new User();
             $user->nombre = $name;
-            $user->correo = $email;
+            $user->email = $email;
             $user->apellidos = $apellidos;
             $user->password = Hash::make($email);
             $user->imagen = $picture;
@@ -111,19 +111,19 @@ class C_AuthController extends Controller
         $this->validate($request, [
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
-            'correo' => 'required|email',
+            'email' => 'required|email',
             'password' => 'required|string|min:6|max:16',
             'rol' => 'string',
         ]);
 
-        // verificar si el correo ya existe
-        $correoARegistrar = $request->correo;
+        // verificar si el email ya existe
+        $emailARegistrar = $request->email;
 
-        $correoExistente = User::where('correo', $correoARegistrar)->first();
+        $emailExistente = User::where('email', $emailARegistrar)->first();
 
-        if ($correoExistente) {
+        if ($emailExistente) {
             return response()->json([
-                'message' => 'El correo que intenta registrar ya existe, por favor intente con otro'
+                'message' => 'El email que intenta registrar ya existe, por favor intente con otro'
             ], 400);
         }
 
@@ -131,7 +131,7 @@ class C_AuthController extends Controller
         $user = User::create([
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
-            'correo' => $request->correo,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
             'rol' => $request->rol
         ]);
@@ -152,12 +152,12 @@ class C_AuthController extends Controller
     {
         // validacion del request
         $this->validate($request, [
-            'correo' => 'required|email',
+            'email' => 'required|email',
             'password' => 'required|string|min:6|max:16',
         ]);
 
         // credenciales
-        $credenciales = $request->only('correo', 'password');
+        $credenciales = $request->only('email', 'password');
 
         try {
             // si no existe el token para el usuario
@@ -183,7 +183,7 @@ class C_AuthController extends Controller
         $this->validate($request, [
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
-            'correo' => 'required|email|unique:users',
+            'email' => 'required|email|unique:users',
             //'password' => 'required|string|min:6|max:16',
             // 'imagen' => 'string|max:100000|mimes:jpg,png',
             // 'google' => 'required'
@@ -196,7 +196,7 @@ class C_AuthController extends Controller
         $user = User::create([
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
-            'correo' => $request->correo,
+            'email' => $request->email,
             'password' => Hash::make($password),
             // 'imagen' => $request->imagen,
             // 'google' => $request->google
@@ -209,7 +209,7 @@ class C_AuthController extends Controller
         // token
         $token = JWTAuth::fromUser($user);
 
-        //   Mail::to($user)->locale('es')->send(new NuevoUTERol($user));
+        Mail::to($user->email)->locale('es')->send(new NuevoUTERol($user));
 
 
         // respuesta en json

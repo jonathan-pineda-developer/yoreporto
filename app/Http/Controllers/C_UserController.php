@@ -20,7 +20,7 @@ class C_UserController extends Controller
             return response()->json(['message' => 'No hay registros'], 404);
         } else {
             $user = User::all();
-            return response ()->json($user, 200);
+            return response()->json($user, 200);
         }
     }
 
@@ -31,7 +31,7 @@ class C_UserController extends Controller
             return response()->json(['message' => 'No hay registros'], 404);
         } else {
             $user = User::find($id);
-            return response() ->json($user, 200);
+            return response()->json($user, 200);
         }
     }
 
@@ -51,7 +51,7 @@ class C_UserController extends Controller
             );
         }
     }
-      /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -61,54 +61,54 @@ class C_UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $campos=[
+        $campos = [
             'nombre' => 'required|string|max:30',
             'apellidos' => 'required|string|max:70',
-            'correo' => 'required|string|max:100|unique:users|email',
+            'email' => 'required|string|max:100|unique:users|email',
             'password' => 'required|string|max:100',
         ];
-        return reponse ()->json([
-            'required' => 'El :attribute es requerido'], 404);
+        return reponse()->json([
+            'required' => 'El :attribute es requerido'
+        ], 404);
 
         if ($request->hasFile('imagen')) {
-            $campos=['imagen'=>'max:10000|mimes:jpeg,png,jpg'];
-           
+            $campos = ['imagen' => 'max:10000|mimes:jpeg,png,jpg'];
         }
 
-        $this->validate($request,$campos,$mensaje);
+        $this->validate($request, $campos, $mensaje);
 
-        $datosUser=request()->except(['_token','_method']);
+        $datosUser = request()->except(['_token', '_method']);
 
         if ($request->hasFile('imagen')) {
-            $user=User::findOrFail($id);
+            $user = User::findOrFail($id);
 
-            Storage::delete('public/'.$user->imagen);
+            Storage::delete('public/' . $user->imagen);
 
-            $datosUser['imagen']=$request->file('imagen')->store('uploads','public');
+            $datosUser['imagen'] = $request->file('imagen')->store('uploads', 'public');
         }
 
-        User::where('id','=',$id)->update($datosUser);
+        User::where('id', '=', $id)->update($datosUser);
 
-        $user=User::findOrFail($id);
+        $user = User::findOrFail($id);
     }
 
-    public function inactivar(Request $str_request,$vint_id)
+    public function inactivar(Request $str_request, $vint_id)
     {
         $str_user = User::find($vint_id);
         if (User::find($vint_id) == null) {
             return reponse()->json([
-                'message' => 'No se encontro el registro'], 404);
+                'message' => 'No se encontro el registro'
+            ], 404);
         } else {
             $str_user->estado = 0;
             $str_user->save();
             return response()->json([
                 'message' => 'Usuario inactivado correctamente'
-                
+
             ], 200);
         }
-    
     }
-    
+
     //UTE
     // public function showAllUTE()
     // {
@@ -124,25 +124,22 @@ class C_UserController extends Controller
 
     public function showAllUTE()
     {
-      $datos = User::select('nombre as Nombre', 'apellidos as Apellidos', 'rol as Rol' , 'TB_Categoria.descripcion as Categoria')
-   
-        ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id') 
-        ->where('rol', 'UTE')
-        ->get();
-      $ute = User::all();
-      if (count($ute) > 0) {
-        return response()->json([
-         
-          $datos,   
-  
-        ], 200);
-      } else {
-        return response()->json([
-          'message' => 'No se encontraron reportes',
-        ], 404);
-      }
+        $datos = User::select('nombre as Nombre', 'apellidos as Apellidos', 'rol as Rol', 'TB_Categoria.descripcion as Categoria')
+
+            ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id')
+            ->where('rol', 'UTE')
+            ->get();
+        $ute = User::all();
+        if (count($ute) > 0) {
+            return response()->json([
+
+                $datos,
+
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron reportes',
+            ], 404);
+        }
     }
-
 }
-
-
