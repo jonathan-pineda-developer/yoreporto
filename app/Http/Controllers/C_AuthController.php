@@ -183,24 +183,30 @@ class C_AuthController extends Controller
         $this->validate($request, [
             'nombre' => 'required|string',
             'apellidos' => 'required|string',
-            'email' => 'required|email|unique:users',
-            //'password' => 'required|string|min:6|max:16',
-            // 'imagen' => 'string|max:100000|mimes:jpg,png',
-            // 'google' => 'required'
+            'email' => 'required|email',
         ]);
+
+        // verificar si el email ya existe
+        $emailARegistrar = $request->email;
+
+        $emailExistente = User::where('email', $emailARegistrar)->first();
+
+        if ($emailExistente) {
+            return response()->json([
+                'message' => 'El email que intenta registrar ya existe, por favor intente con otro'
+            ], 400);
+        }
 
         // crear usuario
         $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!$%^&!$%^&');
         $password = substr($random, 0, 10);
+        $emailpass = $password;
 
         $user = User::create([
             'nombre' => $request->nombre,
             'apellidos' => $request->apellidos,
             'email' => $request->email,
             'password' => Hash::make($password),
-            // 'imagen' => $request->imagen,
-            // 'google' => $request->google
-
         ]);
 
         $user->rol = "UTE";
@@ -209,14 +215,14 @@ class C_AuthController extends Controller
         // token
         $token = JWTAuth::fromUser($user);
 
-        Mail::to($user->email)->locale('es')->send(new NuevoUTERol($user));
-
+        // envio de correo de bienvenida con usuario y contraseña
+        Mail::to($user->email)->send(new NuevoUTERol($user, $emailpass));
 
         // respuesta en json
         return response()->json([
             'message' => 'Usuario creado correctamente',
-            //  'user' => $user,
-            //  'token' => $token // retornamos el token
+            'user' => $user,
+            'token' => $token // retornamos el token
         ], 201);
     }
 }
