@@ -42,7 +42,8 @@ class NuevoUTERol extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.notificacionRol.notificacionRolUTE');
+        return $this->view('emails.notificacionRol.notificacionRolUTE')
+            ->subject('Nuevo usuario UTE');
         // ->with(['rol' => $this->user->rol, ]);
     }
 
