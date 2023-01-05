@@ -14,13 +14,14 @@ class NuevoUTERol extends Mailable
 {
     use Queueable, SerializesModels;
 
-     /**
+    /**
      * The user instance.
      *
      * @var \App\Models\User
      */
 
-    protected $user;
+    public $user;
+    public $password;
 
     /**
      * Create a new message instance.
@@ -28,9 +29,10 @@ class NuevoUTERol extends Mailable
      * @param  \App\Models\User  $user
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, $password)
     {
         $this->user = $user;
+        $this->password = $password;
     }
 
     /**
@@ -40,8 +42,8 @@ class NuevoUTERol extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.notificacionRol.notificacionRolUTE')
-                    ->with(['rol' => $this->user->rol, ]);
+        return $this->view('emails.notificacionRol.notificacionRolUTE');
+        // ->with(['rol' => $this->user->rol, ]);
     }
 
     /*

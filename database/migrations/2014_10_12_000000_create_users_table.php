@@ -17,7 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary(); // id es primary key
             $table->string('nombre', 30);
             $table->string('apellidos', 70);
-            $table->string('correo', 100);
+            $table->string('email', 100);
             $table->string('rol', 25)->default('Ciudadano');
             $table->boolean('google')->default(false);
             $table->string('imagen', 100)->nullable();
