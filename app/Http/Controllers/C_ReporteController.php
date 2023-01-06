@@ -27,7 +27,20 @@ class C_ReporteController extends Controller
     $reporte->latitud = $request->latitud;
     $reporte->longitud = $request->longitud;
 
+    // usuario que emite el reporte
+    $user = User::find($reporte->user_id);
 
+    // validacion de reportes para usuarios ciudadanos
+    if ($user->rol == 'Ciudadano') {
+      if ($user->cantidad_reportes >= 3) {
+        return response()->json([
+          'message' => 'No puedes emitir mas reportes, el limite es de 3 reportes por usuario al mes',
+        ], 400);
+      }
+    }
+
+    $user->cantidad_reportes = $user->cantidad_reportes + 1;
+    $user->save();
 
     $mensaje = [
       'required' => 'El campo :attribute es requerido',
