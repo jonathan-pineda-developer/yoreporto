@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NuevoReporte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\C_Reporte;
 use App\Models\C_Categoria;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class C_ReporteController extends Controller
 {
@@ -41,6 +43,7 @@ class C_ReporteController extends Controller
 
     $user->cantidad_reportes = $user->cantidad_reportes + 1;
     $user->save();
+
 
     $mensaje = [
       'required' => 'El campo :attribute es requerido',
@@ -77,6 +80,11 @@ class C_ReporteController extends Controller
         'longitud' => $reporte->longitud,
       ]
     );
+
+    $categoria = C_Categoria::find($reporte->categoria_id);
+    // email a ute a cargo
+    $userUTE = User::find($categoria->user_id);
+    Mail::to($userUTE->email)->send(new NuevoReporte($categoria->descripcion));
 
     return response()->json([
       'message' => 'Reporte creado correctamente',
