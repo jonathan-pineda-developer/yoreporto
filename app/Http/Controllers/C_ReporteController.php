@@ -161,7 +161,6 @@ class C_ReporteController extends Controller
 
     return response()->json([
       'message' => 'Categoria actualizada correctamente',
-      'reporte' => $reporte
     ], 200);
   }
 
@@ -174,7 +173,6 @@ class C_ReporteController extends Controller
 
     return response()->json([
       'message' => 'Estado actualizado correctamente, el reporte ha sido aceptado',
-      'reporte' => $reporte
     ], 200);
   }
 }
