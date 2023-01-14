@@ -149,7 +149,9 @@ class C_ReporteController extends Controller
   public function update(Request $request, $id)
   {
     $reporte = C_Reporte::find($id);
-    $reporte->categoria_id = $request->categoria_id;
+    // traer la categoria nueva de la base en base a la descripcion que viene en el request  
+    $categoriaNueva = C_Categoria::where('descripcion', $request->descripcion)->first();
+    $reporte->categoria_id = $categoriaNueva->id;
     $reporte->save();
 
     // email a ute a cargo de la nueva categoria

@@ -49,7 +49,7 @@ Route::group(['middleware' => 'jwt.verify'], function () {
 //Route::post('crear_categoria', [C_CategoriaController::class, 'crear_Categoria']);
 Route::get('mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
 Route::post('crear_categoria', [C_CategoriaController::class, 'store']);
-Route::put('actualizar_categoria/{id}', [C_CategoriaController::class, 'update']);
+Route::put('actualizar_categoria/{id}', [C_ReporteController::class, 'update']);
 Route::delete('eliminar_categoria/{id}', [C_CategoriaController::class, 'destroy']);
 
 
