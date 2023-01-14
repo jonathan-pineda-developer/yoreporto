@@ -34,6 +34,7 @@ Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
 Route::get('/mostrar_usuario/{id}', [C_UserController::class, 'showById']);
 Route::put('/actualizar/{id}', [C_UserController::class, 'edit']);
 Route::put('/inactivar/{id}', [C_UserController::class, 'inactivar']);
+Route::put('/actualizar_categoria_reporte/{id}', [C_ReporteController::class, 'updateCategoria']);
 
 // ruta para login de google
 Route::post('google', [C_AuthController::class, 'googleSignIn']);
@@ -49,7 +50,7 @@ Route::group(['middleware' => 'jwt.verify'], function () {
 //Route::post('crear_categoria', [C_CategoriaController::class, 'crear_Categoria']);
 Route::get('mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
 Route::post('crear_categoria', [C_CategoriaController::class, 'store']);
-Route::put('actualizar_categoria/{id}', [C_ReporteController::class, 'update']);
+Route::put('actualizar_categoria/{id}', [C_CategoriaController::class, 'update']);
 Route::delete('eliminar_categoria/{id}', [C_CategoriaController::class, 'destroy']);
 
 

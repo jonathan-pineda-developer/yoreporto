@@ -146,7 +146,7 @@ class C_ReporteController extends Controller
   }
 
   // cambiar la categoria de un reporte
-  public function update(Request $request, $id)
+  public function updateCategoria(Request $request, $id)
   {
     $reporte = C_Reporte::find($id);
     // traer la categoria nueva de la base en base a la descripcion que viene en el request  
