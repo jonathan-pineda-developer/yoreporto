@@ -2,5 +2,5 @@
 CREATE EVENT IF NOT EXISTS reset_cantidad_reportes
 ON SCHEDULE EVERY 28 DAY
 DO
-UPDATE User
+UPDATE Users
 SET cantidad_reportes = 0;
