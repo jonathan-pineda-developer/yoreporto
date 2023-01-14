@@ -164,4 +164,17 @@ class C_ReporteController extends Controller
       'reporte' => $reporte
     ], 200);
   }
+
+  // metodo para cambiar el estado del reporte a aceptado
+  public function aceptarReporte(Request $request, $id)
+  {
+    $reporte = C_Reporte::find($id);
+    $reporte->estado = "Aceptado";
+    $reporte->save();
+
+    return response()->json([
+      'message' => 'Estado actualizado correctamente, el reporte ha sido aceptado',
+      'reporte' => $reporte
+    ], 200);
+  }
 }
