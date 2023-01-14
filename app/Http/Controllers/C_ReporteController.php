@@ -145,4 +145,21 @@ class C_ReporteController extends Controller
     }
   }
 
+  // cambiar la categoria de un reporte
+  public function update(Request $request, $id)
+  {
+    $reporte = C_Reporte::find($id);
+    $reporte->categoria_id = $request->categoria_id;
+    $reporte->save();
+
+    // email a ute a cargo de la nueva categoria
+    $categoria = C_Categoria::find($reporte->categoria_id);
+    $userUTE = User::find($categoria->user_id);
+    Mail::to($userUTE->email)->send(new NuevoReporte($categoria->descripcion));
+
+    return response()->json([
+      'message' => 'Categoria actualizada correctamente',
+      'reporte' => $reporte
+    ], 200);
+  }
 }
