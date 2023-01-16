@@ -24,9 +24,9 @@ return new class extends Migration
             $table->float('longitud');
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('TB_Categoria');
-            $table->string('estado')->default('En proceso');
+            $table->string('estado')->default('En espera');
             $table->timestamps();
-             /* $table->unsignedBigInteger('id_marcador')->nullable();
+            /* $table->unsignedBigInteger('id_marcador')->nullable();
             $table->foreign('id_marcador')->references('id')->on('TB_Marcador');*/
         });
     }
