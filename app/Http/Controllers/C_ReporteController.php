@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NuevoReporte;
+use App\Mail\RechazoReporte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\C_Reporte;
@@ -173,6 +174,27 @@ class C_ReporteController extends Controller
 
     return response()->json([
       'message' => 'Estado actualizado correctamente, el reporte ha sido aceptado',
+    ], 200);
+  }
+
+  // metodo para cambiar el estado del reporte a rechazado y enviar un email al usuario que creo el reporte con el motivo del rechazo 
+  public function rechazarReporte(Request $request, $id)
+  {
+    // rechazo del reporte
+    $reporte = C_Reporte::find($id);
+    $reporte->estado = "Rechazado";
+    $reporte->save();
+
+    // ute a cargo de la categoria del reporte
+    $categoria = C_Categoria::find($reporte->categoria_id);
+    $userUTE = User::find($categoria->user_id);
+
+    // email al usuario que creo el reporte
+    $user = User::find($reporte->user_id);
+    Mail::to($user->email)->send(new RechazoReporte($request->motivo, $reporte->titulo, $user, $userUTE));
+
+    return response()->json([
+      'message' => 'Estado actualizado correctamente, el reporte ha sido rechazado',
     ], 200);
   }
 }
