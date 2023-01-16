@@ -36,6 +36,7 @@ Route::put('/actualizar/{id}', [C_UserController::class, 'edit']);
 Route::put('/inactivar/{id}', [C_UserController::class, 'inactivar']);
 Route::put('/actualizar_categoria_reporte/{id}', [C_ReporteController::class, 'updateCategoria']);
 Route::put('/aceptar_reporte/{id}', [C_ReporteController::class, 'aceptarReporte']);
+Route::put('/rechazar_reporte/{id}', [C_ReporteController::class, 'rechazarReporte']);
 
 // ruta para login de google
 Route::post('google', [C_AuthController::class, 'googleSignIn']);
