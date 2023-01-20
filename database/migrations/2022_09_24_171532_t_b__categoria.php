@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('descripcion', 100);
-            $table->string('color', 7);
+            $table->string('color', 7); // guardar en hexadecimal, ejp: #FFFFFF
         });
     }
 

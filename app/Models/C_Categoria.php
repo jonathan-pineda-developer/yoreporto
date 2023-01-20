@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,9 +19,10 @@ class C_Categoria extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'id',
-        'descripcion'
-    ]; 
+        'user_id',
+        'descripcion',
+        'color',
+    ];
 
     // relacion con reporte de uno a muchos
     public function reporte()
@@ -28,18 +30,11 @@ class C_Categoria extends Model
         return $this->hasMany(C_Reporte::class);
     }
     // relacion con usuario de uno a muchos
-
-    public function usuario()
-    {
-        return $this->hasMany(User::class);
-    }
-    /**
+    /*
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-   /* public function user()
+    public function user()
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
-    }*/
-
-
+    }
 }
