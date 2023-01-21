@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('TB_Categoria', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->uuid('user_id');
+            $table->uuid('user_id'); //->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('descripcion', 100);
             $table->string('color', 7); // guardar en hexadecimal, ejp: #FFFFFF
