@@ -62,11 +62,10 @@ class C_ReporteController extends Controller
     ], $mensaje);
 
     if ($request->hasFile('imagen')) {
-      $file = $request->file('imagen');
-      $name = time() . $file->getClientOriginalName();
-      $file->move(public_path() . '/images/', $name);
-      $reporte->imagen = $name;
+      $file = $request->file('imagen')->store('public/reportes');
+      $reporte->imagen = $file;
     }
+
 
 
     $reporte = C_Reporte::create(
