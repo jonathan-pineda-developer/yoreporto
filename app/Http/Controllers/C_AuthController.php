@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\RecuperacionContrasenia;
 
 require_once '../vendor/autoload.php';
 class C_AuthController extends Controller
@@ -223,6 +224,34 @@ class C_AuthController extends Controller
             'message' => 'Usuario creado correctamente',
             'user' => $user,
             'token' => $token // retornamos el token
+        ], 201);
+    }
+
+    // recuperar contraseña, recibe el email y envia un correo donde accede a la pagina para cambiar la contraseña
+    public function recuperarContrasenia(Request $request)
+    {
+        // validacion del request
+        $this->validate($request, [
+            'email' => 'required|email',
+        ]);
+
+        // verificar si el email ya existe
+        $emailARegistrar = $request->email;
+
+        $user = User::where('email', $emailARegistrar)->first();
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Correo enviado correctamente, revise su bandeja de entrada para recuperar su contraseña'
+            ], 400);
+        }
+
+        // envio de correo de bienvenida con usuario y contraseña
+        Mail::to($user->email)->send(new RecuperacionContrasenia($user));
+
+        // respuesta en json
+        return response()->json([
+            'message' => 'Correo enviado correctamente, revise su bandeja de entrada para recuperar su contraseña',
         ], 201);
     }
 }

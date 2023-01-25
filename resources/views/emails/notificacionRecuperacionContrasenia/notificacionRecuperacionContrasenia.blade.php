@@ -1,6 +1,7 @@
 <html>
  <body>
- <h1>Recuperacion de contrasenia</h1>
-    <p>Recuperacion de contrasenia</p>
+ <h1>Recuperacion de contrasenia del Sistema Yo Reporto</h1>
+    <p>Para reestablecer su contraseña acceda al siguiente link</p>
+    <a href="{{ url('recuperacionContrasenia/'.$user->id) }}">Recuperar contrasenia</a>
  </body>
 </html>
