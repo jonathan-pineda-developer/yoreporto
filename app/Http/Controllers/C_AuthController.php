@@ -228,7 +228,7 @@ class C_AuthController extends Controller
     }
 
     // recuperar contraseña, recibe el email y envia un correo donde accede a la pagina para cambiar la contraseña
-    public function recuperarContrasenia(Request $request)
+    public function solicitudRecuperacionContrasenia(Request $request)
     {
         // validacion del request
         $this->validate($request, [
@@ -252,6 +252,32 @@ class C_AuthController extends Controller
         // respuesta en json
         return response()->json([
             'message' => 'Correo enviado correctamente, revise su bandeja de entrada para recuperar su contraseña',
+        ], 201);
+    }
+
+    // cambiar contraseña de usuario del id que se recibe
+    public function cambiarContrasenia(Request $request, $id)
+    {
+        // validacion del request
+        $this->validate($request, [
+            'password' => 'required|string|min:6|max:16',
+        ]);
+
+        // verificar si el email ya existe
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'message' => 'Usuario no encontrado'
+            ], 400);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        // respuesta en json
+        return response()->json([
+            'message' => 'Contraseña cambiada correctamente',
         ], 201);
     }
 }
