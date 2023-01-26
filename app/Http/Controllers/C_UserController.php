@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 
 class C_UserController extends Controller
 {
@@ -35,73 +36,103 @@ class C_UserController extends Controller
         }
     }
 
-    public function edit(Request $request, $id)
-    {
-
-        $user = User::find($id);
-        if (User::find($id) == null) {
-            return response()->json(['message' => 'No se encontro el registro'], 404);
-        } else {
-            $user->update($request->all());
-            return response()->json(
-                [
-                    'message' => 'Registro actualizado',
-                ],
-                200
-            );
-        }
-    }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-
+    //actualizar datos e imagen del usuario
     public function update(Request $request, $id)
     {
-        $campos = [
-            'nombre' => 'required|string|max:30',
-            'apellidos' => 'required|string|max:70',
-            'email' => 'required|string|max:100|unique:users|email',
-            'password' => 'required|string|max:100',
-        ];
-        return reponse()->json([
-            'required' => 'El :attribute es requerido'
-        ], 404);
-
-        if ($request->hasFile('imagen')) {
-            $campos = ['imagen' => 'max:10000|mimes:jpeg,png,jpg'];
+        $uid = auth()->user()->id;
+        $user = User::findOrFail($uid);
+        $destino = public_path("storage\\". $user->imagen);
+        if ($user == null) {
+            return response()->json([
+                'message' => 'No se encontro el registro'
+            ], 404);
+        } else {
+         
+            if ($request->hasFile('imagen')) {
+                if (File::exists($destino)) {
+                    File::delete($destino);
+                }
+                $user->imagen = $request->file('imagen')->store('public/usuarios');
+              
+            }
+            $user->nombre = $request->nombre;
+            $user->apellidos = $request->apellidos;
+            $user->email = $request->email;
+            $user->save();
+           if ($user->save()) {
+                return response()->json([
+                    'message' => 'Usuario actualizado correctamente'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'No se pudo actualizar el usuario'
+                ], 404);
+            }
         }
-
-        $this->validate($request, $campos, $mensaje);
-
-        $datosUser = request()->except(['_token', '_method']);
-
-        if ($request->hasFile('imagen')) {
-            $user = User::findOrFail($id);
-
-            Storage::delete('public/' . $user->imagen);
-
-            $datosUser['imagen'] = $request->file('imagen')->store('uploads', 'public');
-        }
-
-        User::where('id', '=', $id)->update($datosUser);
-
-        $user = User::findOrFail($id);
     }
 
-    public function inactivar(Request $str_request, $vint_id)
+    //actualizar imagen del usuario
+    public function updateImagen(Request $request, $id)
     {
-        $str_user = User::find($vint_id);
-        if (User::find($vint_id) == null) {
+        $uid = auth()->user()->id;
+        $user = User::findOrFail($uid);
+        $destino = public_path("storage\\". $user->imagen);
+        if ($user == null) {
+            return response()->json([
+                'message' => 'No se encontro el registro'
+            ], 404);
+        } else {
+         
+            if ($request->hasFile('imagen')) {
+                if (File::exists($destino)) {
+                    File::delete($destino);
+                }
+                $user->imagen = $request->file('imagen')->store('public/usuarios');
+            }
+            $user->save();
+           if ($user->save()) {
+                return response()->json([
+                    'message' => 'Usuario actualizado correctamente'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'No se pudo actualizar el usuario'
+                ], 404);
+            }
+        }
+    }
+
+    //actualizar solo datos
+    public function updateDatos(Request $request, $id)
+    {
+        $uid = auth()->user()->id;
+        $user = User::findOrFail($uid);
+        $user->nombre = $request->nombre;
+        $user->apellidos = $request->apellidos;
+        $user->email = $request->email;
+        $user->save();
+           if ($user->save()) {
+                return response()->json([
+                    'message' => 'Usuario actualizado correctamente'
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'No se pudo actualizar el usuario'
+                ], 404);
+            }
+        }
+    
+
+    public function inactivar(Request $request, $id)
+    {
+        $user = User::find($id);
+        if (User::find($id) == null) {
             return reponse()->json([
                 'message' => 'No se encontro el registro'
             ], 404);
         } else {
-            $str_user->estado = 0;
-            $str_user->save();
+            $user->estado = 0;
+            $user->save();
             return response()->json([
                 'message' => 'Usuario inactivado correctamente'
 
