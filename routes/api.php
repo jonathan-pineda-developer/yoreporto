@@ -21,6 +21,8 @@ use App\Http\Controllers\C_CategoriaController;
 // rutas de autentificacion
 Route::post('registro', [C_AuthController::class, 'registro']);
 Route::post('login', [C_AuthController::class, 'login']);
+Route::post('recuperar_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
+Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContrasenia']);
 
 //rutas del reporte
 //crear reporte y validar jwt
