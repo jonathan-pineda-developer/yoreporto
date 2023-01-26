@@ -32,7 +32,9 @@ Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
 
 Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
 Route::get('/mostrar_usuario/{id}', [C_UserController::class, 'showById']);
-Route::put('/actualizar/{id}', [C_UserController::class, 'edit']);
+Route::post('/actualizar/{id}', [C_UserController::class, 'update'])->middleware('jwt.verify');
+Route::post('/actualizar_imagen/{id}', [C_UserController::class, 'updateImagen'])->middleware('jwt.verify');
+Route::post('/actualizar_datos/{id}', [C_UserController::class, 'updateDatos'])->middleware('jwt.verify');
 Route::put('/inactivar/{id}', [C_UserController::class, 'inactivar']);
 Route::put('/actualizar_categoria_reporte/{id}', [C_ReporteController::class, 'updateCategoria']);
 Route::put('/aceptar_reporte/{id}', [C_ReporteController::class, 'aceptarReporte']);
