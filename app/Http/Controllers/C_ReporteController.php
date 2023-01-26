@@ -63,11 +63,9 @@ class C_ReporteController extends Controller
 
     if ($request->hasFile('imagen')) {
       $file = $request->file('imagen')->store('public/reportes');
-      $reporte->imagen = $file;
     }
-
-
-
+    $reporte->imagen = $file;
+    
     $reporte = C_Reporte::create(
       [
         'id' => Str::uuid()->toString(),
