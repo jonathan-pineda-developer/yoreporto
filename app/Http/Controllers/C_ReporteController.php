@@ -42,9 +42,6 @@ class C_ReporteController extends Controller
       }
     }
 
-    $user->cantidad_reportes = $user->cantidad_reportes + 1;
-    $user->save();
-
 
     $mensaje = [
       'required' => 'El campo :attribute es requerido',
@@ -61,11 +58,14 @@ class C_ReporteController extends Controller
       'categoria_id' => 'required',
     ], $mensaje);
 
+    $user->cantidad_reportes = $user->cantidad_reportes + 1;
+    $user->save();
+
     if ($request->hasFile('imagen')) {
       $file = $request->file('imagen')->store('public/reportes');
+      $reporte->imagen = $file;
     }
-    $reporte->imagen = $file;
-    
+
     $reporte = C_Reporte::create(
       [
         'id' => Str::uuid()->toString(),
