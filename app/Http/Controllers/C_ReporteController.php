@@ -11,6 +11,7 @@ use App\Models\C_Categoria;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 
 class C_ReporteController extends Controller
 {
@@ -89,6 +90,37 @@ class C_ReporteController extends Controller
       'reporte' => $reporte
     ], 201);
   }
+
+   //actualizar imagen del reporte
+   public function UpdateImagenReporte(Request $request, $id)
+   {
+       
+       $reporte = C_Reporte::findOrFail($id);
+       $destino = public_path("storage\\". $reporte->imagen);
+       if ($reporte == null) {
+           return response()->json([
+               'message' => 'No se encontro el registro'
+           ], 404);
+       } else {
+        
+           if ($request->hasFile('imagen')) {
+               if (File::exists($destino)) {
+                   File::delete($destino);
+               }
+               $reporte->imagen = $request->file('imagen')->store('public/reportes');
+           }
+           $reporte->save();
+          if ($reporte->save()) {
+               return response()->json([
+                   'message' => 'Imagen actualizada correctamente'
+               ], 200);
+           } else {
+               return response()->json([
+                   'message' => 'No se pudo actualizar el usuario'
+               ], 404);
+           }
+       }
+   }
 
   //mostrar reportes que tiene un usuario logueado
   public function showByUserId()
