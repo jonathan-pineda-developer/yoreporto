@@ -27,6 +27,8 @@ Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContras
 //rutas del reporte
 //crear reporte y validar jwt
 Route::post('crear_reporte', [C_ReporteController::class, 'store'])->middleware('jwt.verify');
+//actualizar imagen del reporte
+Route::post('/actualizar_imagenreporte/{id}', [C_ReporteController::class, 'UpdateImagenReporte'])->middleware('jwt.verify');
 //obtener reportes
 Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middleware('jwt.verify');
 Route::get('reportes', [C_ReporteController::class, 'showAll']);
