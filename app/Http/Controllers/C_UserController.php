@@ -88,6 +88,7 @@ class C_UserController extends Controller
                     File::delete($destino);
                 }
                 $user->imagen = $request->file('imagen')->store('public/usuarios');
+                $user->imagen = substr($user->imagen, 16);
             }
             $user->save();
            if ($user->save()) {
@@ -102,6 +103,20 @@ class C_UserController extends Controller
         }
     }
 
+    public function getImagenById(Request $request, $id)
+    {
+
+        $imagen = $request->id;
+
+        //path de donde se encuentra la imagen public/storage/usuarios/id.extension
+        $path = storage_path("app/public/usuarios/" . $imagen);
+
+        if(file_exists($path)){
+            return response()->file($path);
+        }else{
+            return response()->file(storage_path("app/public/usuarios/default.png"));
+        }
+    }
     //actualizar solo datos
     public function updateDatos(Request $request, $id)
     {

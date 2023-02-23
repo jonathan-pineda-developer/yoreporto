@@ -33,11 +33,16 @@ Route::post('/actualizar_imagenreporte/{id}', [C_ReporteController::class, 'Upda
 Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middleware('jwt.verify');
 Route::get('reportes', [C_ReporteController::class, 'showAll']);
 Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
+Route::get('/reportes/getImagenReporteById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
+
 
 Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
 Route::get('/mostrar_usuario/{id}', [C_UserController::class, 'showById']);
 Route::post('/actualizar/{id}', [C_UserController::class, 'update'])->middleware('jwt.verify');
-Route::post('/actualizar_imagen/{id}', [C_UserController::class, 'updateImagen'])->middleware('jwt.verify');
+Route::post('/actualizar_imagen/usuarios/{id}', [C_UserController::class, 'updateImagen'])->middleware('jwt.verify');
+Route::get('/usuarios/getImagenById/{id}', [C_UserController::class, 'getImagenById']);
+//agregar ruta de traer imagen de reporte
+
 Route::post('/actualizar_datos/{id}', [C_UserController::class, 'updateDatos'])->middleware('jwt.verify');
 Route::put('/inactivar/{id}', [C_UserController::class, 'inactivar']);
 Route::put('/actualizar_categoria_reporte/{id}', [C_ReporteController::class, 'updateCategoria']);

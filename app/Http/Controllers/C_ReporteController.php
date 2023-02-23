@@ -108,6 +108,7 @@ class C_ReporteController extends Controller
                    File::delete($destino);
                }
                $reporte->imagen = $request->file('imagen')->store('public/reportes');
+               $reporte->imagen = substr($reporte->imagen, 16);
            }
            $reporte->save();
           if ($reporte->save()) {
@@ -121,6 +122,20 @@ class C_ReporteController extends Controller
            }
        }
    }
+   public function getImagenReportesById(Request $request, $id)
+    {
+
+        $imagen = $request->id;
+
+        //path de donde se encuentra la imagen public/storage/usuarios/id.extension
+        $path = storage_path("app/public/reportes/" . $imagen);
+
+        if(file_exists($path)){
+            return response()->file($path);
+        }else{
+            return response()->file(storage_path("app/public/reportes/default.png"));
+        }
+    }
 
   //mostrar reportes que tiene un usuario logueado
   public function showByUserId()
