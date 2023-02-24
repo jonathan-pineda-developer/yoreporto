@@ -6,6 +6,7 @@ use App\Http\Controllers\C_AuthController;
 use App\Http\Controllers\C_UserController;
 use App\Http\Controllers\C_ReporteController;
 use App\Http\Controllers\C_CategoriaController;
+use App\Http\Controllers\C_AdministradorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,3 +82,7 @@ Route::post('/registro_UTE', [C_AuthController::class, 'registro_UTE']);
 
 //renew
 Route::get('renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify');
+
+//rutas para el admin
+
+Route::post('/informe', [C_AdministradorController::class, 'informe']);
