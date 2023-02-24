@@ -28,12 +28,19 @@ Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContras
 //crear reporte y validar jwt
 Route::post('crear_reporte', [C_ReporteController::class, 'store'])->middleware('jwt.verify');
 //actualizar imagen del reporte
-Route::post('/actualizar_imagenreporte/{id}', [C_ReporteController::class, 'UpdateImagenReporte'])->middleware('jwt.verify');
+Route::post('actualizar_imagen/reportes/{id}', [C_ReporteController::class, 'updateImagenReporte'])->middleware('jwt.verify');
 //obtener reportes
 Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middleware('jwt.verify');
 Route::get('reportes', [C_ReporteController::class, 'showAll']);
 Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
-Route::get('/reportes/getImagenReporteById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
+Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
+//delete all
+Route::delete('deleteAll', [C_ReporteController::class, 'deleteAll']);
+//metodo upload
+Route::post('upload', [C_ReporteController::class, 'upload']);
+
+//obtener reportes por id
+Route::get('showById/{id}', [C_ReporteController::class, 'showById']);
 
 
 Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
