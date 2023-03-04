@@ -98,7 +98,7 @@ return [
     ],
     */
 
-    'from' => ['address' => 'YoReportoWeb@gmail.com', 'name' => 'Yo Reporto'],
+    'from' => ['address' => 'YoReportoWeb@gmail.com', 'name' => 'Yo Reporto'], //don´t reply
     'reply_to' => ['address' => 'YoReportoWeb@gmail.com', 'name' => 'Yo Reporto'],
 
     /*
