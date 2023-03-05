@@ -60,7 +60,28 @@ return [
         'Download Now'              => 'DOWNLOAD NOW',
         'If you have any questions' => 'If you have any questions or feedback, just',
         'reply to this email'       => 'reply to this email',
-
+        // Rejected Report
+        'Reject Title'      => 'Notificación de Rechazado',
+        'Reject'            => 'Su reporte ha sido rechazado!',
+        'Reject Paragraph'  => 'En la revisión de su reporte se encontraron infracciones a la política de uso o duplicación del reporte con la misma situación',
+        'action_button'     => 'Iniciar Sesión',
+        'Reject_Action'     => 'Detalles',
+        'Headline One R'      => 'Razón de Rechazo: ',
+        'Paragraph One R'     => '',
+        'Headline Two'      => ': ',
+        'Paragraph Two'     => '',
+        'Headline Three'    => '',
+        'Paragraph Three'   => '',
+        'icon_one_R'        => 'http://localhost:8000/assets/img/emails/Email-11_Intro.png',
+        'icon_two'          => '',
+        'icon_three'        => '',
+        'WEB VERSION'       => 'WEB VERSION',
+        'SEND TO A FRIEND'  => 'SEND TO A FRIEND',
+        // New Report Template
+        'New Report Title' => 'Notificación de Nuevo Reporte',
+        'New Report'  => 'Un usuario a generado un nuevo reporte',
+        'New Report Paragraph'      => 'Categoría del Reporte:  ',
+        'pw_reset_button'       => 'Ver Reportes Emitidos',
 
     ],
 

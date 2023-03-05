@@ -50,7 +50,7 @@ class ForgotPassword extends Mailable
      */
     public function build()
     {
-        return $this->view('email.forgot_password')
+        return $this->view('emails.notificacionRecuperacionContrasenia.forgot_password')
             ->subject('Recuperación de contraseña');
     }
 }

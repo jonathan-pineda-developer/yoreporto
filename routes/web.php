@@ -26,5 +26,11 @@ Route::get('pleb/welcome_member', function () {
 Route::get('pleb/forgot_password', function () {
 
     $user = App\Models\User::find('98842033-952d-46f4-b0cf-6cbc5e42a7e7');
-    return new App\Mail\ForgotPassword($user,$user->password_get_info);
+    return new App\Mail\ForgotPassword($user);
+});
+
+Route::get('pleb/forgot_password', function () {
+
+    $user = App\Models\User::find('98842033-952d-46f4-b0cf-6cbc5e42a7e7');
+    return new App\Mail\ForgotPassword($motivo, $reporte, $user, $ute);
 });
