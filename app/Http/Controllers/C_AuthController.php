@@ -11,6 +11,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RecuperacionContrasenia;
+use App\Mail\CodigoAutentificacion;
 
 require_once '../vendor/autoload.php';
 class C_AuthController extends Controller
@@ -173,8 +174,64 @@ class C_AuthController extends Controller
             ], 500);
         }
 
+        // user que esta haciendo login en base al email
+        $user = User::where('email', $request->email)->first();
+
+        // check si el usuario tiene un rol distinto a Ciudadano necesitara autentificacion por doble factor
+        if ($user->rol != "Ciudadano") {
+            $user->generarCodigoDobleFactor();
+            Mail::to($user->email)->send(new CodigoAutentificacion($user));
+            return response()->json([
+                'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
+                'token' => $token,
+            ], 200);
+        }
+
         // si todo es correcto
         return response()->json(compact('token'));
+    }
+
+    // verificar codigo de autentificacion por doble factor
+    public function verificarCodigoDobleFactor(Request $request)
+    {
+        // validacion del request
+        $this->validate($request, [
+            'codigo' => 'required|string',
+        ]);
+
+        $user = User::where('codigo_doble_factor', $request->codigo)->first();
+
+        // verificarcion del codigo
+        if ($user) {
+            $user->resetCodigoDobleFactor();
+            return response()->json([
+                'message' => 'Codigo correcto',
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Codigo incorrecto',
+            ], 400);
+        }
+    }
+
+    // reenviar codigo de autentificacion por doble factor al correo electronico del usuario logueado
+    /*
+
+        MEJORAR ESTA FUNCION PARA QUE NO SEA NECESARIO ENVIAR EL EMAIL DEL USUARIO EN EL REQUEST
+        Y QUE SE PUEDA OBTENER EL EMAIL DEL USUARIO LOGUEADO
+
+    */
+
+    public function reenviarCodigoDobleFactor(Request $request)
+    {
+        // user que esta haciendo login en base al email
+        $user = User::where('email', $request->email)->first();
+
+        $user->generarCodigoDobleFactor();
+        Mail::to($user->email)->send(new CodigoAutentificacion($user));
+        return response()->json([
+            'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
+        ], 200);
     }
 
     //registro UTE

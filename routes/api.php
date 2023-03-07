@@ -22,6 +22,7 @@ use App\Http\Controllers\C_AdministradorController;
 // rutas de autentificacion
 Route::post('registro', [C_AuthController::class, 'registro']);
 Route::post('login', [C_AuthController::class, 'login']);
+Route::post('verificar_codigo', [C_AuthController::class, 'verificarCodigoDobleFactor']);
 Route::post('recuperar_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
 Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContrasenia']);
 
