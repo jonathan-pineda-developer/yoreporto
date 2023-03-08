@@ -214,19 +214,10 @@ class C_AuthController extends Controller
         }
     }
 
-    // reenviar codigo de autentificacion por doble factor al correo electronico del usuario logueado
-    /*
-
-        MEJORAR ESTA FUNCION PARA QUE NO SEA NECESARIO ENVIAR EL EMAIL DEL USUARIO EN EL REQUEST
-        Y QUE SE PUEDA OBTENER EL EMAIL DEL USUARIO LOGUEADO
-
-    */
-
-    public function reenviarCodigoDobleFactor(Request $request)
+    // reenviar codigo de autentificacion por doble factor al id del usuario que trae el url
+    public function reenviarCodigoDobleFactor(Request $request, $id)
     {
-        // user que esta haciendo login en base al email
-        $user = User::where('email', $request->email)->first();
-
+        $user = User::find($id);
         $user->generarCodigoDobleFactor();
         Mail::to($user->email)->send(new CodigoAutentificacion($user));
         return response()->json([
