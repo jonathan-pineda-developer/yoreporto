@@ -184,6 +184,7 @@ class C_AuthController extends Controller
             return response()->json([
                 'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
                 'token' => $token,
+                'user' => $user
             ], 200);
         }
 
