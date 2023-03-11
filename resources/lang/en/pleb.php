@@ -51,9 +51,11 @@ return [
         'icon_one_R'        => 'http://localhost:8000/assets/img/emails/Email-11_Intro.png',
         // New Report Template
         'New Report Title' => 'Notificación de Nuevo Reporte',
-        'New Report'  => 'Un usuario a generado un nuevo reporte',
-        'New Report Paragraph'      => 'Categoría del Reporte:  ',
-        'pw_reset_button_N'       => 'Ver Reportes Emitidos',
+        'New Report'  => '¡Un usuario a generado un nuevo reporte!',
+        'New_Report_Action'     => 'Detalles',
+        'Headline One N'      => 'Categoría del Reporte:  ',
+        'icon_one_N'        => 'http://localhost:8000/assets/img/emails/Email-5_Intro.png',
+        'pw_reset_button_N'       => 'Ver Reportes',
 
     ],
 
