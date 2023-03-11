@@ -16,7 +16,8 @@
     <meta name="format-detection" content="date=no"> <!-- disable auto date linking in iOS -->
     <meta name="format-detection" content="address=no"> <!-- disable auto address linking in iOS -->
     <meta name="format-detection" content="email=no"> <!-- disable auto email linking in iOS -->
-    <meta name="author" content="Simple-Pleb.com">
+    <meta name="author" content="Yo Reporto">
+
     <title>{{ __('pleb.mail.Forgot Password Title') }} | {{ config('app.name') }}</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -207,7 +208,7 @@
                 </tr>
             </table>
 
-            <!-- footer -->
+             <!-- footer -->
             <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;" >
                 <!-- lotus-footer-4 -->
                 <tr>
