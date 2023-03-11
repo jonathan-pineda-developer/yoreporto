@@ -188,4 +188,26 @@ class C_UserController extends Controller
             ], 404);
         }
     }
+
+     //metodo que me muestre el nombre y apelleidoa de los usuarios con rol UTE y que esten activos
+
+    public function showAllUTEActivos() {
+        $datos = User::select('nombre as Nombre', 'apellidos as Apellidos')
+
+            ->where('rol', 'UTE')
+            ->where('estado', 1)
+            ->get();
+        $ute = User::all();
+        if (count($ute) > 0) {
+            return response()->json([
+
+                $datos,
+
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron registros',
+            ], 404);
+        }
+    }
 }
