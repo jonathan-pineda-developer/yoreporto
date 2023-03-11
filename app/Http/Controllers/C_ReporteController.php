@@ -11,6 +11,7 @@ use App\Models\C_Categoria;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File;
 
 class C_ReporteController extends Controller
 {
@@ -64,6 +65,7 @@ class C_ReporteController extends Controller
     if ($request->hasFile('imagen')) {
       $file = $request->file('imagen')->store('public/reportes');
       $reporte->imagen = $file;
+      $reporte->imagen = substr($reporte->imagen, 16);
     }
 
     $reporte = C_Reporte::create(
@@ -89,7 +91,80 @@ class C_ReporteController extends Controller
       'reporte' => $reporte
     ], 201);
   }
+  //metodo uoload para subir imagen
+  public function upload(Request $request){
+    $file = $request->file('imagen')->store('public/reportes');
+    $file = substr($file, 16);
+    return response()->json([
+      'message' => 'Imagen subida correctamente',
+      'imagen' => $file
+    ], 201);
 
+  }
+
+   //actualizar imagen del reporte
+   public function updateImagenReporte(Request $request, $id)
+   {
+       
+       $reporte = C_Reporte::findOrFail($id);
+       $destino = public_path("storage\\". $reporte->imagen);
+       if ($reporte == null) {
+           return response()->json([
+               'message' => 'No se encontro el registro'
+           ], 404);
+       } else {
+        
+           if ($request->hasFile('imagen')) {
+               if (File::exists($destino)) {
+                   File::delete($destino);
+               }
+               $reporte->imagen = $request->file('imagen')->store('public/reportes');
+               $reporte->imagen = substr($reporte->imagen, 16);
+           }
+           $reporte->save();
+          if ($reporte->save()) {
+               return response()->json([
+                   'message' => 'Imagen actualizada correctamente',
+                   'reporte' => $reporte
+               ], 200);
+           } else {
+               return response()->json([
+                   'message' => 'No se pudo actualizar el usuario'
+               ], 404);
+           }
+       }
+   }
+   public function getImagenReportesById(Request $request, $id)
+    {
+
+        $imagen = $request->id;
+
+        //path de donde se encuentra la imagen public/storage/usuarios/id.extension
+        $path = storage_path("app/public/reportes/" . $imagen);
+
+        if(file_exists($path)){
+            return response()->file($path);
+        }else{
+            return response()->file(storage_path("app/public/reportes/default.png"));
+        }
+    }
+//eliminar todos los reportes
+  public function deleteAll()
+  {
+    $reportes = C_Reporte::all();
+    if (count($reportes) > 0) {
+      foreach ($reportes as $reporte) {
+        $reporte->delete();
+      }
+      return response()->json([
+        'message' => 'Reportes eliminados correctamente',
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
+  }
   //mostrar reportes que tiene un usuario logueado
   public function showByUserId()
   {
@@ -140,6 +215,21 @@ class C_ReporteController extends Controller
       return response()->json([
         'message' => 'No se encontraron reportes',
       ], 404);
+    }
+  }
+
+  //obtener reporte por id
+  public function showById($id)
+  {
+    $reporte = C_Reporte::find($id);
+    if ($reporte == null) {
+      return response()->json([
+        'message' => 'No se encontro el reporte',
+      ], 404);
+    } else {
+      return response()->json([
+        'reporte' => $reporte
+      ], 200);
     }
   }
 

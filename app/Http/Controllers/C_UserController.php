@@ -88,6 +88,7 @@ class C_UserController extends Controller
                     File::delete($destino);
                 }
                 $user->imagen = $request->file('imagen')->store('public/usuarios');
+                $user->imagen = substr($user->imagen, 16);
             }
             $user->save();
            if ($user->save()) {
@@ -102,6 +103,20 @@ class C_UserController extends Controller
         }
     }
 
+    public function getImagenById(Request $request, $id)
+    {
+
+        $imagen = $request->id;
+
+        //path de donde se encuentra la imagen public/storage/usuarios/id.extension
+        $path = storage_path("app/public/usuarios/" . $imagen);
+
+        if(file_exists($path)){
+            return response()->file($path);
+        }else{
+            return response()->file(storage_path("app/public/usuarios/default.png"));
+        }
+    }
     //actualizar solo datos
     public function updateDatos(Request $request, $id)
     {
@@ -170,6 +185,28 @@ class C_UserController extends Controller
         } else {
             return response()->json([
                 'message' => 'No se encontraron reportes',
+            ], 404);
+        }
+    }
+
+     //metodo que me muestre el nombre y apelleidoa de los usuarios con rol UTE y que esten activos
+
+    public function showAllUTEActivos() {
+        $datos = User::select('nombre as Nombre', 'apellidos as Apellidos')
+
+            ->where('rol', 'UTE')
+            ->where('estado', 1)
+            ->get();
+        $ute = User::all();
+        if (count($ute) > 0) {
+            return response()->json([
+
+                $datos,
+
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron registros',
             ], 404);
         }
     }

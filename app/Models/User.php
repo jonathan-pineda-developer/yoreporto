@@ -25,7 +25,8 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'imagen',
-        'google'
+        'google',
+        'codigo_doble_factor',
     ];
 
 
@@ -62,5 +63,19 @@ class User extends Authenticatable implements JWTSubject
     public function reporte()
     {
         return $this->hasMany(C_Reporte::class);
+    }
+
+    public function generarCodigoDobleFactor()
+    {
+        $this->timestamps = false;
+        $this->codigo_doble_factor = mt_rand(100000, 999999);
+        $this->save();
+    }
+
+    public function resetCodigoDobleFactor()
+    {
+        $this->timestamps = false;
+        $this->codigo_doble_factor = null;
+        $this->save();
     }
 }

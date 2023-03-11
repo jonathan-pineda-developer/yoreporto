@@ -25,6 +25,9 @@ return new class extends Migration
             $table->integer('cantidad_reportes')->default(0);
             $table->boolean('estado')->default(true);
             $table->timestamps();
+
+            // para el doble factor de autenticacion
+            $table->string('codigo_doble_factor')->nullable();
         });
     }
 
