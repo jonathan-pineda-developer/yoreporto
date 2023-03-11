@@ -3,51 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\C_Categoria;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
 
 class C_CategoriaController extends Controller
 {
-    //metodo para crear una categoria
-    public function store(Request $request)
-    {
-        $categoria = new C_Categoria();
-        $categoria->descripcion = $request->descripcion;
-        $categoria->color = $request->color;
-        $categoria->user_id = $request->user_id;
+  //metodo para crear una categoria
+  public function store(Request $request)
+  {
+      // Validar los datos del formulario
+      $validatedData = $request->validate([
+          'descripcion' => 'required',
+          'color' => 'required',
+          'ute' => 'required',
+      ]);
 
-        $mensaje = [
-            'required' => 'El campo :attribute es requerido',
-            'descripcion.max' => 'El campo descripcion no debe ser mayor a 100 caracteres',
-            'color.max' => 'El campo color no debe ser mayor a 7 caracteres',
-            'user_id.max' => 'El campo user_id no debe ser mayor a 36 caracteres',
-        ];
+      // Buscar el UTE por su nombre de usuario y que el rol sea UTE
+      $ute = User::where('nombre', $request->ute)->where('rol', 'UTE')->FirstOrFail();
 
-        $this->validate($request, [
-            'descripcion' => 'required|string|max:100',
-            'color' => 'required|string|max:7',
-            'user_id' => 'required|string|max:36',
-        ], $mensaje);
+      // Crear y guardar la categoría
+      $categoria = C_Categoria::create([
+          'descripcion' => $request->descripcion,
+          'color' => $request->color,
+          'user_id' => $ute->id,
+      ]);
 
-        $categoria = C_Categoria::create($request->all());
-
-        //si la categoria se crea correctamente
-        if ($categoria) {
-            return response()->json([
-
-                'message' => 'Categoria creada correctamente',
-                'categoria' => $categoria
-
-            ], 200);
-        } else {
-            return response()->json([
-
-                'message' => 'Error al crear la categoria',
-
-            ], 400);
-        }
-    }
-
+      // Guardar la categoría
+      if ($categoria->save()) {
+          return response()->json([
+              'message' => 'Categoria creada correctamente',
+              "categoria" => $categoria
+          ], 200);
+      } else {
+          return response()->json([
+              'message' => 'Error al crear la categoria',
+          ], 400);
+      }
+  }
     //metodo para mostrar todas las categorias
 
     public function mostrar()
