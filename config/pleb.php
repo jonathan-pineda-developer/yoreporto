@@ -23,18 +23,17 @@
 return [
 
     'mail' => [
-        'top_logo'          => 'http://localhost:8000/assets/img/emails/yoReportoC.png', //'assets/img/emails/yoReporto.png',
-        'welcome_url'       => 'http://localhost:8000/login',
-        'street_address'    => '',
-        'phone_number'      => '',
-        'info_email'        => '',
-        'play_url'          => '',
-        'ios_url'           => '',
+        'top_logo'           => 'http://localhost:8000/assets/img/emails/yoReportoC.png', //'assets/img/emails/yoReporto.png',
+        'ingresar_url'       => 'http://localhost:8000/login',
+        'direccion'          => '',
+        'numero_telefono'    => '',
+        'info_email'         => 'info@munipalmares.go.cr',
+        'info'               => '©️Yo Reporto, Palmares. 2023',
+        'no_responder'       => '*Este correo es generado automaticamente, NO RESPONDER',
 
-        // To remove from the email footer - make the value blank
-        'facebook_url'      => '',
-        'twitter_url'       => '',
-        'instagram_url'     => '',
+        'facebook_url'       => 'https://www.facebook.com/munipalmares',
+        'youTube_url'        => 'https://www.youtube.com/user/munipalmares',
+        'instagram_url'      => 'https://www.instagram.com/munipalmares/',
     ],
 
 
