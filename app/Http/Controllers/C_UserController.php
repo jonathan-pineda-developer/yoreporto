@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 
 class C_UserController extends Controller
@@ -155,19 +156,6 @@ class C_UserController extends Controller
         }
     }
 
-    //UTE
-    // public function showAllUTE()
-    // {
-    //     if (DB::table('users')->where('rol', 'UTE')->get()->isEmpty()) {
-    //         return response()->json(['message' => 'No hay registros'], 404);
-    //     } else {
-    //         $user = DB::table('users')->where('rol', 'UTE')->get();
-    //         return response ()->json($user, 200);
-    //     }
-    // }  
-
-    //mostrar usuarios con rol UTE
-
     public function showAllUTE()
     {
         $datos = User::select('nombre as Nombre', 'apellidos as Apellidos', 'rol as Rol', 'TB_Categoria.descripcion as Categoria')
@@ -191,23 +179,20 @@ class C_UserController extends Controller
 
      //metodo que me muestre el nombre y apelleidoa de los usuarios con rol UTE y que esten activos
 
-    public function showAllUTEActivos() {
-        $datos = User::select('nombre as Nombre', 'apellidos as Apellidos')
-
+     public function showAllUTEActivos() {
+        $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
             ->where('estado', 1)
             ->get();
-        $ute = User::all();
-        if (count($ute) > 0) {
+    
+        if ($datos->count() > 0) {
             return response()->json([
-
                 $datos,
-
             ], 200);
         } else {
             return response()->json([
                 'message' => 'No se encontraron registros',
             ], 404);
         }
-    }
+    }    
 }
