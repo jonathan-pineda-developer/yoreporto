@@ -22,22 +22,26 @@ class ReporteObserver
     }
     private function logOperation(string $operation, C_Reporte $reporte)
     {
-        
-        //traer el nombre del ute que realizo la operacion y está logueado
+        // Traer el nombre completo del UTE que realizó la operación y está logueado
         $user_id = auth()->user()->id;
-        $ute = DB::table('users')->where('id', $user_id)->value('nombre');
+        $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
+                   ->where('id', $user_id)
+                   ->where('rol', 'UTE')
+                   ->value('nombre_completo');
         $reporte_id = $reporte->id;
         $modified_at = $reporte->updated_at;
-
+    
         // Determinar el valor de la operación en función del estado del reporte
         $operation = $reporte->estado === 'Aceptado' || $reporte->estado === 'Rechazado'
         ? $reporte->estado
         : 'Modificado';
-        
+    
         DB::table('TB_Bitacora')->insert([
             'operation' => $operation,
             'ute' => $ute,
             'reporte_id' => $reporte_id,
             'modified_at' => $modified_at,
-        ]);}
+        ]);
+    }
+    
 }
