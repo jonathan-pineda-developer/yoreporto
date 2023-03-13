@@ -5,11 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\ReporteObserver;
 
 class C_Reporte extends Model
 {
     use HasFactory;
     use HasUuids;
+
+    protected static function boot()//metodo para observar los cambios en la base de datos
+    {
+        parent::boot();//llama al metodo boot de la clase padre
+        C_Reporte::observe(new ReporteObserver());//llama al metodo observe de la clase ReporteObserver
+    }
 
     // tabla de la base de datos
     protected $table = 'TB_Reporte';
