@@ -178,11 +178,17 @@ class C_AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         // check si el usuario tiene un rol distinto a Ciudadano necesitara autentificacion por doble factor
-        if ($user->rol != "Ciudadano") {
+        if ($user->rol == "UTE") {
             $user->generarCodigoDobleFactor();
             Mail::to($user->email)->send(new CodigoAutentificacion($user));
             return response()->json([
                 'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
+                'token' => $token,
+                'user' => $user
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'Login correcto',
                 'token' => $token,
                 'user' => $user
             ], 200);
