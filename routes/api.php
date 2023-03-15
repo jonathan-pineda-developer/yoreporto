@@ -26,6 +26,8 @@ Route::post('verificar_codigo', [C_AuthController::class, 'verificarCodigoDobleF
 Route::post('reenviar_codigo/{id}', [C_AuthController::class, 'reenviarCodigoDobleFactor']);
 Route::post('recuperar_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
 Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContrasenia']);
+//reenviarCodigoDobleFactorEmail
+Route::post('reenviar_codigo_email', [C_AuthController::class, 'reenviarCodigoDobleFactorEmail']);
 
 //rutas del reporte
 //crear reporte y validar jwt

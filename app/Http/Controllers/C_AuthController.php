@@ -231,6 +231,20 @@ class C_AuthController extends Controller
             'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
         ], 200);
     }
+    //reenviarCodigo por email
+    public function reenviarCodigoDobleFactorEmail(Request $request)
+    {
+        // validacion del request
+        $this->validate($request, [
+            'email' => 'required|email',
+        ]);
+        $user = User::where('email', $request->email)->first();
+        $user->generarCodigoDobleFactor();
+        Mail::to($user->email)->send(new CodigoAutentificacion($user));
+        return response()->json([
+            'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
+        ], 200);
+    }
 
     //registro UTE
     public function registro_UTE(Request $request)
