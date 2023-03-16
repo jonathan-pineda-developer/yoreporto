@@ -167,7 +167,7 @@ class C_UserController extends Controller
         if (count($ute) > 0) {
             return response()->json([
 
-                $datos,
+                'UTE'=>$datos,
 
             ], 200);
         } else {
@@ -187,12 +187,14 @@ class C_UserController extends Controller
     
         if ($datos->count() > 0) {
             return response()->json([
-                $datos,
+                'UTE'=>$datos,
             ], 200);
         } else {
             return response()->json([
                 'message' => 'No se encontraron registros',
             ], 404);
         }
-    }    
+    }  
+
+
 }
