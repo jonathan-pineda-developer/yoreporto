@@ -1,0 +1,1 @@
+<h1>{{$user->nombre}} {{$user->apellidos}} usted ha sido asignado a la categoria {{$categoria->descripcion}}</h1>
