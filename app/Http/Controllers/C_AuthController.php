@@ -212,6 +212,7 @@ class C_AuthController extends Controller
         if ($user) {
             // verificar si el codigo esta expirado en este momento
             if ($user->codigo_doble_factor_expira < now()) {
+                $user->resetCodigoDobleFactor();
                 return response()->json([
                     'message' => 'El codigo ha expirado, por favor vuelva a solicitar uno',
                 ], 400);
