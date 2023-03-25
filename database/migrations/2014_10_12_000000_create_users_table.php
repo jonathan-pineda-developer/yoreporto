@@ -28,6 +28,7 @@ return new class extends Migration
 
             // para el doble factor de autenticacion
             $table->string('codigo_doble_factor')->nullable();
+            $table->dateTime('codigo_doble_factor_expira')->nullable();
         });
     }
 
