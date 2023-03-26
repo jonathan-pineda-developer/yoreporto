@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\C_Reporte;
 use App\Models\C_Categoria;
 use App\Models\User;
+use App\Models\C_Bitacora;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
-
+use Illuminate\Support\Facades\DB;
 
 
 class C_AdministradorController extends Controller
@@ -35,4 +36,11 @@ class C_AdministradorController extends Controller
             ], 200);
         }
         }
+            //funcion para mostrar la bitacora
+    public function mostrarBitacora(){
+        $bitacora = DB::table('TB_Bitacora')->get();
+        return response()->json([
+            'bitacora' => $bitacora
+        ], 200);
+    }
 }
