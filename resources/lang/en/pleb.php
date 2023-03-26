@@ -13,6 +13,14 @@ return [
         'Headline Two'           => 'Contraseña: ',
         'icon_one'               => 'https://drive.google.com/uc?id=1JU8u5_26oDiSr1_FRUUmUx4wkfuHLj0B',
         'Email-1_Intro'          => 'https://drive.google.com/uc?id=1mtdkf5pZZXC48HfjGhGGLFy_Nba9qUnd',
+        // Category
+        'Category Title'           => 'Notificación de Asignación de Categoría',
+        'Category'                 => '¡Se le ha asignado una categoría!',
+        'Category Paragraph'       => 'Como usuario UTE se le ha asignado una categoría para atención de Reportes',
+        'Category_Action'          => 'Detalles',
+        'Headline One C'         => 'Usuario: ',
+        'Headline Two C'         => 'Categoría: ',
+        'icon_one_C'             => 'https://drive.google.com/uc?id=1Obqfx4MMCz3624v5q8uqhSEn5fQRE8d1',
         // Verify Email Template
         'Verify Title'           => 'Còdigo de autentificaciòn',
         'Verify Email'           => '¡Hola, usuario ',
