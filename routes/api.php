@@ -60,7 +60,7 @@ Route::get('/usuarios/getImagenById/{id}', [C_UserController::class, 'getImagenB
 Route::post('/actualizar_datos/{id}', [C_UserController::class, 'updateDatos'])->middleware('jwt.verify');
 Route::put('/inactivar/{id}', [C_UserController::class, 'inactivar']);
 Route::put('/actualizar_categoria_reporte/{id}', [C_ReporteController::class, 'updateCategoria']);
-Route::put('/aceptar_reporte/{id}', [C_ReporteController::class, 'aceptarReporte']);
+Route::put('/aceptar_reporte/{id}', [C_ReporteController::class, 'aceptarReporte'])->middleware('jwt.verify');
 Route::put('/rechazar_reporte/{id}', [C_ReporteController::class, 'rechazarReporte']);
 
 // ruta para login de google
@@ -92,3 +92,6 @@ Route::get('renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify'
 //rutas para el admin
 
 Route::post('/informe', [C_AdministradorController::class, 'informe']);
+
+//ruta para mostar la bitacora
+Route::get('/mostrar_bitacora', [C_AdministradorController::class, 'mostrarBitacora']);
