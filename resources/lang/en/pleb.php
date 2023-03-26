@@ -55,7 +55,7 @@ return [
         //footer
         'facebook_icon'          => 'https://drive.google.com/uc?id=198Ob4uz3skaNlHnyPMnybdhN65-ToDGb',
         'instagram_icon'         => 'https://drive.google.com/uc?id=1_Sce9CURNwKQ4XzYpbOiqPUKZw8YpPz_',
-        'youTube_icon'           => 'https://drive.google.com/uc?id=1ANmNNTfk1iu-N1hcbIn2bJRes2kbJ59s',
+        'youTube_icon'           => 'https://drive.google.com/uc?id=1wFYZt8XVDe2xwvC8bB6zvHYBr30jmvQk',
 
     ],
 
