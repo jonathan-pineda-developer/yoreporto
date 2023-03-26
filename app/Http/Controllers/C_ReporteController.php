@@ -255,6 +255,7 @@ class C_ReporteController extends Controller
   // metodo para cambiar el estado del reporte a aceptado
   public function aceptarReporte(Request $request, $id)
   {
+    $uuid = auth()->user()->id;
     $reporte = C_Reporte::find($id);
     $reporte->estado = "Aceptado";
     $reporte->save();
