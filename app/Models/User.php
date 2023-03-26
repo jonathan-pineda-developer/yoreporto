@@ -27,6 +27,11 @@ class User extends Authenticatable implements JWTSubject
         'imagen',
         'google',
         'codigo_doble_factor',
+        'codigo_doble_factor_expira',
+    ];
+
+    protected $dates = [
+        'codigo_doble_factor_expira',
     ];
 
 
@@ -69,6 +74,7 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->timestamps = false;
         $this->codigo_doble_factor = mt_rand(100000, 999999);
+        $this->codigo_doble_factor_expira = now()->addMinutes(10);
         $this->save();
     }
 
@@ -76,6 +82,7 @@ class User extends Authenticatable implements JWTSubject
     {
         $this->timestamps = false;
         $this->codigo_doble_factor = null;
+        $this->codigo_doble_factor_expira = null;
         $this->save();
     }
 }

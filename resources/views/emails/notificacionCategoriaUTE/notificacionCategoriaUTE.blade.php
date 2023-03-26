@@ -1,3 +1,5 @@
+<h1>{{$user->nombre}} {{$user->apellidos}} usted ha sido asignado a la categoria {{$categoria->descripcion}}</h1>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -17,7 +19,7 @@
     <meta name="format-detection" content="address=no"> <!-- disable auto address linking in iOS -->
     <meta name="format-detection" content="email=no"> <!-- disable auto email linking in iOS -->
     <meta name="author" content="Simple-Pleb.com">
-    <title>{{ __('pleb.mail.Reject Title') }} | {{ config('app.name') }}</title>
+    <title>{{ __('pleb.mail.Category Title') }} | {{ config('app.name') }}</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -171,7 +173,7 @@
                                 <td class="center-text"  align="center" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:42px;line-height:52px;font-weight:400;font-style:normal;color:#FFFFFF;text-decoration:none;letter-spacing:0px;">
 
                                     <div  >
-                                        {{ __('pleb.mail.Reject') }}
+                                        {{ __('pleb.mail.Category') }}
                                     </div>
 
                                 </td>
@@ -185,7 +187,7 @@
                                 <td class="center-text"  align="center" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:16px;line-height:26px;font-weight:300;font-style:normal;color:#FFFFFF;text-decoration:none;letter-spacing:0px;">
 
                                     <div  >
-                                        {{ __('pleb.mail.Reject Paragraph') }}
+                                        {{ __('pleb.mail.Category Paragraph') }}
                                     </div>
 
                                 </td>
@@ -224,7 +226,7 @@
                                 <td class="center-text"  align="center" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:32px;line-height:42px;font-weight:400;font-style:normal;color:#282828;text-decoration:none;letter-spacing:0px;">
 
                                     <div  >
-                                        {{ __('pleb.mail.Reject_Action') }}
+                                        {{ __('pleb.mail.Category_Action') }}
                                     </div>
 
                                 </td>
@@ -248,7 +250,7 @@
                                                     <!-- icon -->
                                                     <tr>
                                                         <td align="center">
-                                                            <img style="display:block;width:100%;max-width:70px;border:0px;"    width="70" src="{{ __('pleb.mail.icon_one_R') }}" border="0"  alt="icon">
+                                                            <img style="display:block;width:100%;max-width:70px;border:0px;"    width="70" src="{{ __('pleb.mail.icon_one_C') }}" border="0"  alt="icon">
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -268,12 +270,12 @@
 
                                                 <!-- headline column -->
                                                 <table border="0" align="left" cellpadding="0" cellspacing="0" role="presentation" class="row" width="500" style="width:480px;max-width:480px;">
-                                                    <!-- headline paragraph -->
+                                                    <!-- headline One paragraph -->
                                                     <tr>
                                                         <td class="center-text"  align="left" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:20px;line-height:28px;font-weight:400;font-style:normal;color:#343e9e;text-decoration:none;letter-spacing:0px;">
 
                                                             <div  >
-                                                                {{ __('pleb.mail.Headline One R') }}
+                                                                {{ __('pleb.mail.Headline One C') }}
                                                             </div>
 
                                                         </td>
@@ -282,12 +284,36 @@
                                                     <tr>
                                                         <td height="5" style="font-size:5px;line-height:5px;" >&nbsp;</td>
                                                     </tr>
-                                                    <!-- motivo paragraph -->
+                                                    <!-- user paragraph -->
                                                     <tr>
                                                         <td class="center-text container-padding"  align="left" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
 
                                                             <div  >
-                                                                {{ $motivo }}
+                                                            {{$user->nombre}} {{$user->apellidos}}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <!-- headline Two paragraph -->
+                                                    <tr>
+                                                        <td class="center-text"  align="left" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:20px;line-height:28px;font-weight:400;font-style:normal;color:#343e9e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ __('pleb.mail.Headline One C') }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <!-- gap -->
+                                                    <tr>
+                                                        <td height="5" style="font-size:5px;line-height:5px;" >&nbsp;</td>
+                                                    </tr>
+                                                    <!-- category paragraph -->
+                                                    <tr>
+                                                        <td class="center-text container-padding"  align="left" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{$categoria->descripcion}}
                                                             </div>
 
                                                         </td>

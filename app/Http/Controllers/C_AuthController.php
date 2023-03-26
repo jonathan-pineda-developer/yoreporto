@@ -186,7 +186,7 @@ class C_AuthController extends Controller
                 'token' => $token,
                 'user' => $user
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Login correcto',
                 'token' => $token,
@@ -210,6 +210,13 @@ class C_AuthController extends Controller
 
         // verificarcion del codigo
         if ($user) {
+            // verificar si el codigo esta expirado en este momento
+            if ($user->codigo_doble_factor_expira < now()) {
+                $user->resetCodigoDobleFactor();
+                return response()->json([
+                    'message' => 'El codigo ha expirado, por favor vuelva a solicitar uno',
+                ], 400);
+            }
             $user->resetCodigoDobleFactor();
             return response()->json([
                 'message' => 'Codigo correcto',

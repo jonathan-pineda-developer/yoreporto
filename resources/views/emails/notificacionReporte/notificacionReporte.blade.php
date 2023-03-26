@@ -159,7 +159,7 @@
                             <!-- header Icon column -->
                             <tr  >
                                 <td align="center" class="center-text">
-                                    <img style="width:190px;border:0px;display: inline!important;" src="{{ asset('assets/img/emails/Email-3_Intro.png') }}" width="190" border="0"       alt="intro">
+                                    <img style="width:190px;border:0px;display: inline!important;" src="{{ __('pleb.mail.Email-3_Intro') }}" width="190" border="0"       alt="intro">
                                 </td>
                             </tr>
                             <!-- gap -->
@@ -190,7 +190,7 @@
             <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;" >
                 <tr>
                     <td align="center"  bgcolor="#FFFFFF">
-                        <img style="width:50px;border:0px;display: inline!important;" src="{{ asset('assets/img/emails/Arrow.png') }}" width="50" border="0"       alt="arrow">
+                        <img style="width:50px;border:0px;display: inline!important;" src="{{ config('pleb.mail.flecha_encabezado') }}" width="50" border="0"       alt="arrow">
                     </td>
                 </tr>
             </table>
@@ -327,7 +327,7 @@
                                                                     <tr>
                                                                         <td width="10"></td>
                                                                         <td align="center">
-                                                                            <a href="{{ config('pleb.mail.facebook_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ asset('assets/img/emails/Facebook.png') }}" width="36" border="0"       alt="icon"></a>
+                                                                            <a href="{{ config('pleb.mail.facebook_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.facebook_icon') }}" width="36" border="0"       alt="icon"></a>
                                                                         </td>
                                                                         <td width="10"></td>
                                                                     </tr>
@@ -340,7 +340,7 @@
                                                                     <tr>
                                                                         <td width="10"></td>
                                                                         <td align="center">
-                                                                            <a href="{{ config('pleb.mail.instagram_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ asset('assets/img/emails/Instagram.png') }}" width="36" border="0"       alt="icon"></a>
+                                                                            <a href="{{ config('pleb.mail.instagram_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.instagram_icon') }}" width="36" border="0"       alt="icon"></a>
                                                                         </td>
                                                                         <td width="10"></td>
                                                                     </tr>
@@ -353,7 +353,7 @@
                                                                     <tr>
                                                                         <td width="10"></td>
                                                                         <td align="center">
-                                                                            <a href="{{ config('pleb.mail.youTube_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ asset('assets/img/emails/YouTube.png') }}" width="36" border="0"       alt="icon"></a>
+                                                                            <a href="{{ config('pleb.mail.youTube_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.youTube_icon') }}" width="36" border="0"       alt="icon"></a>
                                                                         </td>
                                                                         <td width="10"></td>
                                                                     </tr>
