@@ -148,23 +148,23 @@ class C_ReporteController extends Controller
             return response()->file(storage_path("app/public/reportes/default.png"));
         }
     }
-//eliminar todos los reportes
-  public function deleteAll()
-  {
-    $reportes = C_Reporte::all();
-    if (count($reportes) > 0) {
-      foreach ($reportes as $reporte) {
-        $reporte->delete();
-      }
-      return response()->json([
-        'message' => 'Reportes eliminados correctamente',
-      ], 200);
-    } else {
-      return response()->json([
-        'message' => 'No se encontraron reportes',
-      ], 404);
+    //MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
+    public function showByUTEId(){
+       //obtener la categoria de la ute logueada
+        $uid = auth()->user()->id;
+        $categoria = C_Categoria::where('user_id', $uid)->get();
+        $reportes = C_Reporte::where('categoria_id', $categoria[0]->id)->get();
+        if (count($reportes) > 0) {
+            return response()->json([
+                'reportes' => $reportes
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron reportes',
+            ], 404);
+        }
+    
     }
-  }
   //mostrar reportes que tiene un usuario logueado
   public function showByUserId()
   {
