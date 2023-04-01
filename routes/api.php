@@ -83,8 +83,8 @@ Route::delete('eliminar_categoria/{id}', [C_CategoriaController::class, 'destroy
 
 //rutas UTEs
 Route::get('/mostrar_usuarios_UTE', [C_UserController::class, 'showAllUTE']);
-
 Route::post('/registro_UTE', [C_AuthController::class, 'registro_UTE']);
+Route::get('/mostrar_reportes_UTE', [C_ReporteController::class, 'showByUTEId'])->middleware('jwt.verify');
 
 //renew
 Route::get('renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify');
