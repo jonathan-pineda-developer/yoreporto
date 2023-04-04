@@ -145,7 +145,7 @@ class C_ReporteController extends Controller
         if(file_exists($path)){
             return response()->file($path);
         }else{
-            return response()->file(storage_path("app/public/reportes/default.png"));
+            return response()->file(storage_path("app/public/reportes/default1.png"));
         }
     }
     //MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
