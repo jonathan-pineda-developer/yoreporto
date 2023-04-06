@@ -92,79 +92,79 @@ class C_ReporteController extends Controller
     ], 201);
   }
   //metodo uoload para subir imagen
-  public function upload(Request $request){
+  public function upload(Request $request)
+  {
     $file = $request->file('imagen')->store('public/reportes');
     $file = substr($file, 16);
     return response()->json([
       'message' => 'Imagen subida correctamente',
       'imagen' => $file
     ], 201);
-
   }
 
-   //actualizar imagen del reporte
-   public function updateImagenReporte(Request $request, $id)
-   {
-       
-       $reporte = C_Reporte::findOrFail($id);
-       $destino = public_path("storage\\". $reporte->imagen);
-       if ($reporte == null) {
-           return response()->json([
-               'message' => 'No se encontro el registro'
-           ], 404);
-       } else {
-        
-           if ($request->hasFile('imagen')) {
-               if (File::exists($destino)) {
-                   File::delete($destino);
-               }
-               $reporte->imagen = $request->file('imagen')->store('public/reportes');
-               $reporte->imagen = substr($reporte->imagen, 16);
-           }
-           $reporte->save();
-          if ($reporte->save()) {
-               return response()->json([
-                   'message' => 'Imagen actualizada correctamente',
-                   'reporte' => $reporte
-               ], 200);
-           } else {
-               return response()->json([
-                   'message' => 'No se pudo actualizar el usuario'
-               ], 404);
-           }
-       }
-   }
-   public function getImagenReportesById(Request $request, $id)
-    {
+  //actualizar imagen del reporte
+  public function updateImagenReporte(Request $request, $id)
+  {
 
-        $imagen = $request->id;
+    $reporte = C_Reporte::findOrFail($id);
+    $destino = public_path("storage\\" . $reporte->imagen);
+    if ($reporte == null) {
+      return response()->json([
+        'message' => 'No se encontro el registro'
+      ], 404);
+    } else {
 
-        //path de donde se encuentra la imagen public/storage/usuarios/id.extension
-        $path = storage_path("app/public/reportes/" . $imagen);
-
-        if(file_exists($path)){
-            return response()->file($path);
-        }else{
-            return response()->file(storage_path("app/public/reportes/default1.png"));
+      if ($request->hasFile('imagen')) {
+        if (File::exists($destino)) {
+          File::delete($destino);
         }
+        $reporte->imagen = $request->file('imagen')->store('public/reportes');
+        $reporte->imagen = substr($reporte->imagen, 16);
+      }
+      $reporte->save();
+      if ($reporte->save()) {
+        return response()->json([
+          'message' => 'Imagen actualizada correctamente',
+          'reporte' => $reporte
+        ], 200);
+      } else {
+        return response()->json([
+          'message' => 'No se pudo actualizar el usuario'
+        ], 404);
+      }
     }
-    //MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
-    public function showByUTEId(){
-       //obtener la categoria de la ute logueada
-        $uid = auth()->user()->id;
-        $categoria = C_Categoria::where('user_id', $uid)->get();
-        $reportes = C_Reporte::where('categoria_id', $categoria[0]->id)->get();
-        if (count($reportes) > 0) {
-            return response()->json([
-                'reportes' => $reportes
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'No se encontraron reportes',
-            ], 404);
-        }
-    
+  }
+  public function getImagenReportesById(Request $request, $id)
+  {
+
+    $imagen = $request->id;
+
+    //path de donde se encuentra la imagen public/storage/usuarios/id.extension
+    $path = storage_path("app/public/reportes/" . $imagen);
+
+    if (file_exists($path)) {
+      return response()->file($path);
+    } else {
+      return response()->file(storage_path("app/public/reportes/default1.png"));
     }
+  }
+  //MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
+  public function showByUTEId()
+  {
+    //obtener la categoria de la ute logueada
+    $uid = auth()->user()->id;
+    $categoria = C_Categoria::where('user_id', $uid)->get();
+    $reportes = C_Reporte::where('categoria_id', $categoria[0]->id)->get();
+    if (count($reportes) > 0) {
+      return response()->json([
+        'reportes' => $reportes
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
+  }
   //mostrar reportes que tiene un usuario logueado
   public function showByUserId()
   {
@@ -284,5 +284,20 @@ class C_ReporteController extends Controller
     return response()->json([
       'message' => 'Estado actualizado correctamente, el reporte ha sido rechazado',
     ], 200);
+  }
+
+  // metodo que retorna los reportes que tienen el estado Aceptado o Finalizado
+  public function showReportesAceptadosoFinalizados()
+  {
+    $reportes = C_Reporte::where('estado', 'Aceptado')->orWhere('estado', 'Finalizado')->get();
+    if (count($reportes) > 0) {
+      return response()->json([
+        'reportes' => $reportes
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
   }
 }
