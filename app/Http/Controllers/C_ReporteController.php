@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\C_Reporte;
 use App\Models\C_Categoria;
 use App\Models\User;
+use App\Observers\ReporteObserver;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
@@ -255,7 +256,7 @@ class C_ReporteController extends Controller
   // metodo para cambiar el estado del reporte a aceptado
   public function aceptarReporte(Request $request, $id)
   {
-    $uuid = auth()->user()->id;
+   
     $reporte = C_Reporte::find($id);
     $reporte->estado = "Aceptado";
     $reporte->save();
@@ -280,6 +281,10 @@ class C_ReporteController extends Controller
     // email al usuario que creo el reporte
     $user = User::find($reporte->user_id);
     Mail::to($user->email)->send(new RechazoReporte($request->motivo, $reporte->titulo, $user, $userUTE));
+
+       // registrar en la bitácora
+      $reporteObserver = new ReporteObserver();
+      $reporteObserver->updated1($reporte, $request->motivo);
 
     return response()->json([
       'message' => 'Estado actualizado correctamente, el reporte ha sido rechazado',
