@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
 
-class C_Categoria extends Model
+class C_Bitacora extends Model
 {
     use HasFactory;
 
@@ -20,6 +18,7 @@ class C_Categoria extends Model
 
     protected $fillable = [
         'operation',
+        'justificacion',
         'ute',
         'reporte_id',
         'modified_at',
