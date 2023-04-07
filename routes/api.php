@@ -61,7 +61,7 @@ Route::post('/actualizar_datos/{id}', [C_UserController::class, 'updateDatos'])-
 Route::put('/inactivar/{id}', [C_UserController::class, 'inactivar']);
 Route::put('/actualizar_categoria_reporte/{id}', [C_ReporteController::class, 'updateCategoria']);
 Route::put('/aceptar_reporte/{id}', [C_ReporteController::class, 'aceptarReporte'])->middleware('jwt.verify');
-Route::put('/rechazar_reporte/{id}', [C_ReporteController::class, 'rechazarReporte']);
+Route::put('/rechazar_reporte/{id}', [C_ReporteController::class, 'rechazarReporte'])->middleware('jwt.verify');
 
 // ruta para login de google
 Route::post('google', [C_AuthController::class, 'googleSignIn']);
