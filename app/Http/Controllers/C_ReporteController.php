@@ -300,4 +300,19 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
+
+  // metodo que retorna los reportes en base al estado que venga en el request
+  public function showReportesByEstado(Request $request)
+  {
+    $reportes = C_Reporte::where('estado', $request->estado)->get();
+    if (count($reportes) > 0) {
+      return response()->json([
+        'reportes' => $reportes
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
+  }
 }
