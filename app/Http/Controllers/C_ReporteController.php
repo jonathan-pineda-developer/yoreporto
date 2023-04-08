@@ -13,6 +13,7 @@ use App\Observers\ReporteObserver;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class C_ReporteController extends Controller
 {
@@ -248,9 +249,34 @@ class C_ReporteController extends Controller
     $userUTE = User::find($categoria->user_id);
     Mail::to($userUTE->email)->send(new NuevoReporte($categoria->descripcion));
 
-    return response()->json([
-      'message' => 'Categoria actualizada correctamente',
-    ], 200);
+    $user_id = auth()->user()->id;
+    $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
+               ->where('id', $user_id)
+               ->where('rol', 'UTE')
+               ->value('nombre_completo');
+    $reporte_id = $reporte->id;
+    $modified_at = $reporte->updated_at;
+
+
+    $operation = 'Cambio de categoría';
+
+    DB::table('TB_Bitacora')->insert([
+        'operation' => $operation,
+        'ute' => $ute,
+        'reporte_id' => $reporte_id,
+        'modified_at' => $modified_at,
+    ]);
+
+    if($reporte->save()){
+        return response()->json([
+            'message' => 'Se ha cambiado la categoría del reporte exitósamente',
+        ], 200);
+    }else{
+        return response()->json([
+            'message' => 'Error inesperado, vuelva a intentarlo',
+        ], 400);
+    }
+    
   }
 
   // metodo para cambiar el estado del reporte a aceptado
@@ -261,33 +287,97 @@ class C_ReporteController extends Controller
     $reporte->estado = "Aceptado";
     $reporte->save();
 
-    return response()->json([
-      'message' => 'Estado actualizado correctamente, el reporte ha sido aceptado',
-    ], 200);
+    $user_id = auth()->user()->id;
+    $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
+               ->where('id', $user_id)
+               ->where('rol', 'UTE')
+               ->value('nombre_completo');
+    $reporte_id = $reporte->id;
+    $modified_at = $reporte->updated_at;
+
+    // Determinar el valor de la operación en función del estado del reporte
+    if($reporte->estado === 'Aceptado'){
+        $operation = 'Aceptado';
+    }elseif($reporte->estado === 'Rechazado'){
+        $operation = 'Rechazado';
+    }elseif($reporte->estado === 'Finalizado'){
+        $operation = 'Finalizado';
+    }else{
+        $operation = 'Cambio de categoría';
+    }
+
+    DB::table('TB_Bitacora')->insert([
+        'operation' => $operation,
+        'ute' => $ute,
+        'reporte_id' => $reporte_id,
+        'modified_at' => $modified_at,
+    ]);
+
+    if($reporte->save()){
+        return response()->json([
+            'message' => 'Reporte aceptado',
+        ], 200);
+    }else{
+        return response()->json([
+            'message' => 'Error inesperado, vuelva a intentarlo',
+        ], 400);
+    }
   }
 
   // metodo para cambiar el estado del reporte a rechazado y enviar un email al usuario que creo el reporte con el motivo del rechazo 
   public function rechazarReporte(Request $request, $id)
   {
-    // rechazo del reporte
-    $reporte = C_Reporte::find($id);
-    $reporte->estado = "Rechazado";
-    $reporte->save();
-
-    // ute a cargo de la categoria del reporte
-    $categoria = C_Categoria::find($reporte->categoria_id);
-    $userUTE = User::find($categoria->user_id);
-
-    // email al usuario que creo el reporte
-    $user = User::find($reporte->user_id);
-    Mail::to($user->email)->send(new RechazoReporte($request->motivo, $reporte->titulo, $user, $userUTE));
-
-       // registrar en la bitácora
-      $reporteObserver = new ReporteObserver();
-      $reporteObserver->updated1($reporte, $request->motivo);
-
-    return response()->json([
-      'message' => 'Estado actualizado correctamente, el reporte ha sido rechazado',
-    ], 200);
+      // rechazo del reporte
+      $reporte = C_Reporte::find($id);
+      $reporte->estado = "Rechazado";
+      $reporte->save();
+  
+      // ute a cargo de la categoria del reporte
+      $categoria = C_Categoria::find($reporte->categoria_id);
+      $userUTE = User::find($categoria->user_id);
+  
+      // email al usuario que creo el reporte
+      $user = User::find($reporte->user_id);
+      Mail::to($user->email)->send(new RechazoReporte($request->motivo, $reporte->titulo, $user, $userUTE));
+  
+      // registrar en la bitácora
+      // Traer el nombre completo del UTE que realizó la operación y está logueado
+      $user_id = auth()->user()->id;
+      $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
+                 ->where('id', $user_id)
+                 ->where('rol', 'UTE')
+                 ->value('nombre_completo');
+      $reporte_id = $reporte->id;
+      $modified_at = $reporte->updated_at;
+  
+      // Determinar el valor de la operación en función del estado del reporte
+      if($reporte->estado === 'Aceptado'){
+          $operation = 'Aceptado';
+      }elseif($reporte->estado === 'Rechazado'){
+          $operation = 'Rechazado';
+      }elseif($reporte->estado === 'Finalizado'){
+          $operation = 'Finalizado';
+      }else{
+          $operation = 'Cambio de categoría';
+      }
+  
+      DB::table('TB_Bitacora')->insert([
+          'operation' => $operation,
+          'justificacion' => $request->motivo,
+          'ute' => $ute,
+          'reporte_id' => $reporte_id,
+          'modified_at' => $modified_at,
+      ]);
+  
+      if($reporte->save()){
+        return response()->json([
+            'message' => 'Reporte rechazado',
+        ], 200);
+    }else{
+        return response()->json([
+            'message' => 'Error inesperado, vuelva a intentarlo',
+        ], 400);
+    }
   }
+  
 }
