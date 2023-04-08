@@ -24,7 +24,7 @@ Route::post('registro', [C_AuthController::class, 'registro']);
 Route::post('login', [C_AuthController::class, 'login']);
 Route::post('verificar_codigo', [C_AuthController::class, 'verificarCodigoDobleFactor']);
 Route::post('reenviar_codigo/{id}', [C_AuthController::class, 'reenviarCodigoDobleFactor']);
-Route::post('recuperar_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
+Route::post('olvido_contraseña', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
 Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContrasenia']);
 //reenviarCodigoDobleFactorEmail
 Route::post('reenviar_codigo_email', [C_AuthController::class, 'reenviarCodigoDobleFactorEmail']);
@@ -38,6 +38,8 @@ Route::post('actualizar_imagen/reportes/{id}', [C_ReporteController::class, 'upd
 Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middleware('jwt.verify');
 Route::get('reportes', [C_ReporteController::class, 'showAll']);
 Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
+Route::get('aceptadosFinalidasos', [C_ReporteController::class, 'showReportesAceptadosoFinalizados']);
+Route::get('reportes_estado', [C_ReporteController::class, 'showReportesByEstado']);
 Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
 //delete all
 Route::delete('deleteAll', [C_ReporteController::class, 'deleteAll']);

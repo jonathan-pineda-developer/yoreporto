@@ -339,7 +339,7 @@ class C_AuthController extends Controller
             'password' => 'required|string|min:6|max:16',
         ]);
 
-        // verificar si el email ya existe
+        // usuario que se va a cambiar la contraseña
         $user = User::find($id);
 
         if (!$user) {
@@ -348,6 +348,7 @@ class C_AuthController extends Controller
             ], 400);
         }
 
+        // cambiar contraseña
         $user->password = Hash::make($request->password);
         $user->save();
 

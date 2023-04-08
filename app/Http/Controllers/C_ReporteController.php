@@ -94,79 +94,79 @@ class C_ReporteController extends Controller
     ], 201);
   }
   //metodo uoload para subir imagen
-  public function upload(Request $request){
+  public function upload(Request $request)
+  {
     $file = $request->file('imagen')->store('public/reportes');
     $file = substr($file, 16);
     return response()->json([
       'message' => 'Imagen subida correctamente',
       'imagen' => $file
     ], 201);
-
   }
 
-   //actualizar imagen del reporte
-   public function updateImagenReporte(Request $request, $id)
-   {
-       
-       $reporte = C_Reporte::findOrFail($id);
-       $destino = public_path("storage\\". $reporte->imagen);
-       if ($reporte == null) {
-           return response()->json([
-               'message' => 'No se encontro el registro'
-           ], 404);
-       } else {
-        
-           if ($request->hasFile('imagen')) {
-               if (File::exists($destino)) {
-                   File::delete($destino);
-               }
-               $reporte->imagen = $request->file('imagen')->store('public/reportes');
-               $reporte->imagen = substr($reporte->imagen, 16);
-           }
-           $reporte->save();
-          if ($reporte->save()) {
-               return response()->json([
-                   'message' => 'Imagen actualizada correctamente',
-                   'reporte' => $reporte
-               ], 200);
-           } else {
-               return response()->json([
-                   'message' => 'No se pudo actualizar el usuario'
-               ], 404);
-           }
-       }
-   }
-   public function getImagenReportesById(Request $request, $id)
-    {
+  //actualizar imagen del reporte
+  public function updateImagenReporte(Request $request, $id)
+  {
 
-        $imagen = $request->id;
+    $reporte = C_Reporte::findOrFail($id);
+    $destino = public_path("storage\\" . $reporte->imagen);
+    if ($reporte == null) {
+      return response()->json([
+        'message' => 'No se encontro el registro'
+      ], 404);
+    } else {
 
-        //path de donde se encuentra la imagen public/storage/usuarios/id.extension
-        $path = storage_path("app/public/reportes/" . $imagen);
-
-        if(file_exists($path)){
-            return response()->file($path);
-        }else{
-            return response()->file(storage_path("app/public/reportes/default1.png"));
+      if ($request->hasFile('imagen')) {
+        if (File::exists($destino)) {
+          File::delete($destino);
         }
+        $reporte->imagen = $request->file('imagen')->store('public/reportes');
+        $reporte->imagen = substr($reporte->imagen, 16);
+      }
+      $reporte->save();
+      if ($reporte->save()) {
+        return response()->json([
+          'message' => 'Imagen actualizada correctamente',
+          'reporte' => $reporte
+        ], 200);
+      } else {
+        return response()->json([
+          'message' => 'No se pudo actualizar el usuario'
+        ], 404);
+      }
     }
-    //MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
-    public function showByUTEId(){
-       //obtener la categoria de la ute logueada
-        $uid = auth()->user()->id;
-        $categoria = C_Categoria::where('user_id', $uid)->get();
-        $reportes = C_Reporte::where('categoria_id', $categoria[0]->id)->get();
-        if (count($reportes) > 0) {
-            return response()->json([
-                'reportes' => $reportes
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'No se encontraron reportes',
-            ], 404);
-        }
-    
+  }
+  public function getImagenReportesById(Request $request, $id)
+  {
+
+    $imagen = $request->id;
+
+    //path de donde se encuentra la imagen public/storage/usuarios/id.extension
+    $path = storage_path("app/public/reportes/" . $imagen);
+
+    if (file_exists($path)) {
+      return response()->file($path);
+    } else {
+      return response()->file(storage_path("app/public/reportes/default1.png"));
     }
+  }
+  //MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
+  public function showByUTEId()
+  {
+    //obtener la categoria de la ute logueada
+    $uid = auth()->user()->id;
+    $categoria = C_Categoria::where('user_id', $uid)->get();
+    $reportes = C_Reporte::where('categoria_id', $categoria[0]->id)->get();
+    if (count($reportes) > 0) {
+      return response()->json([
+        'reportes' => $reportes
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
+  }
   //mostrar reportes que tiene un usuario logueado
   public function showByUserId()
   {
@@ -327,57 +327,21 @@ class C_ReporteController extends Controller
   // metodo para cambiar el estado del reporte a rechazado y enviar un email al usuario que creo el reporte con el motivo del rechazo 
   public function rechazarReporte(Request $request, $id)
   {
-      // rechazo del reporte
-      $reporte = C_Reporte::find($id);
-      $reporte->estado = "Rechazado";
-      $reporte->save();
-  
-      // ute a cargo de la categoria del reporte
-      $categoria = C_Categoria::find($reporte->categoria_id);
-      $userUTE = User::find($categoria->user_id);
-  
-      // email al usuario que creo el reporte
-      $user = User::find($reporte->user_id);
-      Mail::to($user->email)->send(new RechazoReporte($request->motivo, $reporte->titulo, $user, $userUTE));
-  
-      // registrar en la bitácora
-      // Traer el nombre completo del UTE que realizó la operación y está logueado
-      $user_id = auth()->user()->id;
-      $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
-                 ->where('id', $user_id)
-                 ->where('rol', 'UTE')
-                 ->value('nombre_completo');
-      $reporte_id = $reporte->id;
-      $modified_at = $reporte->updated_at;
-  
-      // Determinar el valor de la operación en función del estado del reporte
-      if($reporte->estado === 'Aceptado'){
-          $operation = 'Aceptado';
-      }elseif($reporte->estado === 'Rechazado'){
-          $operation = 'Rechazado';
-      }elseif($reporte->estado === 'Finalizado'){
-          $operation = 'Finalizado';
-      }else{
-          $operation = 'Cambio de categoría';
-      }
-  
-      DB::table('TB_Bitacora')->insert([
-          'operation' => $operation,
-          'justificacion' => $request->motivo,
-          'ute' => $ute,
-          'reporte_id' => $reporte_id,
-          'modified_at' => $modified_at,
-      ]);
-  
-      if($reporte->save()){
-        return response()->json([
-            'message' => 'Reporte rechazado',
-        ], 200);
-    }else{
-        return response()->json([
-            'message' => 'Error inesperado, vuelva a intentarlo',
-        ], 400);
-    }
+    // rechazo del reporte
+    $reporte = C_Reporte::find($id);
+    $reporte->estado = "Rechazado";
+    $reporte->save();
+
+    // ute a cargo de la categoria del reporte
+    $categoria = C_Categoria::find($reporte->categoria_id);
+    $userUTE = User::find($categoria->user_id);
+
+    // email al usuario que creo el reporte
+    $user = User::find($reporte->user_id);
+    Mail::to($user->email)->send(new RechazoReporte($request->motivo, $reporte->titulo, $user, $userUTE));
+
+    return response()->json([
+      'message' => 'Estado actualizado correctamente, el reporte ha sido rechazado',
+    ], 200);
   }
-  
 }
