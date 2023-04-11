@@ -357,4 +357,30 @@ class C_AuthController extends Controller
             'message' => 'Contraseña cambiada correctamente',
         ], 201);
     }
+    //olvido contraseña password y confirmarPassword 
+    public function olvidoContrasenia(Request $request, $id)
+    {
+        
+        // validacion del request
+        $this->validate($request, [
+            'password' => 'required|string',
+            'confirmarPassword' => 'required|string',
+        ]);
+        $user = User::find($id);
+
+        if ($request->password != $request->confirmarPassword) {
+            return response()->json([
+                'message' => 'Las contraseñas no coinciden'
+            ], 400);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+
+        // respuesta en json
+        return response()->json([
+            'message' => 'Contraseña cambiada correctamente',
+        ], 201);
+    }
 }
