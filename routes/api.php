@@ -8,6 +8,9 @@ use App\Http\Controllers\C_ReporteController;
 use App\Http\Controllers\C_CategoriaController;
 use App\Http\Controllers\C_AdministradorController;
 
+// drive
+use App\Providers\DriveServiceProvider;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -99,3 +102,21 @@ Route::get('renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify'
 
 Route::get('/mostrar_estadisticas/{mes?}/{anio?}', [C_AdministradorController::class, 'estadistica']);
 Route::get('/mostrar_bitacora', [C_AdministradorController::class, 'mostrarBitacora']);
+
+
+// drive test 
+
+Route::post('/drive', function (Request $request) {
+
+    // Obtenemos el archivo que se subió
+    $file = $request->file('imagen')->getRealPath();
+
+    // Generamos un nombre único para el archivo
+    $filename = uniqid() . '.' . $request->file('imagen')->getClientOriginalExtension();
+
+    // Escribimos el archivo en Google Drive
+    Storage::disk('google')->put($filename, file_get_contents($file));
+
+    // Devolvemos la URL del archivo subido
+    return Storage::disk('google')->url($filename);
+});
