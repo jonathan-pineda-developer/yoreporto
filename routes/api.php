@@ -97,5 +97,6 @@ Route::get('renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify'
 
 //rutas para el admin
 
-Route::get('/mostrar_estadisticas/{mes?}/{anio?}', [C_AdministradorController::class, 'estadistica']);
+Route::get('/mostrar_estadisticas', [C_AdministradorController::class, 'estadistica']);
+Route::get('/generar_pdf', [C_AdministradorController::class, 'generarPDF']);
 Route::get('/mostrar_bitacora', [C_AdministradorController::class, 'mostrarBitacora']);
