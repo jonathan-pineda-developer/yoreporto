@@ -52,23 +52,23 @@ class C_AdministradorController extends Controller
             
             $reportes_por_categoria[] = [
                 'Categoria' => $categoria->descripcion,
-                'reportes en espera' => $reportes_en_espera,
-                'reportes aceptados' => $reportes_aceptados,
-                'reportes rechazados' => $reportes_rechazados,
-                'reportes finalizados' => $reportes_finalizados,
+                'espera' => $reportes_en_espera,
+                'aceptados' => $reportes_aceptados,
+                'rechazados' => $reportes_rechazados,
+                'finalizados' => $reportes_finalizados,
                 'total' => $total
             ];
         }
         
         return [
-            'reportes por categoria' => $reportes_por_categoria
+            'categorias' => $reportes_por_categoria
         ];
     }
 
 
 function generarPDF() {
     $data = $this->estadistica();
-    $html = view('Informe.report', ['reportes_por_categoria' => $data['reportes por categoria']])->render();
+    $html = view('Informe.report', ['reportes_por_categoria' => $data['categorias']])->render();
 
     $dompdf = new Dompdf();
     $dompdf->loadHtml($html);

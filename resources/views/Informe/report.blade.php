@@ -16,10 +16,10 @@
             @foreach($reportes_por_categoria as $categoria)
             <tr>
                 <td>{{ $categoria['Categoria'] }}</td>
-                <td>{{ $categoria['reportes en espera'] }}</td>
-                <td>{{ $categoria['reportes aceptados'] }}</td>
-                <td>{{ $categoria['reportes rechazados'] }}</td>
-                <td>{{ $categoria['reportes finalizados'] }}</td>
+                <td>{{ $categoria['espera'] }}</td>
+                <td>{{ $categoria['aceptados'] }}</td>
+                <td>{{ $categoria['rechazados'] }}</td>
+                <td>{{ $categoria['finalizados'] }}</td>
                 <td>{{ $categoria['total'] }}</td>
             </tr>
             @endforeach
