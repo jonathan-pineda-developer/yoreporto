@@ -66,7 +66,7 @@ Route::get('/usuarios/getImagenById/{id}', [C_UserController::class, 'getImagenB
 Route::post('/actualizar_datos/{id}', [C_UserController::class, 'updateDatos'])->middleware('jwt.verify');
 Route::put('/inactivar/{id}', [C_UserController::class, 'inactivar']);
 Route::put('/actualizar_categoria_reporte/{id}', [C_ReporteController::class, 'updateCategoria'])->middleware('jwt.verify');
-Route::put('/aceptar_reporte/{id}', [C_ReporteController::class, 'aceptarReporte'])->middleware('jwt.verify');
+Route::put('/aceptar_reporte/{id}', [C_ReporteController::class, 'aceptarReporte']);
 Route::put('/rechazar_reporte/{id}', [C_ReporteController::class, 'rechazarReporte'])->middleware('jwt.verify');
 
 // ruta para login de google
@@ -85,6 +85,8 @@ Route::get('mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
 Route::post('crear_categoria', [C_CategoriaController::class, 'store']);
 Route::put('actualizar_categoria/{id}', [C_CategoriaController::class, 'update']);
 Route::delete('eliminar_categoria/{id}', [C_CategoriaController::class, 'destroy']);
+//get categoria by id
+Route::get('mostrar_categoria/{id}', [C_CategoriaController::class, 'getCategoria']);
 
 
 //rutas UTEs
@@ -97,5 +99,6 @@ Route::get('renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify'
 
 //rutas para el admin
 
-Route::get('/mostrar_estadisticas/{mes?}/{anio?}', [C_AdministradorController::class, 'estadistica']);
+Route::get('/mostrar_estadisticas', [C_AdministradorController::class, 'estadistica']);
+Route::get('/generar_pdf', [C_AdministradorController::class, 'generarPDF']);
 Route::get('/mostrar_bitacora', [C_AdministradorController::class, 'mostrarBitacora']);
