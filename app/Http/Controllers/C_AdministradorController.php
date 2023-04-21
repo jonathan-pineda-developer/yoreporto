@@ -17,45 +17,37 @@ class C_AdministradorController extends Controller
 {
 
     // función para obtener la cantidad de reportes finalizados en un mes y año dado
-    public function reportes_Finalizados($mes, $anio)
+    public function reportes_Finalizados()
     {
-        return C_Reporte::where('estado', 'Finalizado')->whereMonth('created_at', $mes)->whereYear('created_at', $anio)->count();
+        return C_Reporte::where('estado', 'Finalizado')->count();
     }
 
     // función para obtener la cantidad de reportes en proceso en un mes y año dado
-    public function reportes_en_espera($mes, $anio)
+    public function reportes_en_espera()
     {
-        return C_Reporte::where('estado', 'En espera')->whereMonth('created_at', $mes)->whereYear('created_at', $anio)->count();
+        return C_Reporte::where('estado', 'En espera')->count();
     }
 
     // función para obtener la cantidad de reportes aceptados en un mes y año dado
-    public function reportes_aceptados($mes, $anio)
+    public function reportes_aceptados()
     {
-        return C_Reporte::where('estado', 'Aceptado')->whereMonth('created_at', $mes)->whereYear('created_at', $anio)->count();
+        return C_Reporte::where('estado', 'Aceptado')->count();
     }
-    public function reportes_rechazados($mes, $anio)
+    public function reportes_rechazados()
     {
-        return C_Reporte::where('estado', 'Rechazado')->whereMonth('created_at', $mes)->whereYear('created_at', $anio)->count();
+        return C_Reporte::where('estado', 'Rechazado')->count();
     }
 
-    //función para obtener la cantidad de reportes por categoría en un mes y año dado
-    public function reportes_por_categoria($mes, $anio){
-    return C_Reporte::select('TB_Categoria.descripcion as Categoria', DB::raw('count(*) as total'))
-    ->join('TB_Categoria', 'TB_Categoria.id', '=', 'TB_Reporte.categoria_id')
-    ->whereMonth('TB_Reporte.created_at', $mes)
-    ->whereYear('TB_Reporte.created_at', $anio)
-    ->groupBy('TB_Categoria.descripcion')
-    ->get();
-    }
-    function estadistica($mes, $anio) {
+
+    function estadistica() {
         $categorias = DB::table('TB_Categoria')->get();
         $reportes_por_categoria = [];
         
         foreach ($categorias as $categoria) {
-            $reportes_finalizados = C_Reporte::where('estado', 'Finalizado')->where('categoria_id', $categoria->id)->whereMonth('created_at', $mes)->whereYear('created_at', $anio)->count();
-            $reportes_en_espera = C_Reporte::where('estado', 'En espera')->where('categoria_id', $categoria->id)->whereMonth('created_at', $mes)->whereYear('created_at', $anio)->count();
-            $reportes_aceptados = C_Reporte::where('estado', 'Aceptado')->where('categoria_id', $categoria->id)->whereMonth('created_at', $mes)->whereYear('created_at', $anio)->count();
-            $reportes_rechazados = C_Reporte::where('estado', 'Rechazado')->where('categoria_id', $categoria->id)->whereMonth('created_at', $mes)->whereYear('created_at', $anio)->count();
+            $reportes_finalizados = C_Reporte::where('estado', 'Finalizado')->where('categoria_id', $categoria->id)->count();
+            $reportes_en_espera = C_Reporte::where('estado', 'En espera')->where('categoria_id', $categoria->id)->count();
+            $reportes_aceptados = C_Reporte::where('estado', 'Aceptado')->where('categoria_id', $categoria->id)->count();
+            $reportes_rechazados = C_Reporte::where('estado', 'Rechazado')->where('categoria_id', $categoria->id)->count();
             $total = $reportes_finalizados + $reportes_en_espera + $reportes_aceptados + $reportes_rechazados;
             
             $reportes_por_categoria[] = [
@@ -72,7 +64,29 @@ class C_AdministradorController extends Controller
             'reportes por categoria' => $reportes_por_categoria
         ];
     }
-            //funcion para mostrar la bitacora
+
+
+function generarPDF() {
+    $data = $this->estadistica();
+    $html = view('Informe.report', ['reportes_por_categoria' => $data['reportes por categoria']])->render();
+
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->render();
+
+    $output = $dompdf->output();
+
+    return response()->streamDownload(
+        function() use ($output) {
+            echo $output;
+        },
+        'estadisticas.pdf'
+    );
+}
+
+
+    //funcion para mostrar la bitacora
     public function mostrarBitacora(){
         $bitacora = DB::table('TB_Bitacora')->get();
         return response()->json([
