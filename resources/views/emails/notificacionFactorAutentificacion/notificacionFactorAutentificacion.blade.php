@@ -1,10 +1,3 @@
-<html>
- <body>
- <h1>Notificacion con codigo numerico</h1>
-    <p>Hola, {{$user->nombre}} {{$user->apellidos}} su codigo de acceso al sistema es: {{$user->codigo_doble_factor}}</p>
- </body>
-</html>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -178,7 +171,7 @@
                                 <td class="center-text"  align="center" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:42px;line-height:52px;font-weight:400;font-style:normal;color:#FFFFFF;text-decoration:none;letter-spacing:0px;">
 
                                     <div  >
-                                        {{ __('pleb.mail.Verify Email') }} {{$user->nombre}} {{$user->apellidos}} {{ __('pleb.mail.Verify Email Sign') }}
+                                        {{ __('pleb.mail.Verify Email') }} {{$user->nombre}} {{$user->apellidos}}{{ __('pleb.mail.Verify Email Sign') }}
                                     </div>
 
                                 </td>
