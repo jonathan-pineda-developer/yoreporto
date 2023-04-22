@@ -53,23 +53,20 @@ class C_CategoriaController extends Controller
 
     public function mostrar()
     {
-        // Obtener todas las categorías
+
         $categorias = C_Categoria::all();
-    
-        // Verificar si hay categorías
+
         if ($categorias->count() > 0) {
     
             $categorias_info = [];
     
-            // Para cada categoría, obtener el nombre completo del usuario (UTE) que la creó
             foreach ($categorias as $categoria) {
                 $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
                     ->where('id', $categoria->user_id)
                     ->where('rol', 'UTE')
                     ->value('nombre_completo');
-    
-                // Agregar información sobre la categoría a la matriz $categorias_info
                 $categorias_info[] = [
+                    'id' => $categoria->id,
                     'descripcion' => $categoria->descripcion,
                     'color' => $categoria->color,
                     'ute' => $ute,
@@ -87,6 +84,7 @@ class C_CategoriaController extends Controller
             ], 400);
         }
     }
+    
     
 
     //metodo para eliminar una categoria
@@ -164,4 +162,26 @@ class C_CategoriaController extends Controller
             ], 400);
         }
     }
+
+    public function getCategoria($id)
+    {
+        $categoria = C_Categoria::find($id);
+        if (!$categoria) {
+            return response()->json([
+                'message' => 'La categoría no existe',
+            ], 404);
+        }
+    
+        $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
+            ->where('id', $categoria->user_id)
+            ->where('rol', 'UTE')
+            ->value('nombre_completo');
+    
+        return response()->json([
+            'descripcion' => $categoria->descripcion,
+            'color' => $categoria->color,
+            'ute' => $ute,
+        ], 200);
+    }
+    
 }
