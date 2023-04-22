@@ -332,31 +332,40 @@ class C_AuthController extends Controller
     }
 
     // cambiar contraseña de usuario del id que se recibe
-    public function cambiarContrasenia(Request $request, $id)
-    {
-        // validacion del request
-        $this->validate($request, [
-            'password' => 'required|string|min:6|max:16',
-        ]);
+     public function cambiarContrasena(Request $request, $id)
+     {
 
-        // usuario que se va a cambiar la contraseña
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'Usuario no encontrado'
-            ], 400);
-        }
-
-        // cambiar contraseña
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        // respuesta en json
-        return response()->json([
-            'message' => 'Contraseña cambiada correctamente',
-        ], 201);
-    }
+            // validacion del request
+            $this->validate($request, [
+                'contrasenaActual' => 'required',
+                'contrasenaNueva' => 'required',
+                'contrasenaConfirmar' => 'required',
+            ]);
+         $user = User::find($id);
+         if ($user == null) {
+             return response()->json([
+                 'message' => 'No se encontro el registro'
+             ], 404);
+         } else {
+             if (Hash::check($request->contrasenaActual, $user->password)) {
+                 if ($request->contrasenaNueva == $request->contrasenaConfirmar) {
+                     $user->password = Hash::make($request->contrasenaNueva);
+                     $user->save();
+                     return response()->json([
+                         'message' => 'Contraseña actualizada correctamente'
+                     ], 200);
+                 } else {
+                     return response()->json([
+                         'message' => 'Las contraseñas no coinciden'
+                     ], 404);
+                 }
+             } else {
+                 return response()->json([
+                     'message' => 'La contraseña actual no es correcta'
+                 ], 404);
+             }
+         }
+     }
     //olvido contraseña password y confirmarPassword 
     public function olvidoContrasenia(Request $request, $id)
     {
