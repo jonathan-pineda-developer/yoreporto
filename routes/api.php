@@ -8,6 +8,9 @@ use App\Http\Controllers\C_ReporteController;
 use App\Http\Controllers\C_CategoriaController;
 use App\Http\Controllers\C_AdministradorController;
 
+// drive
+use App\Providers\DriveServiceProvider;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -103,5 +106,28 @@ Route::get('/mostrar_estadisticas', [C_AdministradorController::class, 'estadist
 Route::get('/generar_pdf', [C_AdministradorController::class, 'generarPDF']);
 Route::get('/mostrar_bitacora', [C_AdministradorController::class, 'mostrarBitacora']);
 
+<<<<<<< HEAD
 //contar ciudadanos
 Route::get('/mostrar_usarios_activos', [C_AdministradorController::class, 'total_usuarios']);
+=======
+
+// drive test 
+
+Route::post('/drive', function (Request $request) {
+
+    // Obtenemos el archivo que se subió
+    $file = $request->file('imagen')->getRealPath();
+
+    // Generamos un nombre único para el archivo
+    $filename = uniqid() . '.' . $request->file('imagen')->getClientOriginalExtension();
+
+    // Escribimos el archivo en Google Drive
+    Storage::disk('google')->put($filename, file_get_contents($file));
+
+    // Devolvemos la URL del archivo subido
+    return Response ::json([
+        'message' => 'Archivo subido correctamente',
+        'url' => Storage::disk('google')->url($filename)
+    ]);
+});
+>>>>>>> driveAPI
