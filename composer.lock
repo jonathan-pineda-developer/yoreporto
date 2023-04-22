@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
     "content-hash": "bdad85f9c3142f4706f5cfb0320e4a1b",
-=======
-    "content-hash": "57bb15c3fd9ff03be71c45a5169406f3",
->>>>>>> driveAPI
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -2218,7 +2214,6 @@
             "time": "2022-04-17T13:12:02+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "masterminds/html5",
             "version": "2.7.6",
             "source": {
@@ -2250,42 +2245,10 @@
             "autoload": {
                 "psr-4": {
                     "Masterminds\\": "src"
-=======
-            "name": "masbug/flysystem-google-drive-ext",
-            "version": "v2.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/masbug/flysystem-google-drive-ext.git",
-                "reference": "3947d39be212bff9cea95b2a5252e52c9eb36cc0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/masbug/flysystem-google-drive-ext/zipball/3947d39be212bff9cea95b2a5252e52c9eb36cc0",
-                "reference": "3947d39be212bff9cea95b2a5252e52c9eb36cc0",
-                "shasum": ""
-            },
-            "require": {
-                "ext-mbstring": "*",
-                "google/apiclient": "^2.2",
-                "guzzlehttp/guzzle": "^6.3 | ^7.0",
-                "guzzlehttp/psr7": "^1.7|^2.0",
-                "league/flysystem": "^2.1.1|^3.0",
-                "php": "^7.2 | ^8.0"
-            },
-            "require-dev": {
-                "league/flysystem-adapter-test-utilities": "^2.0|^3.0",
-                "phpunit/phpunit": "^8.0 | ^9.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Masbug\\Flysystem\\": "src"
->>>>>>> driveAPI
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-<<<<<<< HEAD
                 "MIT"
             ],
             "authors": [
@@ -2318,33 +2281,6 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.7.6"
             },
             "time": "2022-08-18T16:18:26+00:00"
-=======
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Naoki Sawada",
-                    "email": "hypweb@gmail.com"
-                },
-                {
-                    "name": "Mitja Spes",
-                    "email": "mitja@lxnav.com"
-                }
-            ],
-            "description": "Flysystem adapter for Google Drive with seamless virtual<=>display path translation",
-            "keywords": [
-                "Flysystem",
-                "extended",
-                "google-drive",
-                "laravel",
-                "translated"
-            ],
-            "support": {
-                "issues": "https://github.com/masbug/flysystem-google-drive-ext/issues",
-                "source": "https://github.com/masbug/flysystem-google-drive-ext/tree/v2.2.2"
-            },
-            "time": "2022-06-24T06:43:42+00:00"
->>>>>>> driveAPI
         },
         {
             "name": "monolog/monolog",
@@ -4063,7 +3999,6 @@
             "time": "2023-04-15T23:01:58+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "sabberworm/php-css-parser",
             "version": "8.4.0",
             "source": {
@@ -4119,10 +4054,6 @@
         {
             "name": "symfony/console",
             "version": "v6.2.5",
-=======
-            "name": "stella-maris/clock",
-            "version": "0.1.7",
->>>>>>> driveAPI
             "source": {
                 "type": "git",
                 "url": "https://github.com/stella-maris-solutions/clock.git",
