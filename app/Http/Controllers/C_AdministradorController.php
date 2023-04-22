@@ -93,4 +93,18 @@ function generarPDF() {
             'bitacora' => $bitacora
         ], 200);
     }
+
+    public function total_usuarios()
+    {
+        $usuarios=User::where('rol', 'Ciudadano')->where('estado', '1')->count();
+        if($usuarios){
+            return response()->json([
+                'usuarios' => $usuarios
+            ], 200);
+        }else{
+            return response()->json([
+                'message' => 'No hay usuarios'
+            ], 404);
+        }
+    }
 }

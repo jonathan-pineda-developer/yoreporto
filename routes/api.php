@@ -102,3 +102,6 @@ Route::get('renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify'
 Route::get('/mostrar_estadisticas', [C_AdministradorController::class, 'estadistica']);
 Route::get('/generar_pdf', [C_AdministradorController::class, 'generarPDF']);
 Route::get('/mostrar_bitacora', [C_AdministradorController::class, 'mostrarBitacora']);
+
+//contar ciudadanos
+Route::get('/mostrar_usarios_activos', [C_AdministradorController::class, 'total_usuarios']);
