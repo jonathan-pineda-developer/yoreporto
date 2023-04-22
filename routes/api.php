@@ -118,5 +118,8 @@ Route::post('/drive', function (Request $request) {
     Storage::disk('google')->put($filename, file_get_contents($file));
 
     // Devolvemos la URL del archivo subido
-    return Storage::disk('google')->url($filename);
+    return Response ::json([
+        'message' => 'Archivo subido correctamente',
+        'url' => Storage::disk('google')->url($filename)
+    ]);
 });
