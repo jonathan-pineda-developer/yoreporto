@@ -251,9 +251,9 @@ class C_ReporteController extends Controller
 
     $user_id = auth()->user()->id;
     $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
-               ->where('id', $user_id)
-               ->where('rol', 'UTE')
-               ->value('nombre_completo');
+      ->where('id', $user_id)
+      ->where('rol', 'UTE')
+      ->value('nombre_completo');
     $reporte_id = $reporte->id;
     $modified_at = $reporte->updated_at;
 
@@ -261,66 +261,65 @@ class C_ReporteController extends Controller
     $operation = 'Cambio de categoría';
 
     DB::table('TB_Bitacora')->insert([
-        'operation' => $operation,
-        'ute' => $ute,
-        'reporte_id' => $reporte_id,
-        'modified_at' => $modified_at,
+      'operation' => $operation,
+      'ute' => $ute,
+      'reporte_id' => $reporte_id,
+      'modified_at' => $modified_at,
     ]);
 
-    if($reporte->save()){
-        return response()->json([
-            'message' => 'Se ha cambiado la categoría del reporte exitósamente',
-        ], 200);
-    }else{
-        return response()->json([
-            'message' => 'Error inesperado, vuelva a intentarlo',
-        ], 400);
+    if ($reporte->save()) {
+      return response()->json([
+        'message' => 'Se ha cambiado la categoría del reporte exitósamente',
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'Error inesperado, vuelva a intentarlo',
+      ], 400);
     }
-    
   }
 
   // metodo para cambiar el estado del reporte a aceptado
   public function aceptarReporte(Request $request, $id)
   {
-   
+
     $reporte = C_Reporte::find($id);
     $reporte->estado = "Aceptado";
     $reporte->save();
 
     $user_id = auth()->user()->id;
     $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
-               ->where('id', $user_id)
-               ->where('rol', 'UTE')
-               ->value('nombre_completo');
+      ->where('id', $user_id)
+      ->where('rol', 'UTE')
+      ->value('nombre_completo');
     $reporte_id = $reporte->id;
     $modified_at = $reporte->updated_at;
 
     // Determinar el valor de la operación en función del estado del reporte
-    if($reporte->estado === 'Aceptado'){
-        $operation = 'Aceptado';
-    }elseif($reporte->estado === 'Rechazado'){
-        $operation = 'Rechazado';
-    }elseif($reporte->estado === 'Finalizado'){
-        $operation = 'Finalizado';
-    }else{
-        $operation = 'Cambio de categoría';
+    if ($reporte->estado === 'Aceptado') {
+      $operation = 'Aceptado';
+    } elseif ($reporte->estado === 'Rechazado') {
+      $operation = 'Rechazado';
+    } elseif ($reporte->estado === 'Finalizado') {
+      $operation = 'Finalizado';
+    } else {
+      $operation = 'Cambio de categoría';
     }
 
     DB::table('TB_Bitacora')->insert([
-        'operation' => $operation,
-        'ute' => $ute,
-        'reporte_id' => $reporte_id,
-        'modified_at' => $modified_at,
+      'operation' => $operation,
+      'ute' => $ute,
+      'reporte_id' => $reporte_id,
+      'modified_at' => $modified_at,
     ]);
 
-    if($reporte->save()){
-        return response()->json([
-            'message' => 'Reporte aceptado',
-        ], 200);
-    }else{
-        return response()->json([
-            'message' => 'Error inesperado, vuelva a intentarlo',
-        ], 400);
+    if ($reporte->save()) {
+      return response()->json([
+        'message' => 'Reporte aceptado',
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'Error inesperado, vuelva a intentarlo',
+      ], 400);
     }
   }
 
@@ -342,39 +341,39 @@ class C_ReporteController extends Controller
 
     $user_id = auth()->user()->id;
     $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
-               ->where('id', $user_id)
-               ->where('rol', 'UTE')
-               ->value('nombre_completo');
+      ->where('id', $user_id)
+      ->where('rol', 'UTE')
+      ->value('nombre_completo');
     $reporte_id = $reporte->id;
     $modified_at = $reporte->updated_at;
 
     // Determinar el valor de la operación en función del estado del reporte
-    if($reporte->estado === 'Aceptado'){
-        $operation = 'Aceptado';
-    }elseif($reporte->estado === 'Rechazado'){
-        $operation = 'Rechazado';
-    }elseif($reporte->estado === 'Finalizado'){
-        $operation = 'Finalizado';
-    }else{
-        $operation = 'Cambio de categoría';
+    if ($reporte->estado === 'Aceptado') {
+      $operation = 'Aceptado';
+    } elseif ($reporte->estado === 'Rechazado') {
+      $operation = 'Rechazado';
+    } elseif ($reporte->estado === 'Finalizado') {
+      $operation = 'Finalizado';
+    } else {
+      $operation = 'Cambio de categoría';
     }
 
     DB::table('TB_Bitacora')->insert([
-        'operation' => $operation,
-        'justificacion' => $request->motivo,
-        'ute' => $ute,
-        'reporte_id' => $reporte_id,
-        'modified_at' => $modified_at,
+      'operation' => $operation,
+      'justificacion' => $request->motivo,
+      'ute' => $ute,
+      'reporte_id' => $reporte_id,
+      'modified_at' => $modified_at,
     ]);
 
-    if($reporte->save()){
-        return response()->json([
-            'message' => 'Reporte aceptado',
-        ], 200);
-    }else{
-        return response()->json([
-            'message' => 'Error inesperado, vuelva a intentarlo',
-        ], 400);
+    if ($reporte->save()) {
+      return response()->json([
+        'message' => 'Reporte aceptado',
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'Error inesperado, vuelva a intentarlo',
+      ], 400);
     }
   }
 
@@ -406,5 +405,24 @@ class C_ReporteController extends Controller
         'message' => 'No se encontraron reportes',
       ], 404);
     }
+  }
+
+  public function uploadDrive(Request $request)
+  {
+
+    // Obtenemos el archivo que se subió
+    $file = $request->file('imagen')->getRealPath();
+
+    // Generamos un nombre único para el archivo
+    $filename = uniqid() . '.' . $request->file('imagen')->getClientOriginalExtension();
+
+    // Escribimos el archivo en Google Drive
+    Storage::disk('google')->put($filename, file_get_contents($file));
+
+    // Devolvemos la URL del archivo subido
+    return response()->json([
+      'message' => 'Archivo subido correctamente',
+      'url' => Storage::disk('google')->url($filename),
+    ], 200);
   }
 }
