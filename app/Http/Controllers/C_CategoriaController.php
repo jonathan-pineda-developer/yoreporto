@@ -53,18 +53,41 @@ class C_CategoriaController extends Controller
 
     public function mostrar()
     {
-        //si hay categorias
-        if (C_Categoria::count() > 0) {
-            $categorias = C_Categoria::all();
+        // Obtener todas las categorías
+        $categorias = C_Categoria::all();
+    
+        // Verificar si hay categorías
+        if ($categorias->count() > 0) {
+    
+            $categorias_info = [];
+    
+            // Para cada categoría, obtener el nombre completo del usuario (UTE) que la creó
+            foreach ($categorias as $categoria) {
+                $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
+                    ->where('id', $categoria->user_id)
+                    ->where('rol', 'UTE')
+                    ->value('nombre_completo');
+    
+                // Agregar información sobre la categoría a la matriz $categorias_info
+                $categorias_info[] = [
+                    'descripcion' => $categoria->descripcion,
+                    'color' => $categoria->color,
+                    'ute' => $ute,
+                ];
+            }
+    
             return response()->json([
-                'categorias' => $categorias,
+                'message' => 'Categorias encontradas',
+                'categorias' => $categorias_info,
             ], 200);
+    
         } else {
             return response()->json([
-                'message' => 'No hay categorias registradas',
+                'message' => 'No se encuentran categorias',
             ], 400);
         }
     }
+    
 
     //metodo para eliminar una categoria
     public function destroy(Request $requeset, $id)
