@@ -4052,8 +4052,8 @@
             "time": "2021-12-11T13:40:54+00:00"
         },
         {
-            "name": "symfony/console",
-            "version": "v6.2.5",
+            "name": "stella-maris/clock",
+            "version": "0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stella-maris-solutions/clock.git",
