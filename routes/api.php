@@ -106,10 +106,8 @@ Route::get('/mostrar_estadisticas', [C_AdministradorController::class, 'estadist
 Route::get('/generar_pdf', [C_AdministradorController::class, 'generarPDF']);
 Route::get('/mostrar_bitacora', [C_AdministradorController::class, 'mostrarBitacora']);
 
-<<<<<<< HEAD
 //contar ciudadanos
 Route::get('/mostrar_usarios_activos', [C_AdministradorController::class, 'total_usuarios']);
-=======
 
 // drive test 
 
@@ -125,9 +123,8 @@ Route::post('/drive', function (Request $request) {
     Storage::disk('google')->put($filename, file_get_contents($file));
 
     // Devolvemos la URL del archivo subido
-    return Response ::json([
+    return Response::json([
         'message' => 'Archivo subido correctamente',
         'url' => Storage::disk('google')->url($filename)
     ]);
 });
->>>>>>> driveAPI
