@@ -121,35 +121,26 @@ class C_CategoriaController extends Controller
         //si se encuentra la categoria con el id
         if (C_Categoria::where('id', $id)->exists()) {
             $categoria = C_Categoria::find($id);
-            $categoria->descripcion = $request->descripcion;
 
-            $mensaje = [
-                'required' => 'El campo :attribute es requerido',
-                'descripcion.max' => 'El campo descripcion no debe ser mayor a 100 caracteres',
-                'color.max' => 'El campo color no debe ser mayor a 7 caracteres, ejemplo: #ffffff',
-                'user_id.max' => 'El campo user_id no debe ser mayor a 36 caracteres',
-            ];
+            // Validar los datos del formulario
+            $validatedData = $request->validate([
+                'descripcion' => 'required',
+                'color' => 'required',
+                'ute' => 'required',
+            ]);
 
-            $this->validate($request, [
-                'descripcion' => 'required|string|max:100',
-                'color' => 'required|string|max:7',
-                'user_id' => 'required|string|max:36',
-            ], $mensaje);
+            // Buscar el UTE por su nombre y apellidos (nombre y apellidos son únicos)
+            $ute = User::where(DB::raw("CONCAT(nombre, ' ', apellidos)"), $request->ute)->where('rol', 'UTE')->firstOrFail();
+         
+            $categoria = C_Categoria::where('id', $id)->update([
+                'descripcion' => $request->descripcion,
+                'color' => $request->color,
+                'user_id' => $ute->id,
+            ]);
 
-            $categoria = C_Categoria::where('id', $id)->update(
-                [
-                    'id' => $categoria->id,
-                    'descripcion' => $categoria->descripcion,
-                    'color' => $categoria->color,
-                    'user_id' => $categoria->user_id,
-                ]
-            );
-
-            //si la categoria se actualiza correctamente
             if ($categoria) {
                 return response()->json([
                     'message' => 'Categoria actualizada correctamente',
-                    "categoria" => $categoria
                 ], 200);
             } else {
                 return response()->json([
@@ -161,8 +152,8 @@ class C_CategoriaController extends Controller
                 'message' => 'No se encuentra la categoria',
             ], 400);
         }
-    }
 
+    }
     public function getCategoria($id)
     {
         $categoria = C_Categoria::find($id);
@@ -178,6 +169,7 @@ class C_CategoriaController extends Controller
             ->value('nombre_completo');
     
         return response()->json([
+            'id' => $categoria->id,
             'descripcion' => $categoria->descripcion,
             'color' => $categoria->color,
             'ute' => $ute,
