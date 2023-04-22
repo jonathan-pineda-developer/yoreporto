@@ -109,22 +109,5 @@ Route::get('/mostrar_bitacora', [C_AdministradorController::class, 'mostrarBitac
 //contar ciudadanos
 Route::get('/mostrar_usarios_activos', [C_AdministradorController::class, 'total_usuarios']);
 
-// drive test 
-
-Route::post('/drive', function (Request $request) {
-
-    // Obtenemos el archivo que se subió
-    $file = $request->file('imagen')->getRealPath();
-
-    // Generamos un nombre único para el archivo
-    $filename = uniqid() . '.' . $request->file('imagen')->getClientOriginalExtension();
-
-    // Escribimos el archivo en Google Drive
-    Storage::disk('google')->put($filename, file_get_contents($file));
-
-    // Devolvemos la URL del archivo subido
-    return Response::json([
-        'message' => 'Archivo subido correctamente',
-        'url' => Storage::disk('google')->url($filename)
-    ]);
-});
+// drive img upload
+Route::post('/drive', [C_ReporteController::class, 'uploadDrive']);
