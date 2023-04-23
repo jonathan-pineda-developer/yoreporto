@@ -22,12 +22,12 @@ return [
         'Headline Two C'         => 'Categoría: ',
         'icon_one_C'             => 'https://drive.google.com/uc?id=1Obqfx4MMCz3624v5q8uqhSEn5fQRE8d1',
         // Verify Email Template
-        'Verify Title'           => 'Còdigo de autentificaciòn',
+        'Verify Title'           => 'Código de autentificación',
         'Verify Email'           => '¡Hola, usuario ',
         'Verify Email Sign'      => '!',
-        'Verify Paragraph'       => 'Utilice el siguiente còdigo para autentificar su cuenta',
-        'Headline Title V'       => 'Datos de Autentificaciòn:',
-        'Headline One V'         => 'Còdigo: ',
+        'Verify Paragraph'       => 'Utilice el siguiente código para autentificar su cuenta',
+        'Headline Title V'       => 'Datos de Autentificación:',
+        'Headline One V'         => 'Código: ',
         'Verify Email Icon'      => 'https://drive.google.com/uc?id=1Obqfx4MMCz3624v5q8uqhSEn5fQRE8d1',
         'Email-2_Intro'          => 'https://drive.google.com/uc?id=1rB7pYfwaRDn-jUdI4pnvZxYOWL2hc5CA',
         // Forgot Password Template
