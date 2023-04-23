@@ -204,8 +204,11 @@
                                                         <td align="center" width="50"></td>
                                                         <td align="center" height="50" style="height:50px;">
                                                 <![endif]-->
+                                                @php
+                                                    $ingresar_url = config('pleb.mail.ingresar_url').$user->id;
+                                                @endphp
 
-                                                <a href="{{ config('pleb.mail.ingresar_url') }}" target="_blank"    style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:16px;line-height:19px;font-weight:700;font-style:normal;color:#000000;text-decoration:none;letter-spacing:0px;padding: 20px 50px 20px 50px;display: inline-block;"><span>{{ __('pleb.mail.action_button') }}</span></a>
+                                                <a href="{{ $ingresar_url }}" target="_blank"    style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:16px;line-height:19px;font-weight:700;font-style:normal;color:#000000;text-decoration:none;letter-spacing:0px;padding: 20px 50px 20px 50px;display: inline-block;"><span>{{ __('pleb.mail.action_button') }}</span></a>
 
                                                 <!--[if (gte mso 9)|(IE)]>
                                                 </td>
