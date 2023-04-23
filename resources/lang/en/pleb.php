@@ -7,10 +7,11 @@ return [
         'Welcome Title'          => '¡Bienvenido!',
         'Welcome'                => '¡Bienvenido al sistema Yo Reporto!',
         'Welcome Paragraph'      => 'Usted ha sido agregado al sistema con el rol ',
+        'Welcome Paragraph One'  => 'Dar click en el botón de abajo para realizar su primer ingreso al sistema y realizar el cambio de contraseña.',
         'action_button'          => 'Cambiar Contraseña',
         'Login'                  => 'Sus credenciales son:',
         'Headline One'           => 'Nombre de Usuario: ',
-        'Headline Two'           => 'Contraseña: ',
+        'Headline Two'           => 'Contraseña Temporal: ',
         'icon_one'               => 'https://drive.google.com/uc?id=1JU8u5_26oDiSr1_FRUUmUx4wkfuHLj0B',
         'Email-1_Intro'          => 'https://drive.google.com/uc?id=1mtdkf5pZZXC48HfjGhGGLFy_Nba9qUnd',
         // Category

@@ -182,8 +182,9 @@
                             <tr>
                                 <td class="center-text"  align="center" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:16px;line-height:26px;font-weight:300;font-style:normal;color:#FFFFFF;text-decoration:none;letter-spacing:0px;">
 
-                                    <div  >
-                                        {{ __('pleb.mail.Welcome Paragraph') }} {{ $user->rol }}
+                                    <div>
+                                        <p> {{ __('pleb.mail.Welcome Paragraph') }} {{ $user->rol }} {!! "<br>" !!}
+                                        {{ __('pleb.mail.Welcome Paragraph One') }} </p>
                                     </div>
 
                                 </td>
