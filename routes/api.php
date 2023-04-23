@@ -27,7 +27,7 @@ Route::post('registro', [C_AuthController::class, 'registro']);
 Route::post('login', [C_AuthController::class, 'login']);
 Route::post('verificar_codigo', [C_AuthController::class, 'verificarCodigoDobleFactor']);
 Route::post('reenviar_codigo/{id}', [C_AuthController::class, 'reenviarCodigoDobleFactor']);
-Route::post('olvido_contraseña', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
+Route::post('olvido_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
 Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContrasena'])->middleware('jwt.verify');
 //olvidoContrasenia
 Route::put('olvido_contrasenia/{id}', [C_AuthController::class, 'olvidoContrasenia'])->middleware('jwt.verify');
@@ -86,7 +86,7 @@ Route::group(['middleware' => 'jwt.verify'], function () {
 //Route::post('crear_categoria', [C_CategoriaController::class, 'crear_Categoria']);
 Route::get('mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
 Route::post('crear_categoria', [C_CategoriaController::class, 'store']);
-Route::put('actualizar_categoria/{id}', [C_CategoriaController::class, 'update']);
+Route::post('actualizar_categoria/{id}', [C_CategoriaController::class, 'update']);
 Route::delete('eliminar_categoria/{id}', [C_CategoriaController::class, 'destroy']);
 //get categoria by id
 Route::get('mostrar_categoria/{id}', [C_CategoriaController::class, 'getCategoria']);
