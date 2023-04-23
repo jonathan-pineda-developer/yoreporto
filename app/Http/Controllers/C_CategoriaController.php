@@ -119,20 +119,15 @@ class C_CategoriaController extends Controller
     public function update(Request $request, $id)
     {
         //si se encuentra la categoria con el id
-        if (C_Categoria::where('id', $id)->exists()) {
-            $categoria = C_Categoria::find($id);
+        if (C_Categoria::where('id', $id)->exists()) { //si existe la categoria
+            $categoria = C_Categoria::find($id); //buscar la categoria
 
-            // Validar los datos del formulario
-            $validatedData = $request->validate([
-                'descripcion' => 'required',
-                'color' => 'required',
-                'ute' => 'required',
-            ]);
 
             // Buscar el UTE por su nombre y apellidos (nombre y apellidos son únicos)
             $ute = User::where(DB::raw("CONCAT(nombre, ' ', apellidos)"), $request->ute)->where('rol', 'UTE')->firstOrFail();
          
-            $categoria = C_Categoria::where('id', $id)->update([
+            // Actualizar la categoría
+            $categoria = C_Categoria::where('id', $id)->update([ //actualizar la categoria 
                 'descripcion' => $request->descripcion,
                 'color' => $request->color,
                 'user_id' => $ute->id,
