@@ -1,5 +1,3 @@
-<h1>{{$user->nombre}} {{$user->apellidos}} usted ha sido asignado a la categoria {{$categoria->descripcion}}</h1>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
@@ -299,7 +297,7 @@
                                                         <td class="center-text"  align="left" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:20px;line-height:28px;font-weight:400;font-style:normal;color:#343e9e;text-decoration:none;letter-spacing:0px;">
 
                                                             <div  >
-                                                                {{ __('pleb.mail.Headline One C') }}
+                                                                {{ __('pleb.mail.Headline Two C') }}
                                                             </div>
 
                                                         </td>
