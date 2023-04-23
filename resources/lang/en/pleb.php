@@ -7,7 +7,7 @@ return [
         'Welcome Title'          => '¡Bienvenido!',
         'Welcome'                => '¡Bienvenido al sistema Yo Reporto!',
         'Welcome Paragraph'      => 'Usted ha sido agregado al sistema con el rol ',
-        'action_button'          => 'Iniciar Sesión',
+        'action_button'          => 'Cambiar Contraseña',
         'Login'                  => 'Sus credenciales son:',
         'Headline One'           => 'Nombre de Usuario: ',
         'Headline Two'           => 'Contraseña: ',

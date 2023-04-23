@@ -5,7 +5,7 @@ return [
     'mail' => [
         'top_logo'           => 'https://drive.google.com/uc?id=19bxjX2HdehB_e5uOqR4CbBxQ1IgHHDiu', //'assets/img/emails/yoReporto.png',
         'flecha_encabezado'  => 'https://drive.google.com/uc?id=1q8SSZSAd2cxNnv2auzCo5Lz9xNR2UXvy',
-        'ingresar_url'       => 'http://localhost:4200/auth/cambiar_contraseña/',
+        'ingresar_url'       => 'http://localhost:4200/auth/cambiar_contrasenia/',
         'direccion'          => '',
         'numero_telefono'    => '',
         'info_email'         => 'info@munipalmares.go.cr',
