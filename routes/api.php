@@ -28,7 +28,7 @@ Route::post('login', [C_AuthController::class, 'login']);
 Route::post('verificar_codigo', [C_AuthController::class, 'verificarCodigoDobleFactor']);
 Route::post('reenviar_codigo/{id}', [C_AuthController::class, 'reenviarCodigoDobleFactor']);
 Route::post('recuperar_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
-Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContrasena'])->middleware('jwt.verify');
+Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContrasena']);
 //olvidoContrasenia
 Route::put('olvido_contrasenia/{id}', [C_AuthController::class, 'olvidoContrasenia']);
 //cambiarContraseniaOlvido
