@@ -107,4 +107,25 @@ function generarPDF() {
             ], 404);
         }
     }
+
+
+    public function  getFiltroBitacora(Request $request)
+    {
+        $query = C_Bitacora::query();
+
+
+        if ($request->filled('fecha_inicio')) {
+            $query->where('modified_at', '>=', $request->fecha_inicio);
+        }
+        if ($request->filled('fecha_fin')) {
+            $query->where('modified_at', '<=', $request->fecha_fin);
+        }
+        if ($request->filled('reporte_id')) {
+            $query->where('reporte_id', $request->reporte_id);
+        }
+        $bitacoras = $query->get();
+
+        return response()->json(['bitacora' => $bitacoras]);
+    }
+
 }
