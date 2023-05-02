@@ -39,12 +39,12 @@ class C_CategoriaController extends Controller
             Mail::to($ute->email)->send(new CategoriaUTE($ute, $categoria));
 
             return response()->json([
-                'message' => 'Categoria creada correctamente',
+                'message' => 'Categoría creada correctamente',
                 "categoria" => $categoria
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Error al crear la categoria',
+                'message' => 'Error al crear la categoría',
             ], 400);
         }
     }
@@ -74,13 +74,13 @@ class C_CategoriaController extends Controller
             }
     
             return response()->json([
-                'message' => 'Categorias encontradas',
+                'message' => 'Categorías encontradas',
                 'categorias' => $categorias_info,
             ], 200);
     
         } else {
             return response()->json([
-                'message' => 'No se encuentran categorias',
+                'message' => 'No se encuentran categorías',
             ], 400);
         }
     }
@@ -100,16 +100,16 @@ class C_CategoriaController extends Controller
 
             if ($categoria) {
                 return response()->json([
-                    'message' => 'Categoria eliminada correctamente',
+                    'message' => 'Categoría eliminada correctamente',
                 ], 200);
             } else {
                 return response()->json([
-                    'message' => 'Error al eliminar la categoria',
+                    'message' => 'Error al eliminar la categoría',
                 ], 400);
             }
         } else {
             return response()->json([
-                'message' => 'No se encuentra la categoria',
+                'message' => 'No se encuentra la categoría',
             ], 400);
         }
     }
@@ -135,16 +135,16 @@ class C_CategoriaController extends Controller
 
             if ($categoria) {
                 return response()->json([
-                    'message' => 'Categoria actualizada correctamente',
+                    'message' => 'Categoría actualizada correctamente',
                 ], 200);
             } else {
                 return response()->json([
-                    'message' => 'Error al actualizar la categoria',
+                    'message' => 'Error al actualizar la categoría',
                 ], 400);
             }
         } else {
             return response()->json([
-                'message' => 'No se encuentra la categoria',
+                'message' => 'No se encuentra la categoría',
             ], 400);
         }
 
