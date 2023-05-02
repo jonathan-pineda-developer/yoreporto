@@ -49,6 +49,8 @@ Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
 Route::get('aceptadosFinalidasos', [C_ReporteController::class, 'showReportesAceptadosoFinalizados']);
 Route::get('reportes_estado/{estado}', [C_ReporteController::class, 'showReportesByEstado']);
 Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
+//showReportesByEstadoUTE
+Route::get('reportes_estado_ute/{estado}', [C_ReporteController::class, 'showReportesByEstadoUTE'])->middleware('jwt.verify');
 //delete all
 Route::delete('deleteAll', [C_ReporteController::class, 'deleteAll']);
 //metodo upload
