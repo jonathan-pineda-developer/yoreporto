@@ -45,7 +45,7 @@ class C_UserController extends Controller
         $destino = public_path("storage\\". $user->imagen);
         if ($user == null) {
             return response()->json([
-                'message' => 'No se encontro el registro'
+                'message' => 'No se encontró el registro'
             ], 404);
         } else {
          
@@ -80,7 +80,7 @@ class C_UserController extends Controller
         $destino = public_path("storage\\". $user->imagen);
         if ($user == null) {
             return response()->json([
-                'message' => 'No se encontro el registro'
+                'message' => 'No se encontró el registro'
             ], 404);
         } else {
          
@@ -144,7 +144,7 @@ class C_UserController extends Controller
         $user = User::find($id);
         if (User::find($id) == null) {
             return reponse()->json([
-                'message' => 'No se encontro el registro'
+                'message' => 'No se encontró el registro'
             ], 404);
         } else {
             $user->estado = 0;

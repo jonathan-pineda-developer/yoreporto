@@ -182,7 +182,7 @@ class C_AuthController extends Controller
             $user->generarCodigoDobleFactor();
             Mail::to($user->email)->send(new CodigoAutentificacion($user));
             return response()->json([
-                'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
+                'message' => 'Se ha enviado un código de autentificación a su correo electrónico',
                 'token' => $token,
                 'user' => $user
             ], 200);
@@ -214,16 +214,16 @@ class C_AuthController extends Controller
             if ($user->codigo_doble_factor_expira < now()) {
                 $user->resetCodigoDobleFactor();
                 return response()->json([
-                    'message' => 'El codigo ha expirado, por favor vuelva a solicitar uno',
+                    'message' => 'El código ha expirado, por favor vuelva a solicitar uno',
                 ], 400);
             }
             $user->resetCodigoDobleFactor();
             return response()->json([
-                'message' => 'Codigo correcto',
+                'message' => 'Código correcto',
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Codigo incorrecto',
+                'message' => 'Código incorrecto',
             ], 400);
         }
     }
@@ -235,7 +235,7 @@ class C_AuthController extends Controller
         $user->generarCodigoDobleFactor();
         Mail::to($user->email)->send(new CodigoAutentificacion($user));
         return response()->json([
-            'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
+            'message' => 'Se ha enviado un código de autentificación a su correo electrónico',
         ], 200);
     }
     //reenviarCodigo por email
@@ -249,7 +249,7 @@ class C_AuthController extends Controller
         $user->generarCodigoDobleFactor();
         Mail::to($user->email)->send(new CodigoAutentificacion($user));
         return response()->json([
-            'message' => 'Se ha enviado un codigo de autentificacion a su correo electronico',
+            'message' => 'Se ha enviado un código de autentificación a su correo electrónico',
         ], 200);
     }
 
@@ -344,7 +344,7 @@ class C_AuthController extends Controller
          $user = User::find($id);
          if ($user == null) {
              return response()->json([
-                 'message' => 'No se encontro el registro'
+                 'message' => 'No se encontró el registro'
              ], 404);
          } else {
             //si la contraseña actual es igual a la contraseña del usuario

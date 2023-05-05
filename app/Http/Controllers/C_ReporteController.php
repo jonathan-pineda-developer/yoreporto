@@ -406,6 +406,23 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
+  //mostrar los reportes por estado y MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
+  public function showReportesByEstadoUTE(Request $request)
+  {
+    $user_id = auth()->user()->id;
+    $categoria = C_Categoria::where('user_id', $user_id)->first();
+    $reportes = C_Reporte::where('estado', $request->estado)->where('categoria_id', $categoria->id)->get();
+    if (count($reportes) > 0) {
+      return response()->json([
+        'reportes' => $reportes
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontraron reportes',
+      ], 404);
+    }
+  }
+
 
   public function uploadDrive(Request $request)
   {
