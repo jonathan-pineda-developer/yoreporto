@@ -425,4 +425,18 @@ class C_ReporteController extends Controller
       'url' => Storage::disk('google')->url($filename),
     ], 200);
   }
+  //funcion para mostrar la justificacion de la tabla bitacora usando el id del reporte
+  public function showJustificacion($id)
+  {
+    $justificacion = DB::table('TB_Bitacora')->where('reporte_id', $id)->value('justificacion');
+    if ($justificacion != null) {
+      return response()->json([
+        'justificacion' => $justificacion
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontró justificación',
+      ], 404);
+    }
+  }
 }
