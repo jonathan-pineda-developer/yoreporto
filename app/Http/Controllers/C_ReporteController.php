@@ -171,7 +171,7 @@ class C_ReporteController extends Controller
   public function showByUserId()
   {
     $uid = auth()->user()->id;
-    $reportes = C_Reporte::where('user_id', $uid)->get();
+    $reportes = C_Reporte::with('categoria')->where('user_id', $uid)->get();
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
