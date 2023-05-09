@@ -206,9 +206,10 @@ class C_ReporteController extends Controller
   }
 
   //mostrar todos los cmapos de la table reportes
+  //mostrar todos los cmapos de la table reportes
   public function showAllReportes()
   {
-    $reportes = C_Reporte::all();
+    $reportes = C_Reporte::with('categoria')->get();
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
