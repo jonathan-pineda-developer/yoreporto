@@ -459,4 +459,47 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
+
+  public function finalizarReporte(Request $request, $id)
+  {
+    $reporte = C_Reporte::find($id);
+    $reporte->estado = "Finalizado";
+    $reporte->save();
+
+    $user_id = auth()->user()->id;
+    $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
+      ->where('id', $user_id)
+      ->where('rol', 'UTE')
+      ->value('nombre_completo');
+    $reporte_id = $reporte->id;
+    $modified_at = $reporte->updated_at;
+
+    // Determinar el valor de la operación en función del estado del reporte
+    if ($reporte->estado === 'Aceptado') {
+      $operation = 'Aceptado';
+    } elseif ($reporte->estado === 'Rechazado') {
+      $operation = 'Rechazado';
+    } elseif ($reporte->estado === 'Finalizado') {
+      $operation = 'Finalizado';
+    } else {
+      $operation = 'Cambio de categoría';
+    }
+
+    DB::table('TB_Bitacora')->insert([
+      'operation' => $operation,
+      'ute' => $ute,
+      'reporte_id' => $reporte_id,
+      'modified_at' => $modified_at,
+    ]);
+
+    if ($reporte->save()) {
+      return response()->json([
+        'message' => 'Reporte finalizado',
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'Error inesperado, vuelva a intentarlo',
+      ], 400);
+    }
+  }
 }
