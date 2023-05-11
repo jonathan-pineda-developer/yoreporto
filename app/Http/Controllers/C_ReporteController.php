@@ -502,4 +502,19 @@ class C_ReporteController extends Controller
       ], 400);
     }
   }
+
+  // metodo para buscar un reporte por su id
+  public function showReporteById($id)
+  {
+    $reporte = C_Reporte::find($id);
+    if ($reporte != null) {
+      return response()->json([
+        'reporte' => $reporte
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontró reporte',
+      ], 404);
+    }
+  }
 }
