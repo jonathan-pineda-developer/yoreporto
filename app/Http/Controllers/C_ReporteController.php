@@ -430,7 +430,7 @@ class C_ReporteController extends Controller
     }
   }
 
-
+  /*
   public function uploadDrive(Request $request)
   {
 
@@ -449,6 +449,8 @@ class C_ReporteController extends Controller
       'url' => Storage::disk('google')->url($filename),
     ], 200);
   }
+  */
+
   //funcion para mostrar la justificacion de la tabla bitacora usando el id del reporte
   public function showJustificacion($id)
   {
@@ -520,5 +522,27 @@ class C_ReporteController extends Controller
         'message' => 'No se encontró reporte',
       ], 404);
     }
+  }
+
+  //metodo uoload para subir imagen
+  public function uploadImgur(Request $request)
+  {
+    //guardar imagen en storage
+    $client = new Client();
+    $response = $client->request('POST', 'https://api.imgur.com/3/image', [
+      'headers' => [
+        'Authorization' => 'Client-ID ' . env('IMGUR_CLIENT_ID')
+      ],
+      'form_params' => [
+        'image' => base64_encode(file_get_contents($request->file('imagen')->path()))
+      ]
+    ]);
+    $data = json_decode($response->getBody());
+
+    $path = $data->data->link;
+    return response()->json([
+      'message' => 'Imagen subida correctamente',
+      'nombre' => $path
+    ], 200);
   }
 }

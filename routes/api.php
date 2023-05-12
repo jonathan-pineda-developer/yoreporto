@@ -55,6 +55,8 @@ Route::get('reportes_estado_ute/{estado}', [C_ReporteController::class, 'showRep
 Route::delete('deleteAll', [C_ReporteController::class, 'deleteAll']);
 //metodo upload
 Route::post('upload', [C_ReporteController::class, 'upload']);
+// imgur img upload
+Route::post('/imgur', [C_ReporteController::class, 'uploadImgur']);
 
 //obtener reportes por id
 Route::get('showById/{id}', [C_ReporteController::class, 'showById']);
@@ -116,7 +118,7 @@ Route::get('/filtro_bitacora/{params}', [C_AdministradorController::class, 'getF
 Route::get('/mostrar_usarios_activos', [C_AdministradorController::class, 'total_usuarios']);
 
 // drive img upload
-Route::post('/drive', [C_ReporteController::class, 'uploadDrive']);
+//Route::post('/drive', [C_ReporteController::class, 'uploadDrive']);
 
 //mostrar justificacion del reporte
 Route::get('/mostrar_justificacion/{id}', [C_ReporteController::class, 'showJustificacion']);
