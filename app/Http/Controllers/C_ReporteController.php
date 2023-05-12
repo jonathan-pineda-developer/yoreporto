@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\NuevoReporte;
 use App\Mail\RechazoReporte;
+use App\Mail\ReporteACiudadano;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\C_Reporte;
@@ -87,6 +88,9 @@ class C_ReporteController extends Controller
     // email a ute a cargo
     $userUTE = User::find($categoria->user_id);
     Mail::to($userUTE->email)->send(new NuevoReporte($categoria->descripcion));
+
+    // envio de emual a ciudadano con ReporteACiudadano
+    Mail::to($user->email)->send(new ReporteACiudadano($reporte, $user));
 
     return response()->json([
       'message' => 'Reporte creado correctamente',

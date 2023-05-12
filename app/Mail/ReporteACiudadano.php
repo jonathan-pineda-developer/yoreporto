@@ -13,47 +13,27 @@ class ReporteACiudadano extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $reporte, $user;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($reporte, $user)
     {
-        //
+        $this->reporte = $reporte;
+        $this->user = $user;
     }
 
     /**
-     * Get the message envelope.
+     * Build the message.
      *
-     * @return \Illuminate\Mail\Mailables\Envelope
+     * @return $this
      */
-    public function envelope()
+    public function build()
     {
-        return new Envelope(
-            subject: 'Reporte A Ciudadano',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     *
-     * @return \Illuminate\Mail\Mailables\Content
-     */
-    public function content()
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array
-     */
-    public function attachments()
-    {
-        return [];
+        return $this->view('emails.notificacionReporteACiudadano.notificacionReporteACiudadano')
+            ->subject('Reporte realizado exitosamente!');
     }
 }
