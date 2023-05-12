@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('TB_Bitacora', function (Blueprint $table) {
             $table->id();
             $table->string('operation');
-            $table->text('justificacion')->nullable();
+            $table->string('justificacion', 300)->nullable();
             $table->string('ute');
             $table->string('reporte_id');
             $table->string('modified_at');
@@ -33,8 +33,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('TB_Bitacora');
     }
-
-    
-
-
 };
