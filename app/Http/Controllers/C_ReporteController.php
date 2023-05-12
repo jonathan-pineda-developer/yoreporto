@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 
 class C_ReporteController extends Controller
 {
