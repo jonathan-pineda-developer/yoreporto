@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+
 class C_ReporteController extends Controller
 {
 
@@ -192,11 +194,13 @@ class C_ReporteController extends Controller
 
   public function showAll()
   {
+    $perPage = 1;
     $usuario = C_Reporte::select('nombre as Ciudadano', 'TB_Categoria.descripcion as Categoria', 'TB_Categoria.user_id as UTE a cargo', 'TB_Reporte.estado as Estado', 'TB_Reporte.created_at as Fecha de creacion', 'TB_Reporte.updated_at as Fecha de actualizacion/finalizacion')
       ->join('users', 'users.id', '=', 'TB_Reporte.user_id')
       ->join('TB_Categoria', 'TB_Categoria.id', '=', 'TB_Reporte.categoria_id')
-      ->get();
+      ->paginate($perPage);;
     $reportes = C_Reporte::all();
+
     if (count($reportes) > 0) {
       return response()->json([
 
@@ -214,7 +218,9 @@ class C_ReporteController extends Controller
   //mostrar todos los cmapos de la table reportes
   public function showAllReportes()
   {
-    $reportes = C_Reporte::with('categoria')->get();
+    $perPage = 1;
+    $reportes = C_Reporte::with('categoria')->paginate($perPage);
+
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
@@ -245,7 +251,7 @@ class C_ReporteController extends Controller
   public function updateCategoria(Request $request, $id)
   {
     $reporte = C_Reporte::find($id);
-    // traer la categoria nueva de la base en base a la descripcion que viene en el request (VERSIOON ANTERIOR)  
+    // traer la categoria nueva de la base en base a la descripcion que viene en el request (VERSIOON ANTERIOR)
     // $categoriaNueva = C_Categoria::where('descripcion', $request->descripcion)->first();
     $categoriaNueva = C_Categoria::find($request->categoria_id);
 
@@ -331,7 +337,7 @@ class C_ReporteController extends Controller
     }
   }
 
-  // metodo para cambiar el estado del reporte a rechazado y enviar un email al usuario que creo el reporte con el motivo del rechazo 
+  // metodo para cambiar el estado del reporte a rechazado y enviar un email al usuario que creo el reporte con el motivo del rechazo
   public function rechazarReporte(Request $request, $id)
   {
     // rechazo del reporte
@@ -388,7 +394,9 @@ class C_ReporteController extends Controller
   // metodo que retorna los reportes que tienen el estado Aceptado o Finalizado
   public function showReportesAceptados()
   {
-    $reportes = C_Reporte::where('estado', 'Aceptado')->get();
+    $perPage = 10;
+    $reportes = C_Reporte::where('estado', 'Aceptado')->get()->paginate($perPage);
+
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
@@ -403,7 +411,9 @@ class C_ReporteController extends Controller
   // metodo que retorna los reportes en base al estado que venga en el request
   public function showReportesByEstado(Request $request)
   {
-    $reportes = C_Reporte::where('estado', $request->estado)->get();
+    $perPage = 10;
+    $reportes = C_Reporte::where('estado', $request->estado)->paginate($perPage);
+
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
@@ -417,9 +427,11 @@ class C_ReporteController extends Controller
   //mostrar los reportes por estado y MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
   public function showReportesByEstadoUTE(Request $request)
   {
+    $perPage = 10;
     $user_id = auth()->user()->id;
     $categoria = C_Categoria::where('user_id', $user_id)->first();
-    $reportes = C_Reporte::where('estado', $request->estado)->where('categoria_id', $categoria->id)->get();
+    $reportes = C_Reporte::where('estado', $request->estado)->where('categoria_id', $categoria->id)->paginate($perPage);
+
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
