@@ -37,6 +37,15 @@ return [
         'Forgot Paragraph'       => 'De Click en el botón de abajo para recuperar su contraseña.',
         'pw_reset_button'        => 'Recuperar Contraseña',
         'Email-4_Intro'          => 'https://drive.google.com/uc?id=1UNTtIu0lsljnuJP3aTQdukeQg3TPenzs',
+        // Report Generated-Citizen Template
+        'Report Title'           => 'Notificación Reporte Creado',
+        'Report'                 => '¡Su reporte ha sido creado exitosamente!',
+        'Report Paragraph'       => 'Proximamente un funcionario municipal atenderá su reporte',
+        'Report_Action'          => 'Detalles',
+        'Headline One RC'         => 'Título de su reporte: ',
+        'Headline Two RC'         => 'Creado por: ',
+        'Headline Three RC'       => 'Código del reporte: ',
+        'icon_one_RC'             => 'https://drive.google.com/uc?id=1JU8u5_26oDiSr1_FRUUmUx4wkfuHLj0B',
         // Rejected Report
         'Reject Title'           => 'Notificación de Rechazado',
         'Reject'                 => '¡Su reporte ha sido rechazado!',
