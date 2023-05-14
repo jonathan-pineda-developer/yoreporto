@@ -179,13 +179,20 @@ class C_AuthController extends Controller
 
         // check si el usuario tiene un rol distinto a Ciudadano necesitara autentificacion por doble factor
         if ($user->rol == "UTE") {
-            $user->generarCodigoDobleFactor();
-            Mail::to($user->email)->send(new CodigoAutentificacion($user));
-            return response()->json([
-                'message' => 'Se ha enviado un código de autentificación a su correo electrónico',
-                'token' => $token,
-                'user' => $user
-            ], 200);
+            if($user->estado == 1){
+                $user->generarCodigoDobleFactor();
+                Mail::to($user->email)->send(new CodigoAutentificacion($user));
+                return response()->json([
+                    'message' => 'Se ha enviado un código de autentificación a su correo electrónico',
+                    'token' => $token,
+                    'user' => $user
+                ], 200);
+            } else {
+                return response()->json([
+                    'message' => 'Usuario inhabilitado comuniquese con el administrador'
+                ], 401);
+            }
+
         } else {
             return response()->json([
                 'message' => 'Login correcto',
@@ -369,10 +376,10 @@ class C_AuthController extends Controller
 
         }
      }
-    //olvido contraseña password y confirmarPassword 
+    //olvido contraseña password y confirmarPassword
     public function olvidoContrasenia(Request $request, $id)
     {
-        
+
         // validacion del request
         $this->validate($request, [
             'password' => 'required|string',
