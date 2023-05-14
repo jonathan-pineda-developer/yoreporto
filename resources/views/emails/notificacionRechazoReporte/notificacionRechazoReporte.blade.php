@@ -292,6 +292,53 @@
 
                                                         </td>
                                                     </tr>
+                                                    <!-- headline paragraph -->
+                                                    <tr>
+                                                        <td class="center-text"  align="left" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:20px;line-height:28px;font-weight:400;font-style:normal;color:#343e9e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ __('pleb.mail.Headline Two R') }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <!-- gap -->
+                                                    <tr>
+                                                        <td height="5" style="font-size:5px;line-height:5px;" >&nbsp;</td>
+                                                    </tr>
+                                                    <!-- ute paragraph -->
+                                                    <tr>
+                                                        <td class="center-text container-padding"  align="left" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ $ute->nombre }} {{ $ute->apellidos }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="center-text"  align="left" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:20px;line-height:28px;font-weight:400;font-style:normal;color:#343e9e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ __('pleb.mail.Headline Three R') }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <!-- gap -->
+                                                    <tr>
+                                                        <td height="5" style="font-size:5px;line-height:5px;" >&nbsp;</td>
+                                                    </tr>
+                                                    <!-- id paragraph -->
+                                                    <tr>
+                                                        <td class="center-text container-padding"  align="left" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ $reporte->id }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
                                                 </table>
                                                 <!-- column -->
 

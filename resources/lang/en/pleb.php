@@ -52,6 +52,8 @@ return [
         'Reject Paragraph'       => 'En la revisión de su reporte se encontraron infracciones a la política de uso o duplicación del reporte con la misma situación',
         'Reject_Action'          => 'Detalles',
         'Headline One R'         => 'Razón de Rechazo: ',
+        'Headline Two R'         => 'Atendido por: ',
+        'Headline Three R'       => 'Código del reporte: ',
         'icon_one_R'             => 'https://drive.google.com/uc?id=1OL2lzV5cQa2sM34tN3JY_DdYkZgymYn0',
         // New Report Template
         'New Report Title'       => 'Notificación de Nuevo Reporte',
