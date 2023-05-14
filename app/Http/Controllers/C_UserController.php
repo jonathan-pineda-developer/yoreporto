@@ -29,7 +29,7 @@ class C_UserController extends Controller
         }
     }
 
-    //mostrar un usuario por id 
+    //mostrar un usuario por id
     public function showById($id)
     {
         if (User::find($id) == null) {
@@ -231,6 +231,42 @@ class C_UserController extends Controller
         if ($datos->count() > 0) {
             return response()->json([
                 'UTE' => $datos,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron registros',
+            ], 404);
+        }
+    }
+
+    public function showAllUTEInactivos()
+    {
+        $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
+            ->where('rol', 'UTE')
+            ->where('estado', 0)
+            ->get();
+
+        if ($datos->count() > 0) {
+            return response()->json([
+                'UTE' => $datos,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron registros',
+            ], 404);
+        }
+    }
+
+    public function showAllUTEactivosSinCategoria(){
+        $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
+            ->where('rol', 'UTE')
+            ->where('estado', 1)
+            ->whereNotIn('id', DB::table('TB_Categoria')->select('user_id'))
+            ->get();
+
+        if ($datos->count() > 0) {
+            return response()->json([
+                'UTE'=>$datos,
             ], 200);
         } else {
             return response()->json([
