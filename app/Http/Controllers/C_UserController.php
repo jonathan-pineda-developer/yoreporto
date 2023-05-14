@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UsuarioInactivado;
+use App\Mail\UsuarioReactivado;
 
 
 class C_UserController extends Controller
@@ -42,25 +45,24 @@ class C_UserController extends Controller
     {
         $uid = auth()->user()->id;
         $user = User::findOrFail($uid);
-        $destino = public_path("storage\\". $user->imagen);
+        $destino = public_path("storage\\" . $user->imagen);
         if ($user == null) {
             return response()->json([
                 'message' => 'No se encontró el registro'
             ], 404);
         } else {
-         
+
             if ($request->hasFile('imagen')) {
                 if (File::exists($destino)) {
                     File::delete($destino);
                 }
                 $user->imagen = $request->file('imagen')->store('public/usuarios');
-              
             }
             $user->nombre = $request->nombre;
             $user->apellidos = $request->apellidos;
             $user->email = $request->email;
             $user->save();
-           if ($user->save()) {
+            if ($user->save()) {
                 return response()->json([
                     'message' => 'Usuario actualizado correctamente'
                 ], 200);
@@ -77,13 +79,13 @@ class C_UserController extends Controller
     {
         $uid = auth()->user()->id;
         $user = User::findOrFail($uid);
-        $destino = public_path("storage\\". $user->imagen);
+        $destino = public_path("storage\\" . $user->imagen);
         if ($user == null) {
             return response()->json([
                 'message' => 'No se encontró el registro'
             ], 404);
         } else {
-         
+
             if ($request->hasFile('imagen')) {
                 if (File::exists($destino)) {
                     File::delete($destino);
@@ -92,7 +94,7 @@ class C_UserController extends Controller
                 $user->imagen = substr($user->imagen, 16);
             }
             $user->save();
-           if ($user->save()) {
+            if ($user->save()) {
                 return response()->json([
                     'message' => 'Usuario actualizado correctamente'
                 ], 200);
@@ -112,9 +114,9 @@ class C_UserController extends Controller
         //path de donde se encuentra la imagen public/storage/usuarios/id.extension
         $path = storage_path("app/public/usuarios/" . $imagen);
 
-        if(file_exists($path)){
+        if (file_exists($path)) {
             return response()->file($path);
-        }else{
+        } else {
             return response()->file(storage_path("app/public/usuarios/default.png"));
         }
     }
@@ -127,17 +129,17 @@ class C_UserController extends Controller
         $user->apellidos = $request->apellidos;
         $user->email = $request->email;
         $user->save();
-           if ($user->save()) {
-                return response()->json([
-                    'message' => 'Usuario actualizado correctamente'
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'No se pudo actualizar el usuario'
-                ], 404);
-            }
+        if ($user->save()) {
+            return response()->json([
+                'message' => 'Usuario actualizado correctamente'
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se pudo actualizar el usuario'
+            ], 404);
         }
-    
+    }
+
 
     public function inactivar(Request $request, $id)
     {
@@ -147,10 +149,50 @@ class C_UserController extends Controller
                 'message' => 'No se encontró el registro'
             ], 404);
         } else {
+
+            if ($user->estado == 0) {
+                return response()->json([
+                    'message' => 'El usuario ya se encuentra inactivo'
+                ], 404);
+            }
+
             $user->estado = 0;
             $user->save();
+
+            // envio de correo UsuarioInactivado
+            Mail::to($user->email)->send(new UsuarioInactivado($user));
+
             return response()->json([
                 'message' => 'Usuario inactivado correctamente'
+
+            ], 200);
+        }
+    }
+
+
+    public function reactivar(Request $request, $id)
+    {
+        $user = User::find($id);
+        if (User::find($id) == null) {
+            return reponse()->json([
+                'message' => 'No se encontró el registro'
+            ], 404);
+        } else {
+
+            if ($user->estado == 1) {
+                return response()->json([
+                    'message' => 'El usuario ya se encuentra activo'
+                ], 404);
+            }
+
+            $user->estado = 1;
+            $user->save();
+
+            // envio de correo UsuarioReactivado
+            Mail::to($user->email)->send(new UsuarioReactivado($user));
+
+            return response()->json([
+                'message' => 'Usuario reactivado correctamente'
 
             ], 200);
         }
@@ -167,7 +209,7 @@ class C_UserController extends Controller
         if (count($ute) > 0) {
             return response()->json([
 
-                'UTE'=>$datos,
+                'UTE' => $datos,
 
             ], 200);
         } else {
@@ -177,24 +219,23 @@ class C_UserController extends Controller
         }
     }
 
-     //metodo que me muestre el nombre y apelleidoa de los usuarios con rol UTE y que esten activos
+    //metodo que me muestre el nombre y apelleidoa de los usuarios con rol UTE y que esten activos
 
-     public function showAllUTEActivos() {
+    public function showAllUTEActivos()
+    {
         $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
             ->where('estado', 1)
             ->get();
-    
+
         if ($datos->count() > 0) {
             return response()->json([
-                'UTE'=>$datos,
+                'UTE' => $datos,
             ], 200);
         } else {
             return response()->json([
                 'message' => 'No se encontraron registros',
             ], 404);
         }
-    }  
-
-
+    }
 }
