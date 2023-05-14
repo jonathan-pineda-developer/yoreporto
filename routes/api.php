@@ -46,7 +46,7 @@ Route::post('actualizar_imagen/reportes/{id}', [C_ReporteController::class, 'upd
 Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middleware('jwt.verify');
 Route::get('reportes', [C_ReporteController::class, 'showAll']);
 Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
-Route::get('aceptadosFinalidasos', [C_ReporteController::class, 'showReportesAceptadosoFinalizados']);
+Route::get('aceptados', [C_ReporteController::class, 'showReportesAceptados']);
 Route::get('reportes_estado/{estado}', [C_ReporteController::class, 'showReportesByEstado']);
 Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
 //showReportesByEstadoUTE

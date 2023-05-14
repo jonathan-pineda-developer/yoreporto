@@ -386,9 +386,9 @@ class C_ReporteController extends Controller
   }
 
   // metodo que retorna los reportes que tienen el estado Aceptado o Finalizado
-  public function showReportesAceptadosoFinalizados()
+  public function showReportesAceptados()
   {
-    $reportes = C_Reporte::where('estado', 'Aceptado')->orWhere('estado', 'Finalizado')->get();
+    $reportes = C_Reporte::where('estado', 'Aceptado')->get();
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
