@@ -16,9 +16,8 @@
     <meta name="format-detection" content="date=no"> <!-- disable auto date linking in iOS -->
     <meta name="format-detection" content="address=no"> <!-- disable auto address linking in iOS -->
     <meta name="format-detection" content="email=no"> <!-- disable auto email linking in iOS -->
-    <meta name="author" content="Yo Reporto">
-
-    <title>{{ __('pleb.mail.Forgot Password Title') }} | {{ config('app.name') }}</title>
+    <meta name="author" content="Simple-Pleb.com">
+    <title>{{ __('pleb.mail.Report Title') }} | {{ config('app.name') }}</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -91,24 +90,40 @@
 <table border="0" align="center" cellpadding="0" cellspacing="0" width="100%" style="width:100%;max-width:100%;">
     <tr><!-- Outer Table -->
         <td align="center"  bgcolor="#f0f0f0" data-composer>
-
-            <!-- Header -->
+            <!-- header -->
             <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;" >
-                <!-- lotus-header-4 -->
+                <!-- lotus-header-1 -->
                 <tr>
                     <td align="center"  bgcolor="#343e9e" class="container-padding">
+
+                        <!-- Content -->
                         <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" class="row" width="580" style="width:580px;max-width:580px;">
+                            <!-- gap -->
                             <tr>
                                 <td height="40" style="font-size:40px;line-height:40px;" >&nbsp;</td>
                             </tr>
-                            <!-- Logo & Webview -->
-                            <tr>
+                            <!-- Logo & Webview Column -->
+                            <tr  >
                                 <td align="center">
+                                    <!-- Logo & Webview -->
                                     <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;">
                                         <tr>
                                             <td align="center" class="container-padding">
+
                                                 <!--[if (gte mso 9)|(IE)]><table border="0" cellpadding="0" cellspacing="0" dir="rtl"><tr><td><![endif]-->
+
+                                                <!-- column -->
+                                            {{--<table border="0" align="right" cellpadding="0" cellspacing="0" role="presentation" class="row" width="280" style="width:280px;max-width:280px;">
+                                                <tr>
+                                                    <td class="center-text" align="right" height="22" style="height: 22px;">
+                                                        <a href="#"  style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:12px;line-height:16px;font-style:italic;font-weight:400;color:#b5beff;text-decoration:none;letter-spacing:0px;">View this email in your browser</a>
+                                                    </td>
+                                                </tr>
+                                            </table>--}}
+                                            <!-- column -->
+
                                                 <!--[if (gte mso 9)|(IE)]></td><td><![endif]-->
+
                                                 <!-- gap -->
                                                 <table border="0" align="right" cellpadding="0" cellspacing="0" role="presentation" class="row" width="20" style="width:20px;max-width:20px;">
                                                     <tr>
@@ -116,42 +131,47 @@
                                                     </tr>
                                                 </table>
                                                 <!-- gap -->
+
                                                 <!--[if (gte mso 9)|(IE)]></td><td><![endif]-->
-                                                <!-- column logo -->
+
+                                                <!-- column -->
                                                 <table border="0" align="right" cellpadding="0" cellspacing="0" role="presentation" class="row" width="320" style="width:320px;max-width:320px;">
                                                     <tr  >
                                                         <td align="left" class="center-text">
-                                                            <a href="{{ url('/') }}"><img style="width:140px;border:0px;display: inline!important;" src="{{ config('pleb.mail.top_logo') }}" width="140" border="0"  alt="{{ config('app.name') }}"></a>
+                                                            <a href="{{ url('/') }}"><img style="width:140px;border:0px;display: inline!important;" src="{{ config('pleb.mail.top_logo') }}" width="140" border="0"       alt="logo"></a>
                                                         </td>
                                                     </tr>
                                                 </table>
                                                 <!-- column -->
+
                                                 <!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+
                                             </td>
                                         </tr>
                                     </table>
+                                    <!-- Logo & Webview -->
                                 </td>
                             </tr>
-                            <!-- gap -->
-                            <tr>
+                            <!-- gap column -->
+                            <tr  >
                                 <td height="40" style="font-size:40px;line-height:40px;" >&nbsp;</td>
                             </tr>
-                            <!-- Header Icon -->
-                            <tr>
+                            <!-- header Icon column -->
+                            <tr  >
                                 <td align="center" class="center-text">
-                                    <img style="width:190px;border:0px;display: inline!important;" src="{{ __('pleb.mail.Email-4_Intro') }}" width="190" border="0"       alt="intro">
+                                    <img style="width:190px;border:0px;display: inline!important;" src="{{ __('pleb.mail.Email-3_Intro') }}" width="190" border="0"       alt="intro">
                                 </td>
                             </tr>
                             <!-- gap -->
-                            <tr>
+                            <tr  >
                                 <td height="40" style="font-size:40px;line-height:40px;" >&nbsp;</td>
                             </tr>
-                            <!-- main Paragraph -->
-                            <tr>
+                            <!-- header Title -->
+                            <tr  >
                                 <td class="center-text"  align="center" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:42px;line-height:52px;font-weight:400;font-style:normal;color:#FFFFFF;text-decoration:none;letter-spacing:0px;">
 
                                     <div  >
-                                        {{ __('pleb.mail.Forgot your password') }}
+                                        {{ __('pleb.mail.Report') }}
                                     </div>
 
                                 </td>
@@ -160,12 +180,12 @@
                             <tr>
                                 <td height="20" style="font-size:20px;line-height:20px;" >&nbsp;</td>
                             </tr>
-                            <!-- second paragraph -->
+                            <!-- header paragraphs -->
                             <tr>
                                 <td class="center-text"  align="center" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:16px;line-height:26px;font-weight:300;font-style:normal;color:#FFFFFF;text-decoration:none;letter-spacing:0px;">
 
                                     <div  >
-                                        {{ __('pleb.mail.Forgot Paragraph') }}
+                                        {{ __('pleb.mail.Report Paragraph') }}
                                     </div>
 
                                 </td>
@@ -174,46 +194,179 @@
                             <tr>
                                 <td height="40" style="font-size:40px;line-height:40px;" >&nbsp;</td>
                             </tr>
-                            <!-- Header Button -->
+                        </table>
+                        <!-- Content -->
+
+                    </td>
+                </tr>
+            </table>
+            <!-- lotus-arrow-divider -->
+            <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;" >
+                <tr>
+                    <td align="center"  bgcolor="#FFFFFF">
+                        <img style="width:50px;border:0px;display: inline!important;" src="{{ config('pleb.mail.flecha_encabezado') }}" width="50" border="0"       alt="arrow">
+                    </td>
+                </tr>
+            </table>
+            <!-- lotus-content-1-1 -->
+            <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;" >
+                <tr>
+                    <td align="center"  bgcolor="#FFFFFF" class="container-padding">
+
+                        <!-- Content -->
+                        <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" class="row" width="580" style="width:580px;max-width:580px;">
+                            <!-- gap -->
                             <tr>
-                                <td align="center">
-                                    <table border="0" cellspacing="0" cellpadding="0" role="presentation" align="center" class="center-float">
-                                        <tr>
-                                            <td align="center"    bgcolor="#d6df58" style="border-radius: 6px;">
-                                                <!--[if (gte mso 9)|(IE)]>
-                                                <table border="0" cellpadding="0" cellspacing="0" align="center">
-                                                    <tr>
-                                                        <td align="center" width="50"></td>
-                                                        <td align="center" height="50" style="height:50px;">
-                                                <![endif]-->
+                                <td height="50" style="font-size:50px;line-height:50px;" >&nbsp;</td>
+                            </tr>
+                            <!-- details paragraph -->
+                            <tr>
+                                <td class="center-text"  align="center" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:32px;line-height:42px;font-weight:400;font-style:normal;color:#282828;text-decoration:none;letter-spacing:0px;">
 
-                                                <a href="{{ url('http://localhost:4200/auth/reset-password/'.$user->id) }}" target="_blank"    style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:16px;line-height:19px;font-weight:700;font-style:normal;color:#000000;text-decoration:none;letter-spacing:0px;padding: 20px 50px 20px 50px;display: inline-block;"><span>{{ __('pleb.mail.pw_reset_button') }}</span></a>
+                                    <div  >
+                                        {{ __('pleb.mail.Report_Action') }}
+                                    </div>
 
-                                                <!--[if (gte mso 9)|(IE)]>
-                                                </td>
-                                                <td align="center" width="50"></td>
-                                                </tr>
-                                                </table>
-                                                <![endif]-->
-                                            </td>
-                                        </tr>
-                                    </table>
                                 </td>
                             </tr>
                             <!-- gap -->
                             <tr>
-                                <td height="40" style="font-size:40px;line-height:40px;" >&nbsp;</td>
+                                <td height="30" style="font-size:30px;line-height:30px;" >&nbsp;</td>
+                            </tr>
+                            <!-- middle content -->
+                            <tr>
+                                <td align="center">
+                                    <!-- 2-columns -->
+                                    <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;">
+                                        <tr>
+                                            <td align="center">
+
+                                                <!--[if (gte mso 9)|(IE)]><table border="0" cellpadding="0" cellspacing="0"><tr><td><![endif]-->
+
+                                                <!-- icon column -->
+                                                <table border="0" align="left" cellpadding="0" cellspacing="0" role="presentation" class="row" width="70" style="width:70px;max-width:70px;">
+                                                    <!-- icon -->
+                                                    <tr>
+                                                        <td align="center">
+                                                            <img style="display:block;width:100%;max-width:70px;border:0px;"    width="70" src="{{ __('pleb.mail.icon_one_RC') }}" border="0"  alt="icon">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <!-- column -->
+
+                                                <!--[if (gte mso 9)|(IE)]></td><td><![endif]-->
+
+                                                <!-- gap -->
+                                                <table border="0" align="left" cellpadding="0" cellspacing="0" role="presentation" class="row" width="30" style="width:30px;max-width:30px;">
+                                                    <tr>
+                                                        <td height="20" style="font-size:20px;line-height:20px;"></td>
+                                                    </tr>
+                                                </table>
+                                                <!-- gap -->
+
+                                                <!--[if (gte mso 9)|(IE)]></td><td><![endif]-->
+
+                                                <!-- headline column -->
+                                                <table border="0" align="left" cellpadding="0" cellspacing="0" role="presentation" class="row" width="500" style="width:480px;max-width:480px;">
+                                                    <!-- headline paragraph -->
+                                                    <tr>
+                                                        <td class="center-text"  align="left" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:20px;line-height:28px;font-weight:400;font-style:normal;color:#343e9e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ __('pleb.mail.Headline One RC') }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <!-- gap -->
+                                                    <tr>
+                                                        <td height="5" style="font-size:5px;line-height:5px;" >&nbsp;</td>
+                                                    </tr>
+                                                    <!-- motivo paragraph -->
+                                                    <tr>
+                                                        <td class="center-text container-padding"  align="left" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{$reporte->titulo}}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="center-text"  align="left" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:20px;line-height:28px;font-weight:400;font-style:normal;color:#343e9e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ __('pleb.mail.Headline Two RC') }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <!-- gap -->
+                                                    <tr>
+                                                        <td height="5" style="font-size:5px;line-height:5px;" >&nbsp;</td>
+                                                    </tr>
+                                                    <!-- motivo paragraph -->
+                                                    <tr>
+                                                        <td class="center-text container-padding"  align="left" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{$user->nombre}} {{$user->apellidos}}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="center-text"  align="left" style="font-family:'Roboto Slab',Arial,Helvetica,sans-serif;font-size:20px;line-height:28px;font-weight:400;font-style:normal;color:#343e9e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ __('pleb.mail.Headline Three RC') }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                    <!-- gap -->
+                                                    <tr>
+                                                        <td height="5" style="font-size:5px;line-height:5px;" >&nbsp;</td>
+                                                    </tr>
+                                                    <!-- motivo paragraph -->
+                                                    <tr>
+                                                        <td class="center-text container-padding"  align="left" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
+
+                                                            <div  >
+                                                                {{ $reporte->id }}
+                                                            </div>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <!-- column -->
+
+                                                <!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <!-- 2-columns -->
+                                </td>
+                            </tr>
+                            <!-- gap -->
+                            <tr>
+                                <td height="15" style="font-size:15px;line-height:15px;" >&nbsp;</td>
                             </tr>
                         </table>
+                        <!-- Content -->
+
                     </td>
                 </tr>
             </table>
 
-             <!-- footer -->
+            <!-- footer -->
             <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;" >
-                <!-- lotus-footer-4 -->
+                <!-- lotus-footer-1 -->
                 <tr>
                     <td align="center"  bgcolor="#f0f0f0" class="container-padding">
+
+                        <!-- Content -->
                         <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" class="row" width="580" style="width:580px;max-width:580px;">
                             <!-- gap -->
                             <tr>
@@ -222,6 +375,7 @@
                             <!-- Social Icons -->
                             <tr>
                                 <td align="center">
+                                    <!-- Social Icons -->
                                     <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;max-width:100%;">
                                         <tr>
                                             <td align="center">
@@ -229,41 +383,41 @@
                                                     <tr>
                                                         <td   class="rwd-on-mobile" align="center" valign="middle" height="36" style="height: 36px;">
                                                             @if( config('pleb.mail.facebook_url') != '')
-                                                            <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation">
-                                                                <tr>
-                                                                    <td width="10"></td>
-                                                                    <td align="center">
-                                                                        <a href="{{ config('pleb.mail.facebook_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.facebook_icon') }}" width="36" border="0"       alt="icon"></a>
-                                                                    </td>
-                                                                    <td width="10"></td>
-                                                                </tr>
-                                                            </table>
+                                                                <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation">
+                                                                    <tr>
+                                                                        <td width="10"></td>
+                                                                        <td align="center">
+                                                                            <a href="{{ config('pleb.mail.facebook_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.facebook_icon') }}" width="36" border="0"       alt="icon"></a>
+                                                                        </td>
+                                                                        <td width="10"></td>
+                                                                    </tr>
+                                                                </table>
                                                             @endif
                                                         </td>
                                                         <td   class="rwd-on-mobile" align="center" valign="middle" height="36" style="height: 36px;">
                                                             @if( config('pleb.mail.instagram_url') != '')
-                                                            <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation">
-                                                                <tr>
-                                                                    <td width="10"></td>
-                                                                    <td align="center">
-                                                                        <a href="{{ config('pleb.mail.instagram_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.instagram_icon') }}" width="36" border="0"       alt="icon"></a>
-                                                                    </td>
-                                                                    <td width="10"></td>
-                                                                </tr>
-                                                            </table>
+                                                                <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation">
+                                                                    <tr>
+                                                                        <td width="10"></td>
+                                                                        <td align="center">
+                                                                            <a href="{{ config('pleb.mail.instagram_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.instagram_icon') }}" width="36" border="0"       alt="icon"></a>
+                                                                        </td>
+                                                                        <td width="10"></td>
+                                                                    </tr>
+                                                                </table>
                                                             @endif
                                                         </td>
                                                         <td   class="rwd-on-mobile" align="center" valign="middle" height="36" style="height: 36px;">
                                                             @if( config('pleb.mail.youTube_url') != '')
-                                                            <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation">
-                                                                <tr>
-                                                                    <td width="10"></td>
-                                                                    <td align="center">
-                                                                        <a href="{{ config('pleb.mail.youTube_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.youTube_icon') }}" width="36" border="0"       alt="icon"></a>
-                                                                    </td>
-                                                                    <td width="10"></td>
-                                                                </tr>
-                                                            </table>
+                                                                <table border="0" align="center" cellpadding="0" cellspacing="0" role="presentation">
+                                                                    <tr>
+                                                                        <td width="10"></td>
+                                                                        <td align="center">
+                                                                            <a href="{{ config('pleb.mail.youTube_url') }}"><img style="width:36px;border:0px;display: inline!important;" src="{{ __('pleb.mail.youTube_icon') }}" width="36" border="0"       alt="icon"></a>
+                                                                        </td>
+                                                                        <td width="10"></td>
+                                                                    </tr>
+                                                                </table>
                                                             @endif
                                                         </td>
                                                     </tr>
@@ -271,11 +425,11 @@
                                             </td>
                                         </tr>
                                     </table>
+                                    <!-- Social Icons -->
                                 </td>
                             </tr>
-                            <!-- Social Icons -->
                             <!-- gap -->
-                            <tr  >
+                            <tr>
                                 <td height="30" style="font-size:30px;line-height:30px;" >&nbsp;</td>
                             </tr>
                             <!-- info -->
@@ -289,7 +443,7 @@
                                 </td>
                             </tr>
                             <!-- direccion -->
-                            <tr  >
+                            <tr>
                                 <td class="center-text"  align="center" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
 
                                     <div  >
@@ -299,15 +453,15 @@
                                 </td>
                             </tr>
                             <!-- tel -->
-                            <tr  >
+                            <tr>
                                 <td class="center-text"  align="center" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
 
                                     <a href="tel:{{ config('pleb.mail.numero_telefono') }}"    style="color:#6e6e6e;"><span>{{ config('pleb.mail.numero_telefono') }}</span></a>
 
                                 </td>
                             </tr>
-                            <!-- email info and home url  -->
-                            <tr  >
+                            <!-- info email and home url-->
+                            <tr>
                                 <td class="center-text"  align="center" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
 
                                     <a href="mailto:{{ config('pleb.mail.info_email') }}"    style="color:#6e6e6e;"><span>{{ config('pleb.mail.info_email') }} <br> </span></a> - <a href="{{ url('/') }}"    style="color:#6e6e6e;"><span>{{ url('/') }}</span></a> <br>
