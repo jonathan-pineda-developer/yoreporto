@@ -66,6 +66,8 @@ Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
 Route::get('/mostrar_usuario/{id}', [C_UserController::class, 'showById']);
 //mostrar utes activos
 Route::get('/mostrar_ute_activos', [C_UserController::class, 'showAllUTEActivos']);
+Route::get('/mostrar_ute_inactivos', [C_UserController::class, 'showAllUTEInactivos']);
+Route::get('/mostrar_ute_activos_sin_categoria', [C_UserController::class, 'showAllUTEactivosSinCategoria']);
 Route::post('/actualizar/{id}', [C_UserController::class, 'update'])->middleware('jwt.verify');
 Route::post('/actualizar_imagen/usuarios/{id}', [C_UserController::class, 'updateImagen'])->middleware('jwt.verify');
 Route::get('/usuarios/getImagenById/{id}', [C_UserController::class, 'getImagenById']);
