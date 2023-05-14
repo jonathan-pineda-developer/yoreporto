@@ -1,0 +1,1 @@
+<h1>{{$user->nombre}} {{$user->apellidos}} su cuenta del sistema Yo Reporto ha sido inactivada, para mas informacion contacte al administrador</h1>
