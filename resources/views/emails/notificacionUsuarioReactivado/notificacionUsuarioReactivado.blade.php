@@ -1,0 +1,1 @@
+<h1>{{$user->nombre}} {{$user->apellidos}} su cuenta del sistema Yo Reporto ha sido reactivada</h1>
