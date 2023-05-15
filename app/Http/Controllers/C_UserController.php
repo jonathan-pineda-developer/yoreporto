@@ -257,7 +257,8 @@ class C_UserController extends Controller
         }
     }
 
-    public function showAllUTEactivosSinCategoria(){
+    public function showAllUTEactivosSinCategoria()
+    {
         $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
             ->where('estado', 1)
@@ -266,11 +267,40 @@ class C_UserController extends Controller
 
         if ($datos->count() > 0) {
             return response()->json([
-                'UTE'=>$datos,
+                'UTE' => $datos,
             ], 200);
         } else {
             return response()->json([
                 'message' => 'No se encontraron registros',
+            ], 404);
+        }
+    }
+
+    public function mostrar_ciudadano()
+    {
+        $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'email as Email')
+            ->where('rol', 'Ciudadano')
+            ->get();
+
+        if (count($datos) > 0) {
+            // Convertir valor numérico del estado a texto legible
+            foreach ($datos as $dato) {
+                if ($dato->Estado == 1) {
+                    $dato->Estado = 'Activo';
+                } else {
+                    $dato->Estado = 'Inactivo';
+                }
+            }
+
+            return response()->json([
+
+                'Ciudadano' => $datos,
+
+                'Ciudadano' => $datos,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron reportes',
             ], 404);
         }
     }
