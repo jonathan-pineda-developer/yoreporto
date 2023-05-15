@@ -161,9 +161,11 @@ class C_ReporteController extends Controller
   public function showByUTEId()
   {
     //obtener la categoria de la ute logueada
+    $perPage = 5;
     $uid = auth()->user()->id;
     $categoria = C_Categoria::where('user_id', $uid)->get();
-    $reportes = C_Reporte::where('categoria_id', $categoria[0]->id)->get();
+    $reportes = C_Reporte::where('categoria_id', $categoria[0]->id)->paginate($perPage);
+
     if (count($reportes) > 0) {
       return response()->json([
         'reportes' => $reportes
@@ -174,12 +176,15 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
+
+
   //mostrar reportes que tiene un usuario logueado
   public function showByUserId()
   {
+    $perPage = 6;
     $uid = auth()->user()->id;
-    $reportes = C_Reporte::with('categoria')->where('user_id', $uid)->get();
-    if (count($reportes) > 0) {
+    $reportes = C_Reporte::with('categoria')->where('user_id', $uid)->paginate($perPage);
+    if ($reportes->total()  > 0) {
       return response()->json([
         'reportes' => $reportes
       ], 200);
@@ -221,7 +226,7 @@ class C_ReporteController extends Controller
     $perPage = 10;
     $reportes = C_Reporte::with('categoria')->paginate($perPage);
 
-    if (count($reportes) > 0) {
+    if ($reportes->total() > 0) {
       return response()->json([
         'reportes' => $reportes
       ], 200);
@@ -410,7 +415,7 @@ class C_ReporteController extends Controller
   // metodo que retorna los reportes en base al estado que venga en el request
   public function showReportesByEstado(Request $request)
   {
-    $perPage = 10;
+    $perPage = 5;
     $reportes = C_Reporte::where('estado', $request->estado)->paginate($perPage);
 
     if (count($reportes) > 0) {
@@ -426,7 +431,7 @@ class C_ReporteController extends Controller
   //mostrar los reportes por estado y MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
   public function showReportesByEstadoUTE(Request $request)
   {
-    $perPage = 10;
+    $perPage = 5;
     $user_id = auth()->user()->id;
     $categoria = C_Categoria::where('user_id', $user_id)->first();
     $reportes = C_Reporte::where('estado', $request->estado)->where('categoria_id', $categoria->id)->paginate($perPage);
