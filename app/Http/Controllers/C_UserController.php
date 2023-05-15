@@ -200,21 +200,30 @@ class C_UserController extends Controller
 
     public function showAllUTE()
     {
-        $datos = User::select('nombre as Nombre', 'apellidos as Apellidos', 'rol as Rol', 'TB_Categoria.descripcion as Categoria')
-
+        $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'TB_Categoria.descripcion as Categoria', 'email as Email')
             ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id')
             ->where('rol', 'UTE')
             ->get();
-        $ute = User::all();
-        if (count($ute) > 0) {
+
+        if (count($datos) > 0) {
+            // Convertir valor numérico del estado a texto legible
+            foreach ($datos as $dato) {
+                if ($dato->Estado == 1) {
+                    $dato->Estado = 'Activo';
+                } else {
+                    $dato->Estado = 'Inactivo';
+                }
+            }
+
             return response()->json([
 
                 'UTE' => $datos,
 
+                'UTE' => $datos,
             ], 200);
         } else {
             return response()->json([
-                'message' => 'No se encontraron reportes',
+                'message' => 'No se encontraron UTEs registrados',
             ], 404);
         }
     }

@@ -66,6 +66,7 @@ Route::get('/mostrar_usuarios', [C_UserController::class, 'show']);
 Route::get('/mostrar_usuario/{id}', [C_UserController::class, 'showById']);
 Route::get('/mostrar_ciudadanos', [C_UserController::class, 'mostrar_ciudadano']);
 //mostrar utes activos
+Route::get('/mostrar_utes', [C_UserController::class, 'showAllUTE']);
 Route::get('/mostrar_ute_activos', [C_UserController::class, 'showAllUTEActivos']);
 Route::get('/mostrar_ute_inactivos', [C_UserController::class, 'showAllUTEInactivos']);
 Route::get('/mostrar_ute_activos_sin_categoria', [C_UserController::class, 'showAllUTEactivosSinCategoria']);
