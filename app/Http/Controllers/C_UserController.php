@@ -309,7 +309,7 @@ class C_UserController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'message' => 'No se encontraron reportes',
+                'message' => 'No se encontraron ciudadanos registrados',
             ], 404);
         }
     }
