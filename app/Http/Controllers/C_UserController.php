@@ -203,7 +203,7 @@ class C_UserController extends Controller
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'TB_Categoria.descripcion as Categoria', 'email as Email')
             ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id')
             ->where('rol', 'UTE')
-            ->get();
+            ->paginate(6);
 
         if (count($datos) > 0) {
             // Convertir valor numérico del estado a texto legible
@@ -289,6 +289,37 @@ class C_UserController extends Controller
     {
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'email as Email')
             ->where('rol', 'Ciudadano')
+            ->paginate(6);
+
+        if (count($datos) > 0) {
+            // Convertir valor numérico del estado a texto legible
+            foreach ($datos as $dato) {
+                if ($dato->Estado == 1) {
+                    $dato->Estado = 'Activo';
+                } else {
+                    $dato->Estado = 'Inactivo';
+                }
+            }
+
+            return response()->json([
+
+                'Ciudadano' => $datos,
+
+                'Ciudadano' => $datos,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron ciudadanos registrados',
+            ], 404);
+        }
+    }
+    //busqueda de usuarios por nombre sensibles a mayusculas y minusculas
+    public function search(Request $request)
+    {
+        $nombre = $request->nombre;
+        $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'email as Email')
+            ->where('rol', 'Ciudadano')
+            ->where('nombre', 'LIKE', '%' . $nombre . '%')
             ->get();
 
         if (count($datos) > 0) {
@@ -310,6 +341,38 @@ class C_UserController extends Controller
         } else {
             return response()->json([
                 'message' => 'No se encontraron ciudadanos registrados',
+            ], 404);
+        }
+    }
+    //busqueda de usuarios ute por nombre sensibles a mayusculas y minusculas
+    public function searchUTE(Request $request)
+    {
+        $nombre = $request->nombre;
+        $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'TB_Categoria.descripcion as Categoria', 'email as Email')
+            ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id')
+            ->where('rol', 'UTE')
+            ->where('nombre', 'LIKE', '%' . $nombre . '%')
+            ->get();
+
+        if (count($datos) > 0) {
+            // Convertir valor numérico del estado a texto legible
+            foreach ($datos as $dato) {
+                if ($dato->Estado == 1) {
+                    $dato->Estado = 'Activo';
+                } else {
+                    $dato->Estado = 'Inactivo';
+                }
+            }
+
+            return response()->json([
+
+                'UTE' => $datos,
+
+                'UTE' => $datos,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'No se encontraron UTEs registrados',
             ], 404);
         }
     }
