@@ -177,22 +177,21 @@ class C_AuthController extends Controller
         // user que esta haciendo login en base al email
         $user = User::where('email', $request->email)->first();
 
+        if ($user->estado != 1) {
+            return response()->json([
+                'message' => 'Usuario inhabilitado comuniquese con el administrador'
+            ], 401);
+        }
+
         // check si el usuario tiene un rol distinto a Ciudadano necesitara autentificacion por doble factor
         if ($user->rol == "UTE") {
-            if($user->estado == 1){
-                $user->generarCodigoDobleFactor();
-                Mail::to($user->email)->send(new CodigoAutentificacion($user));
-                return response()->json([
-                    'message' => 'Se ha enviado un código de autentificación a su correo electrónico',
-                    'token' => $token,
-                    'user' => $user
-                ], 200);
-            } else {
-                return response()->json([
-                    'message' => 'Usuario inhabilitado comuniquese con el administrador'
-                ], 401);
-            }
-
+            $user->generarCodigoDobleFactor();
+            Mail::to($user->email)->send(new CodigoAutentificacion($user));
+            return response()->json([
+                'message' => 'Se ha enviado un código de autentificación a su correo electrónico',
+                'token' => $token,
+                'user' => $user
+            ], 200);
         } else {
             return response()->json([
                 'message' => 'Login correcto',
@@ -339,21 +338,21 @@ class C_AuthController extends Controller
     }
 
     // cambiar contraseña de usuario del id que se recibe
-     public function cambiarContrasena(Request $request, $id)
-     {
+    public function cambiarContrasena(Request $request, $id)
+    {
 
-            // validacion del request
-            $this->validate($request, [
-                'contrasenaActual' => 'required|string',
-                'contrasenaNueva' => 'required|string',
-                'contrasenaConfirmar' => 'required|string',
-            ]);
-         $user = User::find($id);
-         if ($user == null) {
-             return response()->json([
-                 'message' => 'No se encontró el registro'
-             ], 404);
-         } else {
+        // validacion del request
+        $this->validate($request, [
+            'contrasenaActual' => 'required|string',
+            'contrasenaNueva' => 'required|string',
+            'contrasenaConfirmar' => 'required|string',
+        ]);
+        $user = User::find($id);
+        if ($user == null) {
+            return response()->json([
+                'message' => 'No se encontró el registro'
+            ], 404);
+        } else {
             //si la contraseña actual es igual a la contraseña del usuario
             if (Hash::check($request->contrasenaActual, $user->password)) {
                 //si la contraseña nueva es igual a la contraseña confirmar
@@ -373,9 +372,8 @@ class C_AuthController extends Controller
                     'message' => 'La contraseña actual no es correcta'
                 ], 400);
             }
-
         }
-     }
+    }
     //olvido contraseña password y confirmarPassword
     public function olvidoContrasenia(Request $request, $id)
     {
