@@ -62,8 +62,24 @@ return [
         'Headline One N'         => 'Categoría del Reporte:  ',
         'icon_one_N'             => 'https://drive.google.com/uc?id=1MGK0_7Ok711yEzymlSlITbNQWoR3q7Qc',
         'pw_reset_button_N'      => 'Ver Reportes',
-        //New Report & rejected report
+        //New Report, rejected report & generated report
         'Email-3_Intro'          => 'https://drive.google.com/uc?id=1Sv1wdDtM99me_w-5mTUpyLjS-gKp34TV',
+        // Disable User Template
+        'Disable Title'          => 'Inabilitación de Usuario',
+        'Disable Email'          => '¡Hola, usuario ',
+        'Disable Email Sign'     => '!',
+        'Disable Paragraph'      => 'Le informamos que su cuenta del sistema "Yo Reporto" ha sido inactivada, para más información contacte al administrador',
+        'Headline Title D'       => 'Datos de la Cuenta:',
+        'Headline One D'         => 'Nombre de Usuario: ',
+        'Headline Two D'         => 'Rol: ',
+        'Headline Three D'       => 'Estado: ',
+        'Disable Email Icon'     => 'https://drive.google.com/uc?id=1OL2lzV5cQa2sM34tN3JY_DdYkZgymYn0',
+        // Enable User Template
+        'Enable Title'          => 'Reactivación de Usuario',
+        'Enable Email'          => '¡Hola, usuario ',
+        'Enable Email Sign'     => '!',
+        'Enable Paragraph'      => 'Le informamos que su cuenta del sistema "Yo Reporto" ha sido activada nuevamente por el administrador',
+        'Enable Email Icon'     => 'https://drive.google.com/uc?id=1JU8u5_26oDiSr1_FRUUmUx4wkfuHLj0B',
         //footer
         'facebook_icon'          => 'https://drive.google.com/uc?id=198Ob4uz3skaNlHnyPMnybdhN65-ToDGb',
         'instagram_icon'         => 'https://drive.google.com/uc?id=1_Sce9CURNwKQ4XzYpbOiqPUKZw8YpPz_',
