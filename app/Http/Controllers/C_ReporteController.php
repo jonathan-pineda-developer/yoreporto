@@ -194,7 +194,7 @@ class C_ReporteController extends Controller
 
   public function showAll()
   {
-    $perPage = 1;
+    $perPage = 10;
     $usuario = C_Reporte::select('nombre as Ciudadano', 'TB_Categoria.descripcion as Categoria', 'TB_Categoria.user_id as UTE a cargo', 'TB_Reporte.estado as Estado', 'TB_Reporte.created_at as Fecha de creacion', 'TB_Reporte.updated_at as Fecha de actualizacion/finalizacion')
       ->join('users', 'users.id', '=', 'TB_Reporte.user_id')
       ->join('TB_Categoria', 'TB_Categoria.id', '=', 'TB_Reporte.categoria_id')
@@ -218,7 +218,7 @@ class C_ReporteController extends Controller
   //mostrar todos los cmapos de la table reportes
   public function showAllReportes()
   {
-    $perPage = 1;
+    $perPage = 10;
     $reportes = C_Reporte::with('categoria')->paginate($perPage);
 
     if (count($reportes) > 0) {
@@ -394,8 +394,7 @@ class C_ReporteController extends Controller
   // metodo que retorna los reportes que tienen el estado Aceptado o Finalizado
   public function showReportesAceptados()
   {
-    $perPage = 10;
-    $reportes = C_Reporte::where('estado', 'Aceptado')->get()->paginate($perPage);
+    $reportes = C_Reporte::where('estado', 'Aceptado')->get();
 
     if (count($reportes) > 0) {
       return response()->json([
