@@ -88,7 +88,7 @@ function generarPDF() {
 
     //funcion para mostrar la bitacora
     public function mostrarBitacora(){
-        $bitacora = DB::table('TB_Bitacora')->get();
+        $bitacora = DB::table('TB_Bitacora')->paginate(10);
         return response()->json([
             'bitacora' => $bitacora
         ], 200);
