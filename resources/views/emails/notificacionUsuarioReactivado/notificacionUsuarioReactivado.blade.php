@@ -1,7 +1,3 @@
-<h1>{{$user->nombre}} {{$user->apellidos}} su cuenta del sistema Yo Reporto ha sido reactivada</h1>
-
-<h1>{{$user->nombre}} {{$user->apellidos}} su cuenta del sistema Yo Reporto ha sido inactivada, para mas informacion contacte al administrador</h1>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>

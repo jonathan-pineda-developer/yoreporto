@@ -43,6 +43,7 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'local_domain' => env('MAIL_EHLO_DOMAIN'),
+            'auth_mode' => null,
         ],
 
         'ses' => [
@@ -98,8 +99,9 @@ return [
     ],
     */
 
-    'from' => ['address' => 'YoReportoWeb@gmail.com', 'name' => 'Yo Reporto'], //don´t reply
-    'reply_to' => ['address' => 'YoReportoWeb@gmail.com', 'name' => 'Yo Reporto'],
+    'from' => ['address' => env('MAIL_FROM_ADDRESS'), 'name' => env('MAIL_FROM_NAME')], //'from' => ['address' => 'YoReportoWeb@gmail.com', 'name' => 'Yo Reporto'], //don´t reply
+    'reply_to' => ['address' => env('MAIL_FROM_ADDRESS'), 'name' => env('MAIL_FROM_NAME')], //'reply_to' => ['address' => 'YoReportoWeb@gmail.com', 'name' => 'Yo Reporto'],
+
 
     /*
     |--------------------------------------------------------------------------
