@@ -356,7 +356,7 @@ class C_ReporteController extends Controller
 
     // email al usuario que creo el reporte
     $user = User::find($reporte->user_id);
-    Mail::to($user->email)->send(new RechazoReporte($request->motivo, $reporte->titulo, $user, $userUTE));
+    Mail::to($user->email)->send(new RechazoReporte($request->motivo, $reporte->titulo, $user, $userUTE, $reporte->id));
 
     $user_id = auth()->user()->id;
     $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))

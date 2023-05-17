@@ -334,7 +334,7 @@
                                                         <td class="center-text container-padding"  align="left" style="font-family:'Poppins',Arial,Helvetica,sans-serif;font-size:14px;line-height:24px;font-weight:400;font-style:normal;color:#6e6e6e;text-decoration:none;letter-spacing:0px;">
 
                                                             <div  >
-                                                                {{ $reporte->id }}
+                                                                {{ $id }}
                                                             </div>
 
                                                         </td>

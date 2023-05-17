@@ -11,19 +11,20 @@ class RechazoReporte extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $motivo, $reporte, $user, $ute;
+    public $motivo, $reporte, $user, $ute, $id;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($motivo, $reporte, $user, $ute)
+    public function __construct($motivo, $reporte, $user, $ute, $id)
     {
         $this->motivo = $motivo;
         $this->reporte = $reporte;
         $this->user = $user;
         $this->ute = $ute;
+        $this->id = $id;
     }
 
     /**
