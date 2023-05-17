@@ -584,4 +584,17 @@ class C_ReporteController extends Controller
       'nombre' => $path
     ], 200);
   }
+  public function showReporte($id)
+  {
+    $reporte = C_Reporte::find($id);
+    if ($reporte != null) {
+      return response()->json([
+        'reporte' => $reporte
+      ], 200);
+    } else {
+      return response()->json([
+        'message' => 'No se encontró reporte',
+      ], 404);
+    }
+  }
 }
