@@ -43,7 +43,7 @@ Route::post('crear_reporte', [C_ReporteController::class, 'store'])->middleware(
 //actualizar imagen del reporte
 Route::post('actualizar_imagen/reportes/{id}', [C_ReporteController::class, 'updateImagenReporte'])->middleware('jwt.verify');
 //obtener reportes
-Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middleware('jwt.verify');
+Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middleware('jwt.verify', 'usuario.activo');
 Route::get('reportes', [C_ReporteController::class, 'showAll']);
 Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
 Route::get('aceptados', [C_ReporteController::class, 'showReportesAceptados']);
