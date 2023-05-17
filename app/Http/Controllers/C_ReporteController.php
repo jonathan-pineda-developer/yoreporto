@@ -302,6 +302,12 @@ class C_ReporteController extends Controller
   {
 
     $reporte = C_Reporte::find($id);
+    if ($reporte->estado === "Aceptado") {
+      return response()->json([
+          'message' => 'El reporte ya se encuentra aceptado.',
+      ], 400);
+  }
+
     $reporte->estado = "Aceptado";
     $reporte->save();
 
@@ -347,6 +353,12 @@ class C_ReporteController extends Controller
   {
     // rechazo del reporte
     $reporte = C_Reporte::find($id);
+        // Verificar si el reporte ya está rechazado
+        if ($reporte->estado === "Rechazado") {
+          return response()->json([
+              'message' => 'El reporte ya se encuentra rechazado.',
+          ], 400);
+      }
     $reporte->estado = "Rechazado";
     $reporte->save();
 
@@ -491,6 +503,11 @@ class C_ReporteController extends Controller
   public function finalizarReporte(Request $request, $id)
   {
     $reporte = C_Reporte::find($id);
+    if ($reporte->estado === "Finalizado") {
+      return response()->json([
+          'message' => 'El reporte ya se se encuentra finalizado.',
+      ], 400);
+  }
     $reporte->estado = "Finalizado";
     $reporte->save();
 
