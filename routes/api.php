@@ -48,6 +48,7 @@ Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
 Route::get('aceptados', [C_ReporteController::class, 'showReportesAceptados']);
 Route::get('reportes_estado/{estado}', [C_ReporteController::class, 'showReportesByEstado']);
 Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
+Route::get('detalles_reportes/{id}', [C_ReporteController::class, 'showReporte']);
 //showReportesByEstadoUTE
 Route::get('reportes_estado_ute/{estado}', [C_ReporteController::class, 'showReportesByEstadoUTE'])->middleware('jwt.verify');
 //delete all
