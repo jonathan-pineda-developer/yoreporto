@@ -30,6 +30,8 @@ Route::post('google', [C_AuthController::class, 'googleSignIn'])->name("google")
 Route::post('login', [C_AuthController::class, 'login'])->name("login");
     //Ruta de recuperación de contraseña
 Route::post('recuperar_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
+    //Ruta Reportes aceptados
+Route::get('aceptados', [C_ReporteController::class, 'showReportesAceptados']);
 
 //Rutas protegidas
 Route::group(['middleware' => ['jwt.verify', 'usuario.activo']], function () {
@@ -59,7 +61,6 @@ Route::group(['middleware' => ['jwt.verify', 'usuario.activo']], function () {
     Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->name("user_reportes");
     Route::get('reportes', [C_ReporteController::class, 'showAll']);
     Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
-    Route::get('aceptados', [C_ReporteController::class, 'showReportesAceptados']);
     Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
     Route::get('detalles_reportes/{id}', [C_ReporteController::class, 'showReporte']);
         //mostrar justificacion del reporte
