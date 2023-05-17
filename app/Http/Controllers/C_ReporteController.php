@@ -484,14 +484,11 @@ class C_ReporteController extends Controller
 
   public function showJustificacion($id)
   {
-    $justificacion = DB::table('TB_Bitacora')
-      ->where('reporte_id', $id)
-      ->orderBy('id', 'desc')
-      ->first();
-
-    if ($justificacion) {
+    $registro = DB::table('TB_Bitacora')->where('reporte_id', $id)->latest('id')->first();
+  
+    if ($registro) {
       return response()->json([
-        'justificacion' => $justificacion
+        'justificacion' => $registro->justificacion
       ], 200);
     } else {
       return response()->json([
