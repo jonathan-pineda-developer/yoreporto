@@ -22,15 +22,18 @@ use App\Providers\DriveServiceProvider;
 |
 */
 
-//->middleware('jwt.verify', 'usuario.activo')
+    //Rutas de registro
+Route::post('registro', [C_AuthController::class, 'registro'])->name("registro");
+Route::post('/registro_UTE', [C_AuthController::class, 'registro_UTE'])->name("registro_UTE");
+    //Rutas de Login
+Route::post('google', [C_AuthController::class, 'googleSignIn'])->name("google");
+Route::post('login', [C_AuthController::class, 'login'])->name("login");
+    //Ruta de recuperación de contraseña
+Route::post('recuperar_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
 
 //Rutas protegidas
 Route::group(['middleware' => ['jwt.verify', 'usuario.activo']], function () {
 // Rutas de autentificacion
-    Route::post('registro', [C_AuthController::class, 'registro'])->name("registro");
-    Route::post('/registro_UTE', [C_AuthController::class, 'registro_UTE'])->name("registro_UTE");
-    Route::post('google', [C_AuthController::class, 'googleSignIn'])->name("google");
-    Route::post('login', [C_AuthController::class, 'login'])->name("login");
         //renew token
     Route::get('renew', [C_AuthController::class, 'renew'])->name("renew_token");
         //códigode verificación
@@ -39,7 +42,6 @@ Route::group(['middleware' => ['jwt.verify', 'usuario.activo']], function () {
     Route::post('reenviar_codigo_email', [C_AuthController::class, 'reenviarCodigoDobleFactorEmail']);
     Route::post('verificar_codigo_email', [C_AuthController::class, 'verificarCodigoDobleFactorEmail']);
         //contraseña
-    Route::post('recuperar_contrasenia', [C_AuthController::class, 'solicitudRecuperacionContrasenia']);
     Route::put('cambiar_contrasenia/{id}', [C_AuthController::class, 'cambiarContrasena']);
     Route::put('cambiar_contraseniaperfil/{id}', [C_AuthController::class, 'cambiarContrasena']);
     Route::put('olvido_contrasenia/{id}', [C_AuthController::class, 'olvidoContrasenia']);
