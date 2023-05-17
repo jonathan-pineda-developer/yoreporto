@@ -387,7 +387,7 @@ class C_ReporteController extends Controller
 
     if ($reporte->save()) {
       return response()->json([
-        'message' => 'Reporte aceptado',
+        'message' => 'Reporte rechazado',
       ], 200);
     } else {
       return response()->json([
@@ -468,18 +468,23 @@ class C_ReporteController extends Controller
   }
   */
 
-  //funcion para mostrar la justificacion de la tabla bitacora usando el id del reporte
+  //funcion para mostrar la justificacion de la tabla bitacora usando el id del reporte y que sea el ultimo registro de ese reporte
+
   public function showJustificacion($id)
   {
-    $justificacion = DB::table('TB_Bitacora')->where('reporte_id', $id)->value('justificacion');
-    if ($justificacion != null) {
+    $justificacion = DB::table('TB_Bitacora')
+      ->where('reporte_id', $id)
+      ->orderBy('id', 'desc')
+      ->first();
+
+    if ($justificacion) {
       return response()->json([
         'justificacion' => $justificacion
       ], 200);
     } else {
       return response()->json([
         'message' => 'No se encontró justificación',
-      ], 404);
+      ], 400);
     }
   }
 
@@ -536,7 +541,7 @@ class C_ReporteController extends Controller
       ], 200);
     } else {
       return response()->json([
-        'message' => 'No se encontró reporte',
+        'message' => 'No se encontró el reporte',
       ], 404);
     }
   }

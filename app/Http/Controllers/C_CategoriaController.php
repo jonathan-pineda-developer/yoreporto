@@ -80,7 +80,7 @@ class C_CategoriaController extends Controller
     
         } else {
             return response()->json([
-                'message' => 'No se encuentran categorías',
+                'message' => 'No se encontraron categorías',
             ], 400);
         }
     }
@@ -109,7 +109,7 @@ class C_CategoriaController extends Controller
             }
         } else {
             return response()->json([
-                'message' => 'No se encuentra la categoría',
+                'message' => 'No se encontró la categoría',
             ], 400);
         }
     }
@@ -144,7 +144,7 @@ class C_CategoriaController extends Controller
             }
         } else {
             return response()->json([
-                'message' => 'No se encuentra la categoría',
+                'message' => 'No se encontró la categoría',
             ], 400);
         }
 
