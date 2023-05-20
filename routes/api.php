@@ -46,6 +46,7 @@ Route::get('user_reportes', [C_ReporteController::class, 'showByUserId'])->middl
 Route::get('reportes', [C_ReporteController::class, 'showAll']);
 Route::get('mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
 Route::get('aceptados', [C_ReporteController::class, 'showReportesAceptados']);
+Route::get('aceptados_finalizados', [C_ReporteController::class, 'showReportesAceptadosFinalizados']);
 Route::get('reportes_estado/{estado}', [C_ReporteController::class, 'showReportesByEstado']);
 Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
 Route::get('detalles_reportes/{id}', [C_ReporteController::class, 'showReporte']);
