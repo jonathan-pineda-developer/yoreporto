@@ -41,10 +41,12 @@ Route::post('/reenviar_codigo_email', [C_AuthController::class, 'reenviarCodigoD
 Route::put('/olvido_contrasenia/{id}', [C_AuthController::class, 'olvidoContrasenia']);
 // ruta para login/registro de google
 Route::post('/google', [C_AuthController::class, 'googleSignIn']);
+Route::get('/usuarios/getImagenById/{id}', [C_UserController::class, 'getImagenById']);
 // ruta reportes para mapa principal
-Route::get('/aceptados', [C_ReporteController::class, 'showReportesAceptados']);
+Route::get('/aceptados_finalizados', [C_ReporteController::class, 'showReportesAceptadosFinalizados']);
 
-
+//categorias
+Route::get('/mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
 //renew
 Route::get('/renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify');
 
@@ -54,7 +56,6 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     Route::put('cambiar_contraseniaperfil/{id}', [C_AuthController::class, 'cambiarContrasena']);
     Route::post('/actualizar/{id}', [C_UserController::class, 'update']);
     Route::post('/actualizar_imagen/usuarios/{id}', [C_UserController::class, 'updateImagen']);
-    Route::get('/usuarios/getImagenById/{id}', [C_UserController::class, 'getImagenById']);
     Route::post('/actualizar_datos/{id}', [C_UserController::class, 'updateDatos']);
 
     // Reportes
@@ -71,11 +72,10 @@ Route::group(['middleware' => 'jwt.verify'], function () {
     Route::get('/showById/{id}', [C_ReporteController::class, 'showById']);
 
     // Categorias
-    Route::get('/mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
+    Route::get('/mostrar_categoria/{id}', [C_CategoriaController::class, 'getCategoria']);
     Route::post('/crear_categoria', [C_CategoriaController::class, 'store']);
     Route::post('/actualizar_categoria/{id}', [C_CategoriaController::class, 'update']);
     Route::delete('/eliminar_categoria/{id}', [C_CategoriaController::class, 'destroy']);
-    Route::get('/mostrar_categoria/{id}', [C_CategoriaController::class, 'getCategoria']);
 
     // UTEs
     Route::put('/aceptar_reporte/{id}', [C_ReporteController::class, 'aceptarReporte']);
