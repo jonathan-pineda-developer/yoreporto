@@ -50,7 +50,7 @@ Route::get('/mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
 //renew
 Route::get('/renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify');
 
-Route::group(['middleware' => 'jwt.verify'], function () {
+Route::group(['middleware' => ['jwt.verify', 'usuario.activo']], function () {
 
     // Auth / perfil
     Route::put('cambiar_contraseniaperfil/{id}', [C_AuthController::class, 'cambiarContrasena']);
