@@ -15,6 +15,13 @@ use Dompdf\Dompdf;
 
 class C_AdministradorController extends Controller
 {
+    public function autorizarAdmin(User $user){
+        if (!$user->isAdmin()) {
+           return response()->json([
+               'message' => 'No tiene permisos para realizar esta acción'
+           ], 403);
+       }
+    }
 
     // función para obtener la cantidad de reportes finalizados en un mes y año dado
     public function reportes_Finalizados()
@@ -33,6 +40,7 @@ class C_AdministradorController extends Controller
     {
         return C_Reporte::where('estado', 'Aceptado')->count();
     }
+
     public function reportes_rechazados()
     {
         return C_Reporte::where('estado', 'Rechazado')->count();
@@ -40,16 +48,18 @@ class C_AdministradorController extends Controller
 
 
     function estadistica() {
+        $this->autorizarAdmin(auth()->user());
+
         $categorias = DB::table('TB_Categoria')->get();
         $reportes_por_categoria = [];
-        
+
         foreach ($categorias as $categoria) {
             $reportes_finalizados = C_Reporte::where('estado', 'Finalizado')->where('categoria_id', $categoria->id)->count();
             $reportes_en_espera = C_Reporte::where('estado', 'En espera')->where('categoria_id', $categoria->id)->count();
             $reportes_aceptados = C_Reporte::where('estado', 'Aceptado')->where('categoria_id', $categoria->id)->count();
             $reportes_rechazados = C_Reporte::where('estado', 'Rechazado')->where('categoria_id', $categoria->id)->count();
             $total = $reportes_finalizados + $reportes_en_espera + $reportes_aceptados + $reportes_rechazados;
-            
+
             $reportes_por_categoria[] = [
                 'Categoria' => $categoria->descripcion,
                 'espera' => $reportes_en_espera,
@@ -59,35 +69,38 @@ class C_AdministradorController extends Controller
                 'total' => $total
             ];
         }
-        
+
         return [
             'categorias' => $reportes_por_categoria
         ];
     }
 
 
-function generarPDF() {
-    $data = $this->estadistica();
-    $html = view('Informe.report', ['reportes_por_categoria' => $data['categorias']])->render();
+    function generarPDF() {
+        $this->autorizarAdmin(auth()->user());
 
-    $dompdf = new Dompdf();
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'landscape');
-    $dompdf->render();
+        $data = $this->estadistica();
+        $html = view('Informe.report', ['reportes_por_categoria' => $data['categorias']])->render();
 
-    $output = $dompdf->output();
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape');
+        $dompdf->render();
 
-    return response()->streamDownload(
-        function() use ($output) {
-            echo $output;
-        },
-        'estadisticas.pdf'
-    );
-}
+        $output = $dompdf->output();
 
+        return response()->streamDownload(
+            function() use ($output) {
+                echo $output;
+            },
+            'estadisticas.pdf'
+        );
+    }
 
     //funcion para mostrar la bitacora
     public function mostrarBitacora(){
+        $this->autorizarAdmin(auth()->user());
+
         $bitacora = DB::table('TB_Bitacora')->paginate(10);
         return response()->json([
             'bitacora' => $bitacora
@@ -108,11 +121,11 @@ function generarPDF() {
         }
     }
 
-
     public function  getFiltroBitacora(Request $request)
     {
-        $query = C_Bitacora::query();
+        $this->autorizarAdmin(auth()->user());
 
+        $query = C_Bitacora::query();
 
         if ($request->filled('fecha_inicio')) {
             $query->where('modified_at', '>=', $request->fecha_inicio);

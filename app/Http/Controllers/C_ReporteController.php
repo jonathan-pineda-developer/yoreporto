@@ -21,9 +21,15 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class C_ReporteController extends Controller
 {
+    public function autorizarUTE(User $user){
+        if (!$user->isUTE()) {
+           return response()->json([
+               'message' => 'No tiene permisos para realizar esta acción'
+           ], 403);
+       }
+    }
 
   //metodo para agregar reporte
-
   public function store(Request $request)
   {
     $uid = auth()->user()->id;
@@ -100,6 +106,7 @@ class C_ReporteController extends Controller
       'reporte' => $reporte
     ], 201);
   }
+
   //metodo uoload para subir imagen
   public function upload(Request $request)
   {
@@ -114,7 +121,6 @@ class C_ReporteController extends Controller
   //actualizar imagen del reporte
   public function updateImagenReporte(Request $request, $id)
   {
-
     $reporte = C_Reporte::findOrFail($id);
     $destino = public_path("storage\\" . $reporte->imagen);
     if ($reporte == null) {
@@ -143,9 +149,9 @@ class C_ReporteController extends Controller
       }
     }
   }
+
   public function getImagenReportesById(Request $request, $id)
   {
-
     $imagen = $request->id;
 
     //path de donde se encuentra la imagen public/storage/usuarios/id.extension
@@ -157,9 +163,12 @@ class C_ReporteController extends Controller
       return response()->file(storage_path("app/public/reportes/default1.png"));
     }
   }
+
   //MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
   public function showByUTEId()
   {
+    $this->autorizarUTE(auth()->user());
+
     //obtener la categoria de la ute logueada
     $perPage = 5;
     $uid = auth()->user()->id;
@@ -176,7 +185,6 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
-
 
   //mostrar reportes que tiene un usuario logueado
   public function showByUserId()
@@ -196,9 +204,9 @@ class C_ReporteController extends Controller
   }
 
   //mostrar todos los reportes con fecha de creado, nombre de usuario, nombre de categoria y estado
-
   public function showAll()
   {
+
     $perPage = 10;
     $usuario = C_Reporte::select('nombre as Ciudadano', 'TB_Categoria.descripcion as Categoria', 'TB_Categoria.user_id as UTE a cargo', 'TB_Reporte.estado as Estado', 'TB_Reporte.created_at as Fecha de creacion', 'TB_Reporte.updated_at as Fecha de actualizacion/finalizacion')
       ->join('users', 'users.id', '=', 'TB_Reporte.user_id')
@@ -255,6 +263,8 @@ class C_ReporteController extends Controller
   // cambiar la categoria de un reporte
   public function updateCategoria(Request $request, $id)
   {
+    $this->autorizarUTE(auth()->user());
+
     $reporte = C_Reporte::find($id);
     // traer la categoria nueva de la base en base a la descripcion que viene en el request (VERSIOON ANTERIOR)
     // $categoriaNueva = C_Categoria::where('descripcion', $request->descripcion)->first();
@@ -300,13 +310,14 @@ class C_ReporteController extends Controller
   // metodo para cambiar el estado del reporte a aceptado
   public function aceptarReporte(Request $request, $id)
   {
+    $this->autorizarUTE(auth()->user());
 
     $reporte = C_Reporte::find($id);
     if ($reporte->estado === "Aceptado") {
       return response()->json([
           'message' => 'El reporte ya se encuentra aceptado.',
       ], 400);
-  }
+    }
 
     $reporte->estado = "Aceptado";
     $reporte->save();
@@ -351,6 +362,8 @@ class C_ReporteController extends Controller
   // metodo para cambiar el estado del reporte a rechazado y enviar un email al usuario que creo el reporte con el motivo del rechazo
   public function rechazarReporte(Request $request, $id)
   {
+    $this->autorizarUTE(auth()->user());
+
     // rechazo del reporte
     $reporte = C_Reporte::find($id);
         // Verificar si el reporte ya está rechazado
@@ -411,6 +424,8 @@ class C_ReporteController extends Controller
   // metodo que retorna los reportes que tienen el estado Aceptado o Finalizado
   public function showReportesAceptados()
   {
+    $this->autorizarUTE(auth()->user());
+
     $reportes = C_Reporte::where('estado', 'Aceptado')->get();
 
     if (count($reportes) > 0) {
@@ -423,6 +438,7 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
+
   public function showReportesAceptadosFinalizados()
   {
     $reportes = C_Reporte::where('estado', 'Aceptado')->orWhere('estado', 'Finalizado')->get();
@@ -437,6 +453,7 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
+
   // metodo que retorna los reportes en base al estado que venga en el request
   public function showReportesByEstado(Request $request)
   {
@@ -453,6 +470,7 @@ class C_ReporteController extends Controller
       ], 404);
     }
   }
+
   //mostrar los reportes por estado y MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
   public function showReportesByEstadoUTE(Request $request)
   {
@@ -494,11 +512,10 @@ class C_ReporteController extends Controller
   */
 
   //funcion para mostrar la justificacion de la tabla bitacora usando el id del reporte y que sea el ultimo registro de ese reporte
-
   public function showJustificacion($id)
   {
     $registro = DB::table('TB_Bitacora')->where('reporte_id', $id)->latest('id')->first();
-  
+
     if ($registro) {
       return response()->json([
         'justificacion' => $registro->justificacion
@@ -512,12 +529,14 @@ class C_ReporteController extends Controller
 
   public function finalizarReporte(Request $request, $id)
   {
+    $this->autorizarUTE(auth()->user());
+
     $reporte = C_Reporte::find($id);
     if ($reporte->estado === "Finalizado") {
       return response()->json([
           'message' => 'El reporte ya se se encuentra finalizado.',
       ], 400);
-  }
+    }
     $reporte->estado = "Finalizado";
     $reporte->save();
 
@@ -594,6 +613,7 @@ class C_ReporteController extends Controller
       'nombre' => $path
     ], 200);
   }
+
   public function showReporte($id)
   {
     $reporte = C_Reporte::find($id);

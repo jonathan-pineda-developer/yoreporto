@@ -35,6 +35,11 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
+    const ROL_ADMINISTRADOR = 'Administrador';
+    const ROL_UTE = 'UTE';
+    CONST ROL_CIUDADANO = 'Ciudadano';
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -53,6 +58,22 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function isAdmin()
+    {
+        return $this->rol === self::ROL_ADMINISTRADOR;
+    }
+
+    public function isUte()
+    {
+        return $this->rol === self::ROL_UTE;
+    }
+
+    public function isCiudadano()
+    {
+        return $this->rol === self::ROL_CIUDADANO;
+    }
 
     // metodos del jwtsubject
     public function getJWTIdentifier()

@@ -12,9 +12,18 @@ use Illuminate\Support\Facades\Mail;
 
 class C_CategoriaController extends Controller
 {
+    public function autorizarAdmin(User $user){
+        if (!$user->isAdmin()) {
+           return response()->json([
+               'message' => 'No tiene permisos para realizar esta acción'
+           ], 403);
+       }
+    }
+
     //metodo para crear una categoria
     public function store(Request $request)
     {
+        $this->autorizarAdmin(auth()->user());
         // Validar los datos del formulario
         $validatedData = $request->validate([
             'descripcion' => 'required',
@@ -50,16 +59,15 @@ class C_CategoriaController extends Controller
     }
 
     //metodo para mostrar todas las categorias
-
     public function mostrar()
     {
 
         $categorias = C_Categoria::all();
 
         if ($categorias->count() > 0) {
-    
+
             $categorias_info = [];
-    
+
             foreach ($categorias as $categoria) {
                 $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
                     ->where('id', $categoria->user_id)
@@ -72,24 +80,23 @@ class C_CategoriaController extends Controller
                     'ute' => $ute,
                 ];
             }
-    
+
             return response()->json([
                 'message' => 'Categorías encontradas',
                 'categorias' => $categorias_info,
             ], 200);
-    
+
         } else {
             return response()->json([
                 'message' => 'No se encontraron categorías',
             ], 400);
         }
     }
-    
-    
 
     //metodo para eliminar una categoria
     public function destroy(Request $requeset, $id)
     {
+        $this->autorizarAdmin(auth()->user());
         //si se encuentra la categoria con el id
         if (C_Categoria::where('id', $id)->exists()) {
 
@@ -115,9 +122,9 @@ class C_CategoriaController extends Controller
     }
 
     //metodo para actualizar una categoria
-
     public function update(Request $request, $id)
     {
+        $this->autorizarAdmin(auth()->user());
         //si se encuentra la categoria con el id
         if (C_Categoria::where('id', $id)->exists()) { //si existe la categoria
             $categoria = C_Categoria::find($id); //buscar la categoria
@@ -125,9 +132,9 @@ class C_CategoriaController extends Controller
 
             // Buscar el UTE por su nombre y apellidos (nombre y apellidos son únicos)
             $ute = User::where(DB::raw("CONCAT(nombre, ' ', apellidos)"), $request->ute)->where('rol', 'UTE')->firstOrFail();
-         
+
             // Actualizar la categoría
-            $categoria = C_Categoria::where('id', $id)->update([ //actualizar la categoria 
+            $categoria = C_Categoria::where('id', $id)->update([ //actualizar la categoria
                 'descripcion' => $request->descripcion,
                 'color' => $request->color,
                 'user_id' => $ute->id,
@@ -149,6 +156,7 @@ class C_CategoriaController extends Controller
         }
 
     }
+
     public function getCategoria($id)
     {
         $categoria = C_Categoria::find($id);
@@ -157,12 +165,12 @@ class C_CategoriaController extends Controller
                 'message' => 'La categoría no existe',
             ], 404);
         }
-    
+
         $ute = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS nombre_completo"))
             ->where('id', $categoria->user_id)
             ->where('rol', 'UTE')
             ->value('nombre_completo');
-    
+
         return response()->json([
             'id' => $categoria->id,
             'descripcion' => $categoria->descripcion,
@@ -170,5 +178,4 @@ class C_CategoriaController extends Controller
             'ute' => $ute,
         ], 200);
     }
-    
 }

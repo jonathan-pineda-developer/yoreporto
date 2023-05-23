@@ -16,11 +16,23 @@ use App\Mail\CodigoAutentificacion;
 require_once '../vendor/autoload.php';
 class C_AuthController extends Controller
 {
+    public function autorizarAdmin(User $user){
+        if (!$user->isAdmin()) {
+           return response()->json([
+               'message' => 'No tiene permisos para realizar esta acción'
+           ], 403);
+       }
+    }
 
+    public function autorizarUTE(User $user){
+        if (!$user->isUTE()) {
+           return response()->json([
+               'message' => 'No tiene permisos para realizar esta acción'
+           ], 403);
+       }
+    }
 
     // Get $id_token via HTTPS POST.
-
-
     public function googleSignIn(Request $request)
     {
         $client = new \Google_Client(['client_id' => env('GOOGLE_ID')]);  // Specify the CLIENT_ID of the app that accesses the backend
@@ -75,6 +87,7 @@ class C_AuthController extends Controller
             ], 401);
         }
     }
+
     //nuevo token
     public function renew(Request $request)
     {
@@ -105,6 +118,7 @@ class C_AuthController extends Controller
     //         'tokenExists' => $token
     //     ], 200);
     // }
+
     public function getUsuarios()
     {
         $usuarios = User::all();
@@ -212,6 +226,8 @@ class C_AuthController extends Controller
     // verificar codigo de autentificacion por doble factor
     public function verificarCodigoDobleFactor(Request $request)
     {
+        $this->autorizarUTE(auth()->user());
+
         // validacion del request
         $this->validate($request, [
             'codigo' => 'required|string',
@@ -242,6 +258,8 @@ class C_AuthController extends Controller
     // reenviar codigo de autentificacion por doble factor al id del usuario que trae el url
     public function reenviarCodigoDobleFactor(Request $request, $id)
     {
+        $this->autorizarUTE(auth()->user());
+
         $user = User::find($id);
         $user->generarCodigoDobleFactor();
         Mail::to($user->email)->send(new CodigoAutentificacion($user));
@@ -249,9 +267,12 @@ class C_AuthController extends Controller
             'message' => 'Se ha enviado un código de autentificación a su correo electrónico',
         ], 200);
     }
+
     //reenviarCodigo por email
     public function reenviarCodigoDobleFactorEmail(Request $request)
     {
+        $this->autorizarUTE(auth()->user());
+
         // validacion del request
         $this->validate($request, [
             'email' => 'required|email',
@@ -267,6 +288,7 @@ class C_AuthController extends Controller
     //registro UTE
     public function registro_UTE(Request $request)
     {
+        $this->autorizarAdmin(auth()->user());
         // validacion del request
         $this->validate($request, [
             'nombre' => 'required|string',

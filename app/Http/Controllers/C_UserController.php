@@ -13,6 +13,30 @@ use App\Mail\UsuarioReactivado;
 
 class C_UserController extends Controller
 {
+    public function autorizarAdmin(User $user){
+        if (!$user->isAdmin()) {
+           return response()->json([
+               'message' => 'No tiene permisos para realizar esta acción'
+           ], 403);
+       }
+    }
+
+    public function autorizarUTE(User $user){
+        if (!$user->isUTE()) {
+           return response()->json([
+               'message' => 'No tiene permisos para realizar esta acción'
+           ], 403);
+       }
+    }
+
+    public function autorizarCiudadano(User $user){
+        if (!$user->isCiudadano()) {
+           return response()->json([
+               'message' => 'No tiene permisos para realizar esta acción'
+           ], 403);
+       }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +45,8 @@ class C_UserController extends Controller
 
     public function show()
     {
+        $this->autorizarAdmin(auth()->user());
+
         if (User::all()->isEmpty()) {
             return response()->json(['message' => 'No hay registros'], 404);
         } else {
@@ -120,6 +146,7 @@ class C_UserController extends Controller
             return response()->file(storage_path("app/public/usuarios/default.png"));
         }
     }
+
     //actualizar solo datos
     public function updateDatos(Request $request, $id)
     {
@@ -140,9 +167,10 @@ class C_UserController extends Controller
         }
     }
 
-
     public function inactivar(Request $request, $id)
     {
+        $this->autorizarAdmin(auth()->user());
+
         $user = User::find($id);
         if (User::find($id) == null) {
             return reponse()->json([
@@ -169,9 +197,10 @@ class C_UserController extends Controller
         }
     }
 
-
     public function reactivar(Request $request, $id)
     {
+        $this->autorizarAdmin(auth()->user());
+
         $user = User::find($id);
         if (User::find($id) == null) {
             return reponse()->json([
@@ -200,6 +229,8 @@ class C_UserController extends Controller
 
     public function showAllUTE()
     {
+        $this->autorizarAdmin(auth()->user());
+
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'TB_Categoria.descripcion as Categoria', 'email as Email')
             ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id')
             ->where('rol', 'UTE')
@@ -232,6 +263,8 @@ class C_UserController extends Controller
 
     public function showAllUTEActivos()
     {
+        $this->autorizarAdmin(auth()->user());
+
         $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
             ->where('estado', 1)
@@ -250,6 +283,8 @@ class C_UserController extends Controller
 
     public function showAllUTEInactivos()
     {
+        $this->autorizarAdmin(auth()->user());
+
         $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
             ->where('estado', 0)
@@ -268,6 +303,8 @@ class C_UserController extends Controller
 
     public function showAllUTEactivosSinCategoria()
     {
+        $this->autorizarAdmin(auth()->user());
+
         $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
             ->where('estado', 1)
@@ -287,6 +324,8 @@ class C_UserController extends Controller
 
     public function mostrar_ciudadano()
     {
+        $this->autorizarAdmin(auth()->user());
+
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'email as Email')
             ->where('rol', 'Ciudadano')
             ->paginate(6);
@@ -313,9 +352,12 @@ class C_UserController extends Controller
             ], 404);
         }
     }
+
     //busqueda de usuarios por nombre sensibles a mayusculas y minusculas
     public function search(Request $request)
     {
+        $this->autorizarAdmin(auth()->user());
+
         $nombre = $request->nombre;
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'email as Email')
             ->where('rol', 'Ciudadano')
@@ -344,9 +386,12 @@ class C_UserController extends Controller
             ], 404);
         }
     }
+
     //busqueda de usuarios ute por nombre sensibles a mayusculas y minusculas
     public function searchUTE(Request $request)
     {
+        $this->autorizarAdmin(auth()->user());
+
         $nombre = $request->nombre;
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'TB_Categoria.descripcion as Categoria', 'email as Email')
             ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id')
