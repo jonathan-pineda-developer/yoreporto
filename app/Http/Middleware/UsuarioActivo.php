@@ -23,6 +23,9 @@ class UsuarioActivo
         if ($user->estado == 1) {
             return $next($request);
         }
+
+        auth()->logout();
+
         return response()->json(['error' => 'Usuario inactivo'], 401);
     }
 }
