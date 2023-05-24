@@ -61,7 +61,7 @@ Route::group(['middleware' => ['jwt.verify', 'usuario.activo']], function () {
     // Reportes
     Route::post('/crear_reporte', [C_ReporteController::class, 'store']);
     Route::get('/user_reportes', [C_ReporteController::class, 'showByUserId']);
-    Route::get('/reportes', [C_ReporteController::class, 'showAll']);
+    Route::get('/reportes', [C_ReporteController::class, 'showAll']);  // solo para ADMIN y UTE
     Route::get('/mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
     Route::get('/reportes_estado/{estado}', [C_ReporteController::class, 'showReportesByEstado']);
     Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
