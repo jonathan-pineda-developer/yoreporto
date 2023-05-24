@@ -15,13 +15,6 @@ use Dompdf\Dompdf;
 
 class C_AdministradorController extends Controller
 {
-    public function autorizarAdmin(User $user){
-        if (!$user->isAdmin()) {
-           return response()->json([
-               'message' => 'No tiene permisos para realizar esta acción'
-           ], 403);
-       }
-    }
 
     // función para obtener la cantidad de reportes finalizados en un mes y año dado
     public function reportes_Finalizados()
@@ -47,7 +40,8 @@ class C_AdministradorController extends Controller
     }
 
 
-    function estadistica() {
+    function estadistica()
+    {
         if (!auth()->user()->isAdmin()) {
             return response()->json([
                 'message' => 'No tiene permisos para realizar esta acción'
@@ -80,7 +74,8 @@ class C_AdministradorController extends Controller
     }
 
 
-    function generarPDF() {
+    function generarPDF()
+    {
         if (!auth()->user()->isAdmin()) {
             return response()->json([
                 'message' => 'No tiene permisos para realizar esta acción'
@@ -98,7 +93,7 @@ class C_AdministradorController extends Controller
         $output = $dompdf->output();
 
         return response()->streamDownload(
-            function() use ($output) {
+            function () use ($output) {
                 echo $output;
             },
             'estadisticas.pdf'
@@ -106,7 +101,8 @@ class C_AdministradorController extends Controller
     }
 
     //funcion para mostrar la bitacora
-    public function mostrarBitacora(){
+    public function mostrarBitacora()
+    {
         if (!auth()->user()->isAdmin()) {
             return response()->json([
                 'message' => 'No tiene permisos para realizar esta acción'
@@ -121,12 +117,12 @@ class C_AdministradorController extends Controller
 
     public function total_usuarios()
     {
-        $usuarios=User::where('rol', 'Ciudadano')->where('estado', '1')->count();
-        if($usuarios){
+        $usuarios = User::where('rol', 'Ciudadano')->where('estado', '1')->count();
+        if ($usuarios) {
             return response()->json([
                 'usuarios' => $usuarios
             ], 200);
-        }else{
+        } else {
             return response()->json([
                 'message' => 'No hay usuarios'
             ], 404);
@@ -156,5 +152,4 @@ class C_AdministradorController extends Controller
 
         return response()->json(['bitacora' => $bitacoras]);
     }
-
 }
