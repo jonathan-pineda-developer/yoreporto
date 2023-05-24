@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UsuarioActivo
 {
@@ -24,8 +25,9 @@ class UsuarioActivo
             return $next($request);
         }
 
-        auth()->logout();
+        // delete the users token
+        JWTAuth::invalidate(JWTAuth::getToken());
 
-        return response()->json(['error' => 'Usuario inactivo'], 401);
+        return response()->json(['message' => 'Usuario inactivo'], 401);
     }
 }
