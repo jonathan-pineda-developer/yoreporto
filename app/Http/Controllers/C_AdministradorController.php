@@ -48,7 +48,11 @@ class C_AdministradorController extends Controller
 
 
     function estadistica() {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $categorias = DB::table('TB_Categoria')->get();
         $reportes_por_categoria = [];
@@ -77,7 +81,11 @@ class C_AdministradorController extends Controller
 
 
     function generarPDF() {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $data = $this->estadistica();
         $html = view('Informe.report', ['reportes_por_categoria' => $data['categorias']])->render();
@@ -99,7 +107,11 @@ class C_AdministradorController extends Controller
 
     //funcion para mostrar la bitacora
     public function mostrarBitacora(){
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $bitacora = DB::table('TB_Bitacora')->paginate(10);
         return response()->json([
@@ -123,7 +135,11 @@ class C_AdministradorController extends Controller
 
     public function  getFiltroBitacora(Request $request)
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $query = C_Bitacora::query();
 

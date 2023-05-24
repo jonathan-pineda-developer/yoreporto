@@ -16,22 +16,6 @@ use App\Mail\CodigoAutentificacion;
 require_once '../vendor/autoload.php';
 class C_AuthController extends Controller
 {
-    public function autorizarAdmin(User $user){
-        if (!$user->isAdmin()) {
-           return response()->json([
-               'message' => 'No tiene permisos para realizar esta acción'
-           ], 403);
-       }
-    }
-
-    public function autorizarUTE(User $user){
-        if (!$user->isUTE()) {
-           return response()->json([
-               'message' => 'No tiene permisos para realizar esta acción'
-           ], 403);
-       }
-    }
-
     // Get $id_token via HTTPS POST.
     public function googleSignIn(Request $request)
     {
@@ -121,6 +105,11 @@ class C_AuthController extends Controller
 
     public function getUsuarios()
     {
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
         $usuarios = User::all();
         return response()->json($usuarios);
     }
@@ -226,7 +215,11 @@ class C_AuthController extends Controller
     // verificar codigo de autentificacion por doble factor
     public function verificarCodigoDobleFactor(Request $request)
     {
-        $this->autorizarUTE(auth()->user());
+        if (!auth()->user()->isUTE()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         // validacion del request
         $this->validate($request, [
@@ -258,7 +251,11 @@ class C_AuthController extends Controller
     // reenviar codigo de autentificacion por doble factor al id del usuario que trae el url
     public function reenviarCodigoDobleFactor(Request $request, $id)
     {
-        $this->autorizarUTE(auth()->user());
+        if (!auth()->user()->isUTE()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $user = User::find($id);
         $user->generarCodigoDobleFactor();
@@ -271,7 +268,11 @@ class C_AuthController extends Controller
     //reenviarCodigo por email
     public function reenviarCodigoDobleFactorEmail(Request $request)
     {
-        $this->autorizarUTE(auth()->user());
+        if (!auth()->user()->isUTE()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         // validacion del request
         $this->validate($request, [
@@ -288,7 +289,11 @@ class C_AuthController extends Controller
     //registro UTE
     public function registro_UTE(Request $request)
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
         // validacion del request
         $this->validate($request, [
             'nombre' => 'required|string',

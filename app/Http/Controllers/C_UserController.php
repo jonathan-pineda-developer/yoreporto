@@ -13,24 +13,24 @@ use App\Mail\UsuarioReactivado;
 
 class C_UserController extends Controller
 {
-    public function autorizarAdmin(User $user){
-        if (!$user->isAdmin()) {
+    public function autorizarAdmin(){
+        if (!auth()->user()->isAdmin()) {
            return response()->json([
                'message' => 'No tiene permisos para realizar esta acción'
            ], 403);
        }
     }
 
-    public function autorizarUTE(User $user){
-        if (!$user->isUTE()) {
+    public function autorizarUTE(){
+        if (!auth()->user()->isUTE()) {
            return response()->json([
                'message' => 'No tiene permisos para realizar esta acción'
            ], 403);
        }
     }
 
-    public function autorizarCiudadano(User $user){
-        if (!$user->isCiudadano()) {
+    public function autorizarCiudadano(){
+        if (!auth()->user()->isCiudadano()) {
            return response()->json([
                'message' => 'No tiene permisos para realizar esta acción'
            ], 403);
@@ -169,7 +169,12 @@ class C_UserController extends Controller
 
     public function inactivar(Request $request, $id)
     {
-        $this->autorizarAdmin(auth()->user());
+        //$this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $user = User::find($id);
         if (User::find($id) == null) {
@@ -199,7 +204,11 @@ class C_UserController extends Controller
 
     public function reactivar(Request $request, $id)
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $user = User::find($id);
         if (User::find($id) == null) {
@@ -229,7 +238,11 @@ class C_UserController extends Controller
 
     public function showAllUTE()
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'TB_Categoria.descripcion as Categoria', 'email as Email')
             ->join('TB_Categoria', 'TB_Categoria.user_id', '=', 'users.id')
@@ -263,7 +276,11 @@ class C_UserController extends Controller
 
     public function showAllUTEActivos()
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
@@ -283,7 +300,11 @@ class C_UserController extends Controller
 
     public function showAllUTEInactivos()
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
@@ -303,7 +324,11 @@ class C_UserController extends Controller
 
     public function showAllUTEactivosSinCategoria()
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $datos = User::select(DB::raw("CONCAT(nombre, ' ', apellidos) AS Nombre"))
             ->where('rol', 'UTE')
@@ -324,7 +349,11 @@ class C_UserController extends Controller
 
     public function mostrar_ciudadano()
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'email as Email')
             ->where('rol', 'Ciudadano')
@@ -356,7 +385,11 @@ class C_UserController extends Controller
     //busqueda de usuarios por nombre sensibles a mayusculas y minusculas
     public function search(Request $request)
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $nombre = $request->nombre;
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'email as Email')
@@ -390,7 +423,11 @@ class C_UserController extends Controller
     //busqueda de usuarios ute por nombre sensibles a mayusculas y minusculas
     public function searchUTE(Request $request)
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         $nombre = $request->nombre;
         $datos = User::select('users.id as Id', 'nombre as Nombre', 'apellidos as Apellidos', 'estado as Estado', 'TB_Categoria.descripcion as Categoria', 'email as Email')

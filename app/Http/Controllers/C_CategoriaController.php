@@ -12,18 +12,15 @@ use Illuminate\Support\Facades\Mail;
 
 class C_CategoriaController extends Controller
 {
-    public function autorizarAdmin(User $user){
-        if (!$user->isAdmin()) {
-           return response()->json([
-               'message' => 'No tiene permisos para realizar esta acción'
-           ], 403);
-       }
-    }
-
     //metodo para crear una categoria
     public function store(Request $request)
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
+
         // Validar los datos del formulario
         $validatedData = $request->validate([
             'descripcion' => 'required',
@@ -96,7 +93,11 @@ class C_CategoriaController extends Controller
     //metodo para eliminar una categoria
     public function destroy(Request $requeset, $id)
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
         //si se encuentra la categoria con el id
         if (C_Categoria::where('id', $id)->exists()) {
 
@@ -124,7 +125,11 @@ class C_CategoriaController extends Controller
     //metodo para actualizar una categoria
     public function update(Request $request, $id)
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
         //si se encuentra la categoria con el id
         if (C_Categoria::where('id', $id)->exists()) { //si existe la categoria
             $categoria = C_Categoria::find($id); //buscar la categoria

@@ -21,14 +21,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class C_ReporteController extends Controller
 {
-    public function autorizarUTE(User $user){
-        if (!$user->isUTE()) {
-           return response()->json([
-               'message' => 'No tiene permisos para realizar esta acción'
-           ], 403);
-       }
-    }
-
   //metodo para agregar reporte
   public function store(Request $request)
   {
@@ -167,7 +159,11 @@ class C_ReporteController extends Controller
   //MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
   public function showByUTEId()
   {
-    $this->autorizarUTE(auth()->user());
+    if (!auth()->user()->isUTE()) {
+        return response()->json([
+            'message' => 'No tiene permisos para realizar esta acción'
+        ], 403);
+    }
 
     //obtener la categoria de la ute logueada
     $perPage = 5;
@@ -263,7 +259,11 @@ class C_ReporteController extends Controller
   // cambiar la categoria de un reporte
   public function updateCategoria(Request $request, $id)
   {
-    $this->autorizarUTE(auth()->user());
+    if (!auth()->user()->isUTE()) {
+        return response()->json([
+            'message' => 'No tiene permisos para realizar esta acción'
+        ], 403);
+    }
 
     $reporte = C_Reporte::find($id);
     // traer la categoria nueva de la base en base a la descripcion que viene en el request (VERSIOON ANTERIOR)
@@ -310,7 +310,11 @@ class C_ReporteController extends Controller
   // metodo para cambiar el estado del reporte a aceptado
   public function aceptarReporte(Request $request, $id)
   {
-    $this->autorizarUTE(auth()->user());
+    if (!auth()->user()->isUTE()) {
+        return response()->json([
+            'message' => 'No tiene permisos para realizar esta acción'
+        ], 403);
+    }
 
     $reporte = C_Reporte::find($id);
     if ($reporte->estado === "Aceptado") {
@@ -362,7 +366,11 @@ class C_ReporteController extends Controller
   // metodo para cambiar el estado del reporte a rechazado y enviar un email al usuario que creo el reporte con el motivo del rechazo
   public function rechazarReporte(Request $request, $id)
   {
-    $this->autorizarUTE(auth()->user());
+    if (!auth()->user()->isUTE()) {
+        return response()->json([
+            'message' => 'No tiene permisos para realizar esta acción'
+        ], 403);
+    }
 
     // rechazo del reporte
     $reporte = C_Reporte::find($id);
@@ -424,8 +432,6 @@ class C_ReporteController extends Controller
   // metodo que retorna los reportes que tienen el estado Aceptado o Finalizado
   public function showReportesAceptados()
   {
-    $this->autorizarUTE(auth()->user());
-
     $reportes = C_Reporte::where('estado', 'Aceptado')->get();
 
     if (count($reportes) > 0) {
@@ -474,6 +480,11 @@ class C_ReporteController extends Controller
   //mostrar los reportes por estado y MOSTRAR LOS REPORTES QUE PERTECEN A CADA CATEGORÍA DE UTE
   public function showReportesByEstadoUTE(Request $request)
   {
+    if (!auth()->user()->isUTE()) {
+        return response()->json([
+            'message' => 'No tiene permisos para realizar esta acción'
+        ], 403);
+    }
     $perPage = 5;
     $user_id = auth()->user()->id;
     $categoria = C_Categoria::where('user_id', $user_id)->first();
@@ -529,7 +540,11 @@ class C_ReporteController extends Controller
 
   public function finalizarReporte(Request $request, $id)
   {
-    $this->autorizarUTE(auth()->user());
+    if (!auth()->user()->isUTE()) {
+        return response()->json([
+            'message' => 'No tiene permisos para realizar esta acción'
+        ], 403);
+    }
 
     $reporte = C_Reporte::find($id);
     if ($reporte->estado === "Finalizado") {
