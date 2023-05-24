@@ -251,12 +251,6 @@ class C_AuthController extends Controller
     // reenviar codigo de autentificacion por doble factor al id del usuario que trae el url
     public function reenviarCodigoDobleFactor(Request $request, $id)
     {
-        if (!auth()->user()->isUTE()) {
-            return response()->json([
-                'message' => 'No tiene permisos para realizar esta acción'
-            ], 403);
-        }
-
         $user = User::find($id);
         $user->generarCodigoDobleFactor();
         Mail::to($user->email)->send(new CodigoAutentificacion($user));
@@ -268,12 +262,6 @@ class C_AuthController extends Controller
     //reenviarCodigo por email
     public function reenviarCodigoDobleFactorEmail(Request $request)
     {
-        if (!auth()->user()->isUTE()) {
-            return response()->json([
-                'message' => 'No tiene permisos para realizar esta acción'
-            ], 403);
-        }
-
         // validacion del request
         $this->validate($request, [
             'email' => 'required|email',
