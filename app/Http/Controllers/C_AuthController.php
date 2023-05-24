@@ -215,11 +215,6 @@ class C_AuthController extends Controller
     // verificar codigo de autentificacion por doble factor
     public function verificarCodigoDobleFactor(Request $request)
     {
-        if (!auth()->user()->isUTE()) {
-            return response()->json([
-                'message' => 'No tiene permisos para realizar esta acción'
-            ], 403);
-        }
 
         // validacion del request
         $this->validate($request, [
