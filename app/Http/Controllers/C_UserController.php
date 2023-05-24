@@ -13,30 +13,6 @@ use App\Mail\UsuarioReactivado;
 
 class C_UserController extends Controller
 {
-    public function autorizarAdmin(){
-        if (!auth()->user()->isAdmin()) {
-           return response()->json([
-               'message' => 'No tiene permisos para realizar esta acción'
-           ], 403);
-       }
-    }
-
-    public function autorizarUTE(){
-        if (!auth()->user()->isUTE()) {
-           return response()->json([
-               'message' => 'No tiene permisos para realizar esta acción'
-           ], 403);
-       }
-    }
-
-    public function autorizarCiudadano(){
-        if (!auth()->user()->isCiudadano()) {
-           return response()->json([
-               'message' => 'No tiene permisos para realizar esta acción'
-           ], 403);
-       }
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +21,11 @@ class C_UserController extends Controller
 
     public function show()
     {
-        $this->autorizarAdmin(auth()->user());
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
 
         if (User::all()->isEmpty()) {
             return response()->json(['message' => 'No hay registros'], 404);

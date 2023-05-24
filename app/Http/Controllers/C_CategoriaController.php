@@ -82,7 +82,6 @@ class C_CategoriaController extends Controller
                 'message' => 'Categorías encontradas',
                 'categorias' => $categorias_info,
             ], 200);
-
         } else {
             return response()->json([
                 'message' => 'No se encontraron categorías',
@@ -159,11 +158,17 @@ class C_CategoriaController extends Controller
                 'message' => 'No se encontró la categoría',
             ], 400);
         }
-
     }
 
     public function getCategoria($id)
     {
+
+        if (!auth()->user()->isAdmin()) {
+            return response()->json([
+                'message' => 'No tiene permisos para realizar esta acción'
+            ], 403);
+        }
+
         $categoria = C_Categoria::find($id);
         if (!$categoria) {
             return response()->json([

@@ -160,9 +160,9 @@ class C_ReporteController extends Controller
   public function showByUTEId()
   {
     if (!auth()->user()->isUTE()) {
-        return response()->json([
-            'message' => 'No tiene permisos para realizar esta acción'
-        ], 403);
+      return response()->json([
+        'message' => 'No tiene permisos para realizar esta acción'
+      ], 403);
     }
 
     //obtener la categoria de la ute logueada
@@ -203,6 +203,12 @@ class C_ReporteController extends Controller
   public function showAll()
   {
 
+    if (!(auth()->user()->isAdmin() || auth()->user()->isUTE())) {
+      return response()->json([
+        'message' => 'No tiene permisos para realizar esta acción'
+      ], 403);
+    }
+
     $perPage = 10;
     $usuario = C_Reporte::select('nombre as Ciudadano', 'TB_Categoria.descripcion as Categoria', 'TB_Categoria.user_id as UTE a cargo', 'TB_Reporte.estado as Estado', 'TB_Reporte.created_at as Fecha de creacion', 'TB_Reporte.updated_at as Fecha de actualizacion/finalizacion')
       ->join('users', 'users.id', '=', 'TB_Reporte.user_id')
@@ -223,7 +229,6 @@ class C_ReporteController extends Controller
     }
   }
 
-  //mostrar todos los cmapos de la table reportes
   //mostrar todos los cmapos de la table reportes
   public function showAllReportes()
   {
@@ -260,9 +265,9 @@ class C_ReporteController extends Controller
   public function updateCategoria(Request $request, $id)
   {
     if (!auth()->user()->isUTE()) {
-        return response()->json([
-            'message' => 'No tiene permisos para realizar esta acción'
-        ], 403);
+      return response()->json([
+        'message' => 'No tiene permisos para realizar esta acción'
+      ], 403);
     }
 
     $reporte = C_Reporte::find($id);
@@ -311,15 +316,15 @@ class C_ReporteController extends Controller
   public function aceptarReporte(Request $request, $id)
   {
     if (!auth()->user()->isUTE()) {
-        return response()->json([
-            'message' => 'No tiene permisos para realizar esta acción'
-        ], 403);
+      return response()->json([
+        'message' => 'No tiene permisos para realizar esta acción'
+      ], 403);
     }
 
     $reporte = C_Reporte::find($id);
     if ($reporte->estado === "Aceptado") {
       return response()->json([
-          'message' => 'El reporte ya se encuentra aceptado.',
+        'message' => 'El reporte ya se encuentra aceptado.',
       ], 400);
     }
 
@@ -367,19 +372,19 @@ class C_ReporteController extends Controller
   public function rechazarReporte(Request $request, $id)
   {
     if (!auth()->user()->isUTE()) {
-        return response()->json([
-            'message' => 'No tiene permisos para realizar esta acción'
-        ], 403);
+      return response()->json([
+        'message' => 'No tiene permisos para realizar esta acción'
+      ], 403);
     }
 
     // rechazo del reporte
     $reporte = C_Reporte::find($id);
-        // Verificar si el reporte ya está rechazado
-        if ($reporte->estado === "Rechazado") {
-          return response()->json([
-              'message' => 'El reporte ya se encuentra rechazado.',
-          ], 400);
-      }
+    // Verificar si el reporte ya está rechazado
+    if ($reporte->estado === "Rechazado") {
+      return response()->json([
+        'message' => 'El reporte ya se encuentra rechazado.',
+      ], 400);
+    }
     $reporte->estado = "Rechazado";
     $reporte->save();
 
@@ -463,6 +468,13 @@ class C_ReporteController extends Controller
   // metodo que retorna los reportes en base al estado que venga en el request
   public function showReportesByEstado(Request $request)
   {
+
+    if (!(auth()->user()->isAdmin() || auth()->user()->isUTE())) {
+      return response()->json([
+        'message' => 'No tiene permisos para realizar esta acción'
+      ], 403);
+    }
+
     $perPage = 5;
     $reportes = C_Reporte::where('estado', $request->estado)->paginate($perPage);
 
@@ -481,9 +493,9 @@ class C_ReporteController extends Controller
   public function showReportesByEstadoUTE(Request $request)
   {
     if (!auth()->user()->isUTE()) {
-        return response()->json([
-            'message' => 'No tiene permisos para realizar esta acción'
-        ], 403);
+      return response()->json([
+        'message' => 'No tiene permisos para realizar esta acción'
+      ], 403);
     }
     $perPage = 5;
     $user_id = auth()->user()->id;
@@ -541,15 +553,15 @@ class C_ReporteController extends Controller
   public function finalizarReporte(Request $request, $id)
   {
     if (!auth()->user()->isUTE()) {
-        return response()->json([
-            'message' => 'No tiene permisos para realizar esta acción'
-        ], 403);
+      return response()->json([
+        'message' => 'No tiene permisos para realizar esta acción'
+      ], 403);
     }
 
     $reporte = C_Reporte::find($id);
     if ($reporte->estado === "Finalizado") {
       return response()->json([
-          'message' => 'El reporte ya se se encuentra finalizado.',
+        'message' => 'El reporte ya se se encuentra finalizado.',
       ], 400);
     }
     $reporte->estado = "Finalizado";
