@@ -42,8 +42,13 @@ class C_AuthController extends Controller
         } else {
             $user = $userDB;
             $user->google = 1;
+            $user->save();
         }
-        $user->save();
+        if ($userDB->estado != 1) {
+            return response()->json([
+                'message' => 'Usuario inhabilitado comuniquese con el administrador'
+            ], 401);
+        }
         $token = JWTAuth::fromUser($user);
 
 
