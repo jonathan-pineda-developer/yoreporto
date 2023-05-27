@@ -35,7 +35,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
 
-    const ROL_ADMINISTRADOR = 'Administrador';
+    const ROL_ADMINISTRADOR = 'ADMIN';
     const ROL_UTE = 'UTE';
     CONST ROL_CIUDADANO = 'Ciudadano';
 
