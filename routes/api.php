@@ -50,6 +50,8 @@ Route::get('/mostrar_categoria', [C_CategoriaController::class, 'mostrar']);
 //renew
 Route::get('/renew', [C_AuthController::class, 'renew'])->middleware('jwt.verify');
 
+Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
+
 Route::group(['middleware' => ['jwt.verify', 'usuario.activo']], function () {
 
     // Auth / perfil
@@ -64,7 +66,6 @@ Route::group(['middleware' => ['jwt.verify', 'usuario.activo']], function () {
     Route::get('/reportes', [C_ReporteController::class, 'showAll']);  // solo para ADMIN y UTE
     Route::get('/mostrar_reportes', [C_ReporteController::class, 'showAllReportes']);
     Route::get('/reportes_estado/{estado}', [C_ReporteController::class, 'showReportesByEstado']);
-    Route::get('/reportes/getImagenById/{id}', [C_ReporteController::class, 'getImagenReportesById']);
     Route::get('/detalles_reportes/{id}', [C_ReporteController::class, 'showReporte']);
     Route::get('/reportes_estado_ute/{estado}', [C_ReporteController::class, 'showReportesByEstadoUTE']);
     Route::post('/upload', [C_ReporteController::class, 'upload']);
