@@ -1,0 +1,111 @@
+/*Forms */
+
+input::placeholder {
+
+	color: #000 !important;
+
+	opacity: .3 !important
+
+}
+
+.custom-file-label {
+
+	font-size: 1rem;
+
+}
+
+.form-check-label {
+
+	font-size: 1rem;
+
+}
+
+.form-text {
+
+	font-size: 13px;
+
+}
+
+
+.form-check-input:checked {
+	background-color: #673ab7;
+    border-color: #673ab7;
+}
+
+
+.form-check-input[type=checkbox]:indeterminate {
+	background-color: rgba(104, 58, 183, 0.5);
+	border-color: rgba(104, 58, 183, 0.5);
+}
+
+
+.form-range:focus::-webkit-slider-thumb {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 .25rem rgba(104, 58, 183, 0.25);
+}
+.form-range:focus::-moz-range-thumb {
+	box-shadow: 0 0 0 1px #fff, 0 0 0 .25rem rgba(104, 58, 183, 0.25);
+}
+
+.form-range::-moz-range-thumb {
+	background-color: #673ab7;
+}
+
+.invalid-feedback {
+
+	font-size: 100%;
+
+	margin-top: 0.55rem;
+
+}
+
+.custom-control-label {
+
+	font-size: 1rem;
+
+}
+
+.select2-container--bootstrap4 .select2-selection--single {
+
+	font-size: 1rem;
+
+}
+
+.select2-container--bootstrap4 .select2-selection--multiple .select2-selection__rendered {
+
+	font-size: 1rem;
+
+}
+
+.select2-sm .select2-container--bootstrap4 .select2-selection {
+
+	height: calc(1.5em + .5rem + 2px);
+
+	font-size: .875rem;
+
+}
+
+.select2-container--bootstrap4 .select2-dropdown {
+
+	border-color: rgba(206, 212, 218, 0.55);
+
+	border-radius: 0;
+
+	box-shadow: 0 0.1rem 0.7rem rgba(0, 0, 0, .10);
+
+}
+
+.g-r-left .select2-container--bootstrap4 .select2-selection {
+
+	border-top-left-radius: 0!important;
+
+	border-bottom-left-radius: 0!important;
+
+}
+
+.g-r-right .select2-container--bootstrap4 .select2-selection {
+
+	border-top-right-radius: 0!important;
+
+	border-bottom-right-radius: 0!important;
+
+}
