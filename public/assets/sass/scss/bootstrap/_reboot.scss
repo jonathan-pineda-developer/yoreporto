@@ -1,0 +1,33 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  letter-spacing: .1px;
+  font-size: 14px !important;
+  overflow-x: hidden;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/*Page Wrapper*/
+
+.page-wrapper {
+  position: relative;
+  margin-top: 70px;
+}
+
+.page-content-wrapper {
+  margin-left: 260px;
+  transition: all .3s ease-out;
+  margin-top: 70px;
+}
+
+.page-content {
+  padding: 1.5rem;
+}
