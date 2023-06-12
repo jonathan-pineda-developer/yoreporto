@@ -565,6 +565,8 @@ class C_ReporteController extends Controller
       ], 400);
     }
     $reporte->estado = "Finalizado";
+    // quitar imagen del reporte
+    $reporte->imagen = null;
     $reporte->save();
 
     $user_id = auth()->user()->id;
