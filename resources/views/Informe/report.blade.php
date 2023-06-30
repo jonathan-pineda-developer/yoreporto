@@ -46,8 +46,13 @@
     @php
         $fechaHora = date("d/m/Y H:i:s");
     @endphp
+<div class="container">
+    <div class="date">
+        <h6>Fecha y hora: {{ $fechaHora }}</h6>
+    </div>
+    <a href="{{ url('/') }}"><img style="width:140px;border:0px;display: inline!important;" src="{{ config('pleb.mail.top_logo') }}" width="140" border="0"       alt="logo"></a>
+</div>
 <div>
-    <h6>Fecha y hora: {{ $fechaHora }}</h6>
     <h2>Reporte de Estadísticas</h2>
     <table>
         <thead>
