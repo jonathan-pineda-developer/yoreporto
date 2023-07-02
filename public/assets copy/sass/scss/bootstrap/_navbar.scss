@@ -1,0 +1,41 @@
+/* Navbars */
+
+.nav-search input.form-control {
+
+	background-color: rgb(255 255 255 / 20%);
+
+	border: 1px solid rgb(255 255 255 / 45%);
+
+	border-top-left-radius: 30px;
+
+	border-bottom-left-radius: 30px;
+
+}
+
+.nav-search input.form-control::placeholder {
+
+	opacity: 0.5 !important;
+
+	color: #fff !important;
+
+}
+
+.nav-search input.form-control::-ms-input-placeholder {
+
+	color: #fff !important;
+
+}
+
+.nav-search button[type='submit'] {
+
+	background-color: rgb(255 255 255 / 20%);
+
+	border: 1px solid rgb(255 255 255 / 32%);
+
+	color: #fff;
+
+	border-top-right-radius: 30px;
+
+	border-bottom-right-radius: 30px;
+
+}

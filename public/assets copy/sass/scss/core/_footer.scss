@@ -1,0 +1,80 @@
+.footer {
+
+	position: fixed;
+
+	bottom: 0;
+
+	left: 0;
+
+	right: 0;
+
+	background: #ffffff;
+
+	border-top: 1px solid #cccbcb;
+
+	padding: 8px 15px;
+
+	font-size: 13px;
+
+	text-align: center;
+
+	margin-left: 260px;
+
+	transition: all .3s ease-out;
+
+	z-index: 10;
+
+}
+
+
+.back-to-top {
+
+	display: none;
+
+	width: 40px;
+
+	height: 40px;
+
+	line-height: 40px;
+
+	text-align: center;
+
+	font-size: 26px;
+
+	color: white;
+
+	position: fixed;
+
+	border-radius: 10px;
+
+	bottom: 20px;
+
+	right: 12px;
+
+	background-color: #673ab7;
+
+	z-index: 10000;
+
+}
+
+.back-to-top:hover {
+
+	color: white;
+
+	background-color: #000;
+
+	transition: all .5s;
+
+}
+
+.vertical-separater {
+
+	width: 1px;
+
+	background: #dadada;
+
+	height: 50px;
+
+	margin: auto;
+
+}
