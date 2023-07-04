@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('reset:reportes-command')->monthlyOn(1, '00:00');
-        // $schedule->command('reset:reportes-command')->everyMinute();
+        // $schedule->command('reset:reportes-command')->monthlyOn(1, '00:00');
+       $schedule->command('mytask:run')->everyMinute();
     }
     /**
      * Register the commands for the application.
