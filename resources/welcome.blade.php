@@ -59,6 +59,6 @@
   <div class="page-loading">
     <div class="spinner-border text-danger loading-icon" role="status"></div>
   </div>
-<script src="runtime.12b6f9316bd41ade.js" type="module"></script><script src="polyfills.c2d0e72ba3ab7af1.js" type="module"></script><script src="scripts.8a4cfb6a34d601d2.js" defer></script><script src="main.c7171d269393992c.js" type="module"></script>
+<script src="runtime.1147a3bbc1b6908f.js" type="module"></script><script src="polyfills.c2d0e72ba3ab7af1.js" type="module"></script><script src="scripts.8a4cfb6a34d601d2.js" defer></script><script src="main.ed01610b5b16f15d.js" type="module"></script>
 
 </body></html>
